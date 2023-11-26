@@ -584,10 +584,15 @@ export default {
   position: absolute;
   top: 5px;
   right: -5px;
-  font-size: 150%;
+  width: 35%;
 
   .warning {
     filter: drop-shadow(0 0 3px black) drop-shadow(0 0 3px black);
+
+    .fa-exclamation-triangle {
+      height: 100%;
+      width: auto;
+    }
 
     + .warning {
       position: absolute;
