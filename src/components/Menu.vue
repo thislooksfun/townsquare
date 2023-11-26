@@ -479,8 +479,8 @@ export default {
 }
 
 .menu {
-  width: 220px;
-  transform-origin: 200px 22px;
+  width: 230px;
+  transform-origin: 210px 22px;
   transition: transform 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
   transform: rotate(-90deg);
   position: absolute;
