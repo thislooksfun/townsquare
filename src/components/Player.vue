@@ -431,16 +431,24 @@ export default {
     position: absolute;
     width: 100%;
     height: 45%;
-    cursor: pointer;
     transform: rotateX(0deg);
     transform-origin: top center;
     transition: transform 200ms ease-in-out;
     z-index: 2;
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.8));
 
+    pointer-events: none;
+
     .shroud-target {
+      cursor: pointer;
       width: 100%;
       height: 44%;
+
+      pointer-events: all;
+
+      #townsquare.spectator & {
+        pointer-events: none;
+      }
     }
 
     &:before {
@@ -457,10 +465,6 @@ export default {
       transform: perspective(400px) scale(1.5);
       transform-origin: top center;
       transition: all 200ms;
-      pointer-events: none;
-    }
-
-    #townsquare.spectator & {
       pointer-events: none;
     }
 
