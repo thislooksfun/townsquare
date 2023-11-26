@@ -114,12 +114,11 @@
       <div class="marked">
         <font-awesome-icon icon="skull" />
       </div>
-      <div class="name" @click="toggleMenu" :class="{ active: isMenuOpen }">
-        <span>{{ player.name }}</span>
-        <font-awesome-icon icon="venus-mars" v-if="player.pronouns" />
-        <div class="pronouns" v-if="player.pronouns">
-          <span>{{ player.pronouns }}</span>
-        </div>
+      <div class="info" @click="toggleMenu" :class="{ active: isMenuOpen }">
+        <span class="name">{{ player.name }}</span>
+        <span v-if="player.pronouns" class="pronouns">{{
+          player.pronouns
+        }}</span>
       </div>
 
       <transition name="fold">
@@ -806,14 +805,15 @@ li.move:not(.from) .player .overlay svg.move {
 }
 
 /***** Player name *****/
-.player > .name {
+.player > .info {
+  display: flex;
+  flex-direction: column;
   right: 10%;
   display: flex;
   justify-content: center;
   font-size: 120%;
-  line-height: 120%;
+  line-height: 1em;
   cursor: pointer;
-  white-space: nowrap;
   width: 120%;
   background: rgba(0, 0, 0, 0.5);
   border: 3px solid black;
@@ -821,6 +821,7 @@ li.move:not(.from) .player .overlay svg.move {
   top: 5px;
   box-shadow: 0 0 5px black;
   padding: 0 4px;
+  gap: 2px;
 
   svg {
     top: 3px;
@@ -835,6 +836,20 @@ li.move:not(.from) .player .overlay svg.move {
     flex-grow: 1;
   }
 
+  .name {
+    white-space: nowrap;
+  }
+
+  .pronouns {
+    align-items: center;
+    font-size: 0.5em;
+    line-height: 1em;
+
+    margin-bottom: 4px;
+
+    opacity: 0.75;
+  }
+
   .cohost & {
     cursor: default;
   }
@@ -843,43 +858,9 @@ li.move:not(.from) .player .overlay svg.move {
   &.active {
     color: red;
   }
-
-  &:hover .pronouns {
-    opacity: 1;
-    color: white;
-  }
-
-  .pronouns {
-    display: flex;
-    position: absolute;
-    right: 110%;
-    max-width: 250px;
-    z-index: 25;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    border: 3px solid black;
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
-    align-items: center;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 200ms ease-in-out;
-    padding: 0 4px;
-    bottom: -3px;
-
-    &:before {
-      content: " ";
-      border: 10px solid transparent;
-      width: 0;
-      height: 0;
-      border-left-color: black;
-      position: absolute;
-      margin-left: 2px;
-      left: 100%;
-    }
-  }
 }
 
-.player.dead > .name {
+.player.dead > .info {
   opacity: 0.5;
 }
 
@@ -948,6 +929,7 @@ li.move:not(.from) .player .overlay svg.move {
 
 /***** Reminder token *****/
 .circle .reminder {
+  position: relative;
   background: url("../assets/reminder.png") center center;
   background-size: 100%;
   width: 50%;
