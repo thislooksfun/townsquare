@@ -12,7 +12,7 @@
           'vote-yes': session.votes[index],
           'vote-lock': voteLocked
         },
-        player.role.team
+        team,
       ]"
     >
       <div class="shroud">
@@ -226,6 +226,15 @@ export default {
     ...mapGetters({ nightOrder: "players/nightOrder" }),
     index: function() {
       return this.players.indexOf(this.player);
+    },
+    team: function() {
+      if (!this.player.role.id) return null;
+
+      if (this.player.reminders.some(r => r.role === "drunk")) {
+        return "outsider"
+      } else {
+        return this.player.role.team;
+      }
     },
     voteLocked: function() {
       const session = this.session;
