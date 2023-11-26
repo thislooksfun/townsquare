@@ -35,10 +35,10 @@ import { mapMutations } from "vuex";
 export default {
   data() {
     return {
-      language: window.navigator.userLanguage || window.navigator.language
+      language: window.navigator.userLanguage || window.navigator.language,
     };
   },
-  methods: mapMutations(["toggleMenu"])
+  methods: mapMutations(["toggleMenu"]),
 };
 </script>
 

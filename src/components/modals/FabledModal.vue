@@ -1,8 +1,6 @@
 <template>
   <Modal v-if="modals.fabled && fabled.length" @close="toggleModal('fabled')">
-    <h3>
-      Choose a fabled character to add to the game
-    </h3>
+    <h3>Choose a fabled character to add to the game</h3>
     <ul class="tokens">
       <li v-for="role in fabled" :key="role.id" @click="setFabled(role)">
         <Token :role="role" />
@@ -22,26 +20,28 @@ export default {
     ...mapState(["modals", "fabled", "grimoire"]),
     fabled() {
       const fabled = [];
-      this.$store.state.fabled.forEach(role => {
+      this.$store.state.fabled.forEach((role) => {
         // don't show fabled that are already in play
         if (
-          !this.$store.state.players.fabled.some(fable => fable.id === role.id)
+          !this.$store.state.players.fabled.some(
+            (fable) => fable.id === role.id,
+          )
         ) {
           fabled.push(role);
         }
       });
       return fabled;
-    }
+    },
   },
   methods: {
     setFabled(role) {
       this.$store.commit("players/setFabled", {
-        fabled: role
+        fabled: role,
       });
       this.$store.commit("toggleModal", "fabled");
     },
-    ...mapMutations(["toggleModal"])
-  }
+    ...mapMutations(["toggleModal"]),
+  },
 };
 </script>
 
