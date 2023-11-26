@@ -25,10 +25,11 @@ const server = https.createServer(options);
 const wss = new WebSocket.Server({
   ...(isProd ? { server } : { port: 8081 }),
   verifyClient: info =>
-    isProd &&
-    info.origin &&
-    !!info.origin.match(
-      /^https:\/\/botc\.thislooks\.fun/i
+    !isProd || (
+      info.origin &&
+      !!info.origin.match(
+        /^https:\/\/botc\.thislooks\.fun/i
+      )
     )
 });
 
