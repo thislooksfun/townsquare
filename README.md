@@ -72,11 +72,11 @@ definition file might be written:
     "team": "outsider",
     "ability": "Each night*, if either good living neighbor is drunk or poisoned, you die."
   },
-  { 
-    "id": "investigator" 
+  {
+    "id": "investigator"
   },
-  { 
-    "id": "imp" 
+  {
+    "id": "imp"
   }
 ]
 ```

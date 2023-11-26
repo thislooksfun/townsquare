@@ -1,6 +1,6 @@
 # Contributing Guide
 
-Hi! I'm really excited that you are interested in contributing to this project. 
+Hi! I'm really excited that you are interested in contributing to this project.
 Before submitting your contribution, please make sure to take a moment and read through the following guidelines:
 
 - [Code of Conduct](CODE_OF_CONDUCT.md)
@@ -20,7 +20,7 @@ Before submitting your contribution, please make sure to take a moment and read 
 - The `main` branch is what is currently deployed to the website. All development should be done in dedicated branches.
 
 - The `develop` branch contains the changes that will be deployed to main next. In order to prepare a release, development
-  branches should have their Pull Request against `develop` and only releases should be merged from `develop` into `main`. 
+  branches should have their Pull Request against `develop` and only releases should be merged from `develop` into `main`.
 
 - Work in the `src` folder and **DO NOT** checkin `dist` in the commits.
 
@@ -33,7 +33,7 @@ Before submitting your contribution, please make sure to take a moment and read 
 - If fixing a bug:
   - If you are resolving a special issue, add `(fix #xxxx[,#xxxx])` (#xxxx is the issue id) in your PR title for a better release log, e.g. `update entities encoding/decoding (fix #3899)`.
   - Provide a detailed description of the bug in the PR. Live demo preferred.
-  
+
 - You'll need to update the `CHANGELOG.md` with a description of your changes before you open a pull request and your code
   should pass the lint check.
 
@@ -58,7 +58,7 @@ as removing the CNAME file and updating the GitHub pages configuration. Otherwis
 will think it should be served at clocktower.online instead of \<user\>.github.io/townsquare/.
 
 For example, deploying your forked `townsquare` project to GitHub pages would need the following
-`vue.config.js` changes: 
+`vue.config.js` changes:
 ```js
 module.exports = {
   publicPath: process.env.NODE_ENV === "production" ? "/townsquare/" : "/"
@@ -87,7 +87,7 @@ $ npm run lint
 - **`dist`**: contains built files for distribution.
 
 - **`public`**: static assets and templates that don't need to be built dynamically.
-  
+
 - **`server`**: NodeJS code for the live session backend server.
 
 - **`src`**: contains the source code. The codebase is written in ES2015.
@@ -99,13 +99,13 @@ $ npm run lint
     - **`fonts`**: webfonts used on the page
 
     - **`icons`**: character token icons
-      
+
     - **`sounds`**: sound effects used on the page
 
   - **`components`**: the internal components used in the project
-  
+
     - **`modals`**: the modals have a separate subfolder
 
   - **`store`**: the VueX data store and modules
-    
+
     - **`modules`**: VueX modules that live in their own namespace
