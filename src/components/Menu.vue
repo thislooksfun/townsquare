@@ -116,6 +116,13 @@
                 :icon="['fas', grimoire.isMuted ? 'volume-mute' : 'volume-up']"
             /></em>
           </li>
+          <li @click="toggleSmolBluffs">
+            {{ grimoire.smolBluffs ? "Regular bluffs" : "Small bluffs" }}
+            <em
+              ><font-awesome-icon
+                :icon="['fas', grimoire.smolBluffs ? 'expand-alt' : 'compress-alt']"
+            /></em>
+          </li>
         </template>
 
         <template v-if="tab === 'session'">
@@ -380,6 +387,7 @@ export default {
       "toggleImageOptIn",
       "toggleMuted",
       "toggleNightOrder",
+      "toggleSmolBluffs",
       "toggleStatic",
       "setZoom",
       "toggleModal"

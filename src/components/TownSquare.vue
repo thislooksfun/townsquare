@@ -3,6 +3,7 @@
     id="townsquare"
     class="square"
     :class="{
+      smolBluffs: grimoire.smolBluffs,
       public: grimoire.isPublic,
       cohost: session.isCohost,
       spectator: session.isSpectator,
@@ -491,6 +492,34 @@ export default {
 #townsquare.public > .bluffs {
   opacity: 0;
   transform: scale(0.1);
+}
+
+#townsquare.smolBluffs > .bluffs,
+#townsquare.smolBluffs > .fabled {
+  padding: 0.2em 0;
+
+  h3 {
+    margin: 0 0.5em;
+    max-width: 100%;
+  }
+
+  ul {
+    flex-direction: row;
+    li {
+      width: 7vh;
+      height: 7vh;
+    }
+  }
+
+  &.bluffs {
+    rotate: -90deg;
+    translate: 0 100%;
+    transform-origin: top left;
+
+    ul li {
+      rotate: 90deg;
+    }
+  }
 }
 
 .fabled ul li .token:before {

@@ -107,6 +107,7 @@ export default new Vuex.Store({
       isStatic: false,
       isMuted: false,
       isImageOptIn: false,
+      smolBluffs: false,
       zoom: 0,
       background: ""
     },
@@ -169,6 +170,7 @@ export default new Vuex.Store({
     toggleMuted: toggle("isMuted"),
     toggleMenu: toggle("isMenuOpen"),
     toggleNightOrder: toggle("isNightOrder"),
+    toggleSmolBluffs: toggle("smolBluffs"),
     toggleStatic: toggle("isStatic"),
     toggleNight: toggle("isNight"),
     toggleGrimoire: toggle("isPublic"),

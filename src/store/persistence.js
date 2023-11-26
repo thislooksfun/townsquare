@@ -11,6 +11,9 @@ module.exports = store => {
   if (localStorage.getItem("muted")) {
     store.commit("toggleMuted", true);
   }
+  if (localStorage.getItem("smolBluffs")) {
+    store.commit("toggleSmolBluffs", true);
+  }
   if (localStorage.getItem("static")) {
     store.commit("toggleStatic", true);
   }
@@ -96,6 +99,13 @@ module.exports = store => {
           localStorage.setItem("muted", 1);
         } else {
           localStorage.removeItem("muted");
+        }
+        break;
+      case "toggleSmolBluffs":
+        if (state.grimoire.smolBluffs) {
+          localStorage.setItem("smolBluffs", 1);
+        } else {
+          localStorage.removeItem("smolBluffs");
         }
         break;
       case "toggleStatic":
