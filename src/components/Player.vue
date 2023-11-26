@@ -15,7 +15,9 @@
         player.role.team
       ]"
     >
-      <div class="shroud" @click="toggleStatus()"></div>
+      <div class="shroud">
+        <div class="shroud-target" @click="toggleStatus()"></div>
+      </div>
       <div class="life" @click="toggleStatus()"></div>
 
       <div
@@ -391,6 +393,11 @@ export default {
     z-index: 2;
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.8));
 
+    .shroud-target {
+      width: 100%;
+      height: 44%;
+    }
+
     &:before {
       content: " ";
       background: url("../assets/shroud.png") center -10px no-repeat;
@@ -412,7 +419,7 @@ export default {
       pointer-events: none;
     }
 
-    #townsquare:not(.spectator) &:hover:before {
+    #townsquare:not(.spectator) &:has(.shroud-target:hover):before {
       opacity: 0.5;
       top: -10px;
       transform: scale(1);
@@ -425,7 +432,7 @@ export default {
     transform: perspective(400px) scale(1);
   }
 
-  #townsquare:not(.spectator) &.dead .shroud:hover:before {
+  #townsquare:not(.spectator) &.dead .shroud:has(.shroud-target:hover):before {
     opacity: 1;
   }
 }
