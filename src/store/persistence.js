@@ -11,6 +11,9 @@ module.exports = store => {
   if (localStorage.getItem("muted")) {
     store.commit("toggleMuted", true);
   }
+  if (localStorage.getItem("mismatchWarnings")) {
+    store.commit("toggleMismatchWarnings", true);
+  }
   if (localStorage.getItem("smolBluffs")) {
     store.commit("toggleSmolBluffs", true);
   }
@@ -102,6 +105,13 @@ module.exports = store => {
           localStorage.setItem("muted", 1);
         } else {
           localStorage.removeItem("muted");
+        }
+        break;
+      case "toggleMismatchWarnings":
+        if (state.grimoire.mismatchWarnings) {
+          localStorage.setItem("mismatchWarnings", 1);
+        } else {
+          localStorage.removeItem("mismatchWarnings");
         }
         break;
       case "toggleSmolBluffs":

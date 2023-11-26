@@ -130,6 +130,13 @@
                 :icon="['fas', grimoire.teamColors ? 'check-square' : 'square']"
             /></em>
           </li>
+          <li @click="toggleMismatchWarnings">
+            Mismatch warnings
+            <em
+              ><font-awesome-icon
+                :icon="['fas', grimoire.mismatchWarnings ? 'check-square' : 'square']"
+            /></em>
+          </li>
         </template>
 
         <template v-if="tab === 'session'">
@@ -389,6 +396,7 @@ export default {
       }
     },
     ...mapMutations([
+      "toggleMismatchWarnings",
       "toggleGrimoire",
       "toggleMenu",
       "toggleImageOptIn",

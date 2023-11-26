@@ -13,6 +13,7 @@
           'vote-lock': voteLocked
         },
         team,
+        alignment,
       ]"
     >
       <div class="shroud">
@@ -43,6 +44,14 @@
         :role="player.role"
         @set-role="$emit('trigger', ['openRoleModal'])"
       />
+      <div class="warnings" v-if="grimoire.mismatchWarnings">
+        <div class="warning warning-alignment" v-if="alignmentMismatch">
+          <font-awesome-icon icon="exclamation-triangle" />
+        </div>
+        <div class="warning warning-team" v-if="teamMismatch">
+          <font-awesome-icon icon="exclamation-triangle" />
+        </div>
+      </div>
 
       <!-- Overlay icons -->
       <div class="overlay">
@@ -210,6 +219,13 @@
 import Token from "./Token";
 import { mapGetters, mapState } from "vuex";
 
+const alignmentMap = {
+  "townsfolk": "good",
+  "outsider": "good",
+  "minion": "evil",
+  "demon": "evil"
+};
+
 export default {
   components: {
     Token
@@ -227,6 +243,19 @@ export default {
     index: function() {
       return this.players.indexOf(this.player);
     },
+    alignment: function() {
+      if (!this.player.role.id) return null;
+
+      const alignmentTokens = ["good", "evil"];
+      const roleReminder =
+        this.player.reminders.find(r => alignmentTokens.includes(r.role));
+
+      return roleReminder?.role ?? alignmentMap[this.team] ?? "alignmentUnknown";
+    },
+    alignmentMismatch: function() {
+      if (!this.player.role.id) return null;
+      return alignmentMap[this.player.role.team] !== this.alignment;
+    },
     team: function() {
       if (!this.player.role.id) return null;
 
@@ -235,6 +264,10 @@ export default {
       } else {
         return this.player.role.team;
       }
+    },
+    teamMismatch: function() {
+      if (!this.player.role.id) return false;
+      return this.player.role.team !== this.team;
     },
     voteLocked: function() {
       const session = this.session;
@@ -533,6 +566,41 @@ export default {
 #townsquare.public .circle .token {
   transform: perspective(400px) rotateY(-180deg);
 }
+
+/****** Mismatch warning *******/
+@mixin mismatchColor($type, $name, $color) {
+  .player.#{$name} .warning-#{$type} {
+    color: $color;
+  }
+}
+
+.player .warnings {
+  position: absolute;
+  top: 5px;
+  right: -5px;
+  font-size: 150%;
+
+  .warning {
+    filter: drop-shadow(0 0 3px black) drop-shadow(0 0 3px black);
+
+    + .warning {
+      position: absolute;
+      width: 50%;
+      left: 0;
+      top: 0;
+      overflow: hidden;
+    }
+  }
+}
+
+@include mismatchColor("alignment", "good", $townsfolk);
+@include mismatchColor("alignment", "evil", $demon);
+
+@include mismatchColor("team", "townsfolk", $townsfolk);
+@include mismatchColor("team", "outsider", $outsider);
+@include mismatchColor("team", "demon", $demon);
+@include mismatchColor("team", "minion", $minion);
+@include mismatchColor("team", "traveler", $traveler);
 
 /****** Player choice icons *******/
 .player .overlay {
