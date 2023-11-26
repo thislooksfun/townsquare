@@ -77,7 +77,7 @@ export default {
   .roles &,
   .characters & {
     max-height: 100%;
-    max-width: 60%;
+    max-width: 75%;
   }
 
   ul {

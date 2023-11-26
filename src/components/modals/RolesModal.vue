@@ -166,10 +166,11 @@ export default {
 @import "../../vars.scss";
 
 ul.tokens {
-  padding-left: 5%;
+  padding: 10px 0 10px 5%;
+
   li {
     border-radius: 50%;
-    width: 5vw;
+    width: 100px;
     margin: 5px;
     opacity: 0.5;
     transition: all 250ms;
@@ -249,6 +250,7 @@ ul.tokens {
     font-weight: bold;
     font-size: 75%;
     width: 5%;
+    min-width: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
