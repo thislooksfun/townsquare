@@ -105,7 +105,7 @@
       </div>
       <div
         class="name"
-        @click="isMenuOpen = !isMenuOpen"
+        @click="toggleMenu"
         :class="{ active: isMenuOpen }"
       >
         <span>{{ player.name }}</span>
@@ -197,7 +197,7 @@
         <span class="text">{{ reminder.name }}</span>
       </div>
     </template>
-    <div class="reminder add" @click="$emit('trigger', ['openReminderModal'])">
+    <div v-if="!session.isCohost" class="reminder add" @click="$emit('trigger', ['openReminderModal'])">
       <span class="icon"></span>
     </div>
     <div class="reminderHoverTarget"></div>
@@ -285,12 +285,17 @@ export default {
         }
       }
     },
+    toggleMenu() {
+      if (this.session.isCohost) return;
+      this.isMenuOpen = !this.isMenuOpen
+    },
     changeName() {
       if (this.session.isSpectator) return;
       const name = prompt("Player name", this.player.name) || this.player.name;
       this.updatePlayer("name", name, true);
     },
     removeReminder(reminder) {
+      if (this.session.isCohost) return;
       const reminders = [...this.player.reminders];
       reminders.splice(this.player.reminders.indexOf(reminder), 1);
       this.updatePlayer("reminders", reminders, true);
@@ -733,6 +738,10 @@ li.move:not(.from) .player .overlay svg.move {
     flex-grow: 1;
   }
 
+  .cohost & {
+    cursor: default;
+  }
+
   #townsquare:not(.spectator) &:hover,
   &.active {
     color: red;
@@ -926,6 +935,17 @@ li.move:not(.from) .player .overlay svg.move {
   }
   &:hover:after {
     opacity: 1;
+  }
+
+  .cohost & {
+    cursor: default;
+
+    &:before {
+      display: none;
+    }
+    &:after {
+      display: none;
+    }
   }
 }
 

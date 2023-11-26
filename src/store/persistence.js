@@ -59,14 +59,18 @@ module.exports = store => {
       }))
     );
   }
+  if (localStorage.cohosts) {
+    store.commit("cohosts/set", JSON.parse(localStorage.cohosts))
+  }
   /**** Session related data *****/
   if (localStorage.getItem("playerId")) {
     store.commit("session/setPlayerId", localStorage.getItem("playerId"));
   }
   if (localStorage.getItem("session") && !window.location.hash.substr(1)) {
-    const [spectator, sessionId] = JSON.parse(localStorage.getItem("session"));
+    const [spectator, sessionId, cohost] = JSON.parse(localStorage.getItem("session"));
     store.commit("session/setSpectator", spectator);
     store.commit("session/setSessionId", sessionId);
+    store.commit("session/setCohost", !!cohost);
   }
 
   // listen to mutations
@@ -166,11 +170,23 @@ module.exports = store => {
           localStorage.removeItem("players");
         }
         break;
+      case "cohosts/add":
+      case "cohosts/remove":
+        console.log("Cohosts updated!", state.cohosts.cohosts);
+        if (state.cohosts.cohosts.length) {
+          localStorage.setItem(
+            "cohosts",
+            JSON.stringify(state.cohosts.cohosts)
+          );
+        } else {
+          localStorage.removeItem("cohosts");
+        }
+        break;
       case "session/setSessionId":
         if (payload) {
           localStorage.setItem(
             "session",
-            JSON.stringify([state.session.isSpectator, payload])
+            JSON.stringify([state.session.isSpectator, payload, state.session.isCohost])
           );
         } else {
           localStorage.removeItem("session");

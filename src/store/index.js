@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import persistence from "./persistence";
 import socket from "./socket";
+import cohosts from "./modules/cohosts";
 import players from "./modules/players";
 import session from "./modules/session";
 import editionJSON from "../editions.json";
@@ -93,6 +94,7 @@ const customRole = {
 
 export default new Vuex.Store({
   modules: {
+    cohosts,
     players,
     session
   },

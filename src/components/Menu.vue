@@ -16,6 +16,7 @@
     <span
       class="session"
       :class="{
+        cohost: session.isCohost,
         spectator: session.isSpectator,
         reconnecting: session.isReconnecting
       }"
@@ -41,7 +42,11 @@
             v-if="!session.isSpectator"
             @click="tab = 'players'"
           />
-          <font-awesome-icon icon="theater-masks" @click="tab = 'characters'" />
+          <font-awesome-icon
+            v-if="!session.isCohost"
+            icon="theater-masks"
+            @click="tab = 'characters'"
+          />
           <font-awesome-icon icon="question" @click="tab = 'help'" />
         </li>
 
@@ -124,6 +129,7 @@
           <template v-if="!session.sessionId">
             <li @click="hostSession">Host (Storyteller)<em>[H]</em></li>
             <li @click="joinSession">Join (Player)<em>[J]</em></li>
+            <li @click="cohostSession">Co-host (Storyteller)</li>
           </template>
           <template v-else>
             <li v-if="session.ping">
@@ -258,9 +264,28 @@ export default {
       );
       if (sessionId) {
         this.$store.commit("session/clearVoteHistory");
+        this.$store.commit("cohosts/clear");
         this.$store.commit("session/setSpectator", false);
+        this.$store.commit("session/setCohost", false);
         this.$store.commit("session/setSessionId", sessionId);
         this.copySessionUrl();
+      }
+    },
+    cohostSession() {
+      if (this.session.sessionId) return this.leaveSession();
+      let sessionId = prompt(
+        "Enter the channel number / name of the session you want to co-host"
+      );
+      if (sessionId.match(/^https?:\/\//i)) {
+        sessionId = sessionId.split("#").pop();
+      }
+      if (sessionId) {
+        this.$store.commit("session/clearVoteHistory");
+        this.$store.commit("cohosts/clear");
+        this.$store.commit("session/setSpectator", true);
+        this.$store.commit("session/setCohost", true);
+        this.$store.commit("toggleGrimoire", false);
+        this.$store.commit("session/setSessionId", sessionId);
       }
     },
     copySessionUrl() {
@@ -299,14 +324,18 @@ export default {
       }
       if (sessionId) {
         this.$store.commit("session/clearVoteHistory");
+        this.$store.commit("cohosts/clear");
         this.$store.commit("session/setSpectator", true);
+        this.$store.commit("session/setCohost", false);
         this.$store.commit("toggleGrimoire", false);
         this.$store.commit("session/setSessionId", sessionId);
       }
     },
     leaveSession() {
       if (confirm("Are you sure you want to leave the active live game?")) {
+        this.$store.commit("cohosts/clear");
         this.$store.commit("session/setSpectator", false);
+        this.$store.commit("session/setCohost", false);
         this.$store.commit("session/setSessionId", "");
       }
     },
@@ -405,6 +434,9 @@ export default {
     color: $demon;
     &.spectator {
       color: $townsfolk;
+    }
+    &.cohost {
+      color: $traveler;
     }
     &.reconnecting {
       animation: blink 1s infinite;

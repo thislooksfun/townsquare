@@ -4,6 +4,7 @@
     class="square"
     :class="{
       public: grimoire.isPublic,
+      cohost: session.isCohost,
       spectator: session.isSpectator,
       vote: session.nomination
     }"
@@ -30,7 +31,7 @@
       :class="{ closed: !isBluffsOpen }"
     >
       <h3>
-        <span v-if="session.isSpectator">Other characters</span>
+        <span v-if="session.isSpectator && !session.isCohost">Other characters</span>
         <span v-else>Demon bluffs</span>
         <font-awesome-icon icon="times-circle" @click.stop="toggleBluffs" />
         <font-awesome-icon icon="plus-circle" @click.stop="toggleBluffs" />
@@ -145,6 +146,7 @@ export default {
       this.$store.commit("toggleModal", "reminder");
     },
     openRoleModal(playerIndex) {
+      if (this.session.isCohost) return;
       const player = this.players[playerIndex];
       if (this.session.isSpectator && player && player.role.team === "traveler")
         return;

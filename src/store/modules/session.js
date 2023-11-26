@@ -13,6 +13,7 @@ const handleVote = (state, [index, vote]) => {
 
 const state = () => ({
   sessionId: "",
+  isCohost: false,
   isSpectator: false,
   isReconnecting: false,
   playerCount: 0,
@@ -41,6 +42,7 @@ const set = key => (state, val) => {
 
 const mutations = {
   setPlayerId: set("playerId"),
+  setCohost: set("isCohost"),
   setSpectator: set("isSpectator"),
   setReconnecting: set("isReconnecting"),
   setPlayerCount: set("playerCount"),

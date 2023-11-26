@@ -95,6 +95,10 @@ export default {
   justify-content: center;
   transition: border-color 250ms;
 
+  .cohost & {
+    cursor: default;
+  }
+
   &:hover .name .label {
     stroke: black;
     fill: white;

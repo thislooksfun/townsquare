@@ -4,6 +4,7 @@ class LiveSession {
     // this._wss = "ws://localhost:8081/"; // uncomment if using local server with NODE_ENV=development
     this._socket = null;
     this._isSpectator = true;
+    this._isCohost = false;
     this._gamestate = [];
     this._store = store;
     this._pingInterval = 30 * 1000; // 30 seconds between pings
@@ -83,7 +84,13 @@ class LiveSession {
    * @private
    */
   _onOpen() {
-    if (this._isSpectator) {
+    if (this._isCohost) {
+      this._sendDirect(
+        "host",
+        "registerCohost",
+        this._store.state.session.playerId
+      )
+    } else if (this._isSpectator) {
       this._sendDirect(
         "host",
         "getGamestate",
@@ -123,6 +130,7 @@ class LiveSession {
     } catch (err) {
       console.log("unsupported socket message", data);
     }
+    console.log(`Received command '${command}'`, {params});
     switch (command) {
       case "getGamestate":
         this.sendGamestate(params);
@@ -155,6 +163,12 @@ class LiveSession {
           );
         }
         this._store.commit("session/nomination", { nomination: params });
+        break;
+      case "registerCohost":
+        if (this._isSpectator) return;
+        console.log("Hi");
+        this._store.commit("cohosts/add", params);
+        this.sendFullGrim(params);
         break;
       case "swap":
         if (!this._isSpectator) return;
@@ -226,6 +240,7 @@ class LiveSession {
     this._store.commit("session/setPlayerCount", 0);
     this._store.commit("session/setPing", 0);
     this._isSpectator = this._store.state.session.isSpectator;
+    this._isCohost = this._store.state.session.isCohost;
     this._open(channel);
   }
 
@@ -248,27 +263,64 @@ class LiveSession {
   }
 
   /**
+   * Send the full grimoire state to all cohosts. ST only
+   */
+  updateCohosts() {
+    if (this._isSpectator) return;
+
+    for (const clientId of this._store.state.cohosts.cohosts) {
+      this.sendFullGrim(clientId);
+    }
+  }
+
+  /**
+   * Send the full grimoire state to the specified player
+   * @param {*} playerId
+   * @returns
+   */
+  sendFullGrim(playerId) {
+    if (this._isSpectator) return;
+    if (!playerId) return;
+
+    this.sendGamestate(playerId, true, true);
+  }
+
+  /**
    * Publish the current gamestate.
    * Optional param to reduce traffic. (send only player data)
    * @param playerId
    * @param isLightweight
    */
-  sendGamestate(playerId = "", isLightweight = false) {
+  sendGamestate(playerId = "", isLightweight = false, full = false) {
     if (this._isSpectator) return;
-    this._gamestate = this._store.state.players.players.map(player => ({
-      name: player.name,
-      id: player.id,
-      isDead: player.isDead,
-      isVoteless: player.isVoteless,
-      pronouns: player.pronouns,
-      ...(player.role && player.role.team === "traveler"
-        ? { roleId: player.role.id }
-        : {})
-    }));
+    this._gamestate = this._store.state.players.players.map(player => {
+      const state = {
+        name: player.name,
+        id: player.id,
+        isDead: player.isDead,
+        isVoteless: player.isVoteless,
+        pronouns: player.pronouns,
+      }
+
+      if (full) {
+        state.roleId = player.role?.id || '__unset__';
+        state.reminders = player.reminders
+      } else if (player.role && player.role.team === "traveler") {
+        state.roleId = player.role.id;
+      }
+
+      return state;
+    });
+
+    const bluffs = full ? {
+      bluffs: this._store.state.players.bluffs.map(b => b.id)
+    } : {}
+
     if (isLightweight) {
       this._sendDirect(playerId, "gs", {
         gamestate: this._gamestate,
-        isLightweight
+        isLightweight,
+        ...bluffs,
       });
     } else {
       const { session, grimoire } = this._store.state;
@@ -284,7 +336,8 @@ class LiveSession {
         isVoteInProgress: session.isVoteInProgress,
         markedPlayer: session.markedPlayer,
         fabled: fabled.map(f => (f.isCustom ? f : { id: f.id })),
-        ...(session.nomination ? { votes: session.votes } : {})
+        ...(session.nomination ? { votes: session.votes } : {}),
+        ...bluffs,
       });
     }
   }
@@ -297,6 +350,7 @@ class LiveSession {
   _updateGamestate(data) {
     if (!this._isSpectator) return;
     const {
+      bluffs,
       gamestate,
       isLightweight,
       isNight,
@@ -320,10 +374,24 @@ class LiveSession {
         this._store.commit("players/remove", x - 1);
       }
     }
+    if (bluffs) {
+      // Clear bluffs first.
+      this._store.commit("players/setBluff");
+
+      bluffs.forEach((roleId, index) => {
+        this._store.commit("players/setBluff", {
+          index,
+          role: this._getRole(roleId) || {}
+        });
+      });
+
+      console.log("Updated bluffs");
+      console.log(this._store.state.players.bluffs)
+    }
     // update status for each player
     gamestate.forEach((state, x) => {
       const player = players[x];
-      const { roleId } = state;
+      const { roleId, reminders } = state;
       // update relevant properties
       ["name", "id", "isDead", "isVoteless", "pronouns"].forEach(property => {
         const value = state[property];
@@ -332,10 +400,14 @@ class LiveSession {
         }
       });
       // roles are special, because of travelers
-      if (roleId && player.role.id !== roleId) {
-        const role =
-          this._store.state.roles.get(roleId) ||
-          this._store.getters.rolesJSONbyId.get(roleId);
+      if (roleId === '__unset__') {
+        this._store.commit("players/update", {
+          player,
+          property: "role",
+          value: {}
+        });
+      } else if (roleId && player.role.id !== roleId) {
+        const role = this._getRole(roleId);
         if (role) {
           this._store.commit("players/update", {
             player,
@@ -349,6 +421,14 @@ class LiveSession {
           property: "role",
           value: {}
         });
+      }
+
+      if (reminders) {
+        this._store.commit("players/update", {
+          player,
+          property: "reminders",
+          value: reminders
+        })
       }
     });
     if (!isLightweight) {
@@ -604,6 +684,7 @@ class LiveSession {
       "session/setPlayerCount",
       Object.keys(this._players).length
     );
+    this._store.commit("cohosts/remove", playerId);
   }
 
   /**
@@ -834,6 +915,11 @@ class LiveSession {
     if (this._isSpectator) return;
     this._send("remove", payload);
   }
+
+  _getRole(roleId) {
+    return this._store.state.roles.get(roleId) ||
+      this._store.getters.rolesJSONbyId.get(roleId);
+  }
 }
 
 export default store => {
@@ -906,6 +992,7 @@ export default store => {
       case "players/clear":
       case "players/add":
         session.sendGamestate("", true);
+        session.updateCohosts();
         break;
       case "players/update":
         if (payload.property === "pronouns") {
@@ -913,7 +1000,10 @@ export default store => {
         } else {
           session.sendPlayer(payload);
         }
+        session.updateCohosts();
         break;
+      case "players/setBluff":
+        session.updateCohosts();
     }
   });
 
