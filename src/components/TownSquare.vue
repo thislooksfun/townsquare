@@ -4,6 +4,7 @@
     class="square"
     :class="{
       smolBluffs: grimoire.smolBluffs,
+      teamColors: grimoire.teamColors,
       public: grimoire.isPublic,
       cohost: session.isCohost,
       spectator: session.isSpectator,

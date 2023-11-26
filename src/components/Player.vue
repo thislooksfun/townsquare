@@ -642,6 +642,10 @@ li.move:not(.from) .player .overlay svg.move {
   .player.you.#{$name} .token {
     animation: #{$name}-glow 5s ease-in-out infinite;
   }
+
+  .teamColors .player.#{$name} .token {
+    box-shadow: 0 0 10px $color, 0 0 10px $color;
+  }
 }
 
 @include glow("townsfolk", $townsfolk);

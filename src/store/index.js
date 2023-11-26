@@ -108,6 +108,7 @@ export default new Vuex.Store({
       isMuted: false,
       isImageOptIn: false,
       smolBluffs: false,
+      teamColors: false,
       zoom: 0,
       background: ""
     },
@@ -171,6 +172,7 @@ export default new Vuex.Store({
     toggleMenu: toggle("isMenuOpen"),
     toggleNightOrder: toggle("isNightOrder"),
     toggleSmolBluffs: toggle("smolBluffs"),
+    toggleTeamColors: toggle("teamColors"),
     toggleStatic: toggle("isStatic"),
     toggleNight: toggle("isNight"),
     toggleGrimoire: toggle("isPublic"),

@@ -123,6 +123,13 @@
                 :icon="['fas', grimoire.smolBluffs ? 'expand-alt' : 'compress-alt']"
             /></em>
           </li>
+          <li @click="toggleTeamColors">
+            Team colors
+            <em
+              ><font-awesome-icon
+                :icon="['fas', grimoire.teamColors ? 'check-square' : 'square']"
+            /></em>
+          </li>
         </template>
 
         <template v-if="tab === 'session'">
@@ -387,6 +394,7 @@ export default {
       "toggleImageOptIn",
       "toggleMuted",
       "toggleNightOrder",
+      "toggleTeamColors",
       "toggleSmolBluffs",
       "toggleStatic",
       "setZoom",

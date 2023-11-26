@@ -17,6 +17,9 @@ module.exports = store => {
   if (localStorage.getItem("static")) {
     store.commit("toggleStatic", true);
   }
+  if (localStorage.getItem("teamColors")) {
+    store.commit("toggleTeamColors", true);
+  }
   if (localStorage.getItem("imageOptIn")) {
     store.commit("toggleImageOptIn", true);
   }
@@ -113,6 +116,13 @@ module.exports = store => {
           localStorage.setItem("static", 1);
         } else {
           localStorage.removeItem("static");
+        }
+        break;
+      case "toggleTeamColors":
+        if (state.grimoire.teamColors) {
+          localStorage.setItem("teamColors", 1);
+        } else {
+          localStorage.removeItem("teamColors");
         }
         break;
       case "toggleImageOptIn":
