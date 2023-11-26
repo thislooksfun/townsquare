@@ -41,13 +41,13 @@ you could use [pm2](https://pm2.keymetrics.io/) with the provided `ecosystem.con
 ### Allowing access from different domains
 
 Currently the backend server only accepts connections coming from
-pages hosted on github.io or localhost. If you want to use your own
+[botc.thislooks.fun](https://botc.thislooks.fun). If you want to use your own
 domain for the page, make sure to adjust the domain whitelist pattern
 around line 15 in the `index.js`:
 
 ```ecmascript 6
   verifyClient: info =>
     !!info.origin.match(
-      /^https?:\/\/([^.]+\.github\.io|localhost|live\.clocktower\.online|eddbra1nprivatetownsquare\.xyz)/i
+      /^https?:\/\/your\.custom\.domain/i
     )
 ```

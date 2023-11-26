@@ -215,7 +215,7 @@
 ---
 
 ## Version 2.0.0
-- The project is now available under its own domain: [clocktower.online](https://clocktower.online)
+- The project is now available under its own domain: [botc.thislooks.fun](https://botc.thislooks.fun)
 - Added a feature that allows a live session Storyteller to automatically (and safely) distribute assigned
   characters to all players that have claimed a seat, eliminating the need to manually tell every player their role
 - Visible "night phase" that can be toggled by the Storyteller

@@ -14,18 +14,21 @@ const PING_INTERVAL = 30000; // 30 seconds
 
 const options = {};
 
-if (process.env.NODE_ENV !== "development") {
+const isProd = process.env.NODE_ENV === "production";
+
+if (isProd) {
   options.cert = fs.readFileSync("cert.pem");
   options.key = fs.readFileSync("key.pem");
 }
 
 const server = https.createServer(options);
 const wss = new WebSocket.Server({
-  ...(process.env.NODE_ENV === "development" ? { port: 8081 } : { server }),
+  ...(isProd ? { server } : { port: 8081 }),
   verifyClient: info =>
+    isProd &&
     info.origin &&
     !!info.origin.match(
-      /^https?:\/\/([^.]+\.github\.io|localhost|clocktower\.online|eddbra1nprivatetownsquare\.xyz)/i
+      /^https:\/\/botc\.thislooks\.fun/i
     )
 });
 
@@ -104,7 +107,7 @@ for (let metric in metrics) {
 
 // a new client connects
 wss.on("connection", function connection(ws, req) {
-  // url pattern: clocktower.online/<channel>/<playerId|host>
+  // url pattern: botc.thislooks.fun/<channel>/<playerId|host>
   const url = req.url.toLocaleLowerCase().split("/");
   ws.playerId = url.pop();
   ws.channel = url.pop();
@@ -250,7 +253,7 @@ wss.on("close", function close() {
 });
 
 // prod mode with stats API
-if (process.env.NODE_ENV !== "development") {
+if (isProd) {
   console.log("server starting");
   server.listen(8080);
   server.on("request", (req, res) => {
