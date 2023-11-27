@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.1.0](https://github.com/thislooksfun/townsquare/compare/v3.0.1...v3.1.0) (2023-11-27)
+
+
+### Features
+
+* add a health check endpoint ([562db75](https://github.com/thislooksfun/townsquare/commit/562db756280f9bbea1fdf6bf1b53cf18aa91e2b1))
+
+
+### Bug Fixes
+
+* use http server, not https ([fc4aa39](https://github.com/thislooksfun/townsquare/commit/fc4aa3974b131b3115680d7b4864766c6ce496b9))
+
 ## [3.0.1](https://github.com/thislooksfun/townsquare/compare/v3.0.0...v3.0.1) (2023-11-27)
 
 
