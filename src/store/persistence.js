@@ -68,9 +68,6 @@ module.exports = (store) => {
       })),
     );
   }
-  if (localStorage.cohosts) {
-    store.commit("cohosts/set", JSON.parse(localStorage.cohosts));
-  }
   /**** Session related data *****/
   if (localStorage.getItem("playerId")) {
     store.commit("session/setPlayerId", localStorage.getItem("playerId"));
@@ -200,18 +197,6 @@ module.exports = (store) => {
           );
         } else {
           localStorage.removeItem("players");
-        }
-        break;
-      case "cohosts/add":
-      case "cohosts/remove":
-        console.log("Cohosts updated!", state.cohosts.cohosts);
-        if (state.cohosts.cohosts.length) {
-          localStorage.setItem(
-            "cohosts",
-            JSON.stringify(state.cohosts.cohosts),
-          );
-        } else {
-          localStorage.removeItem("cohosts");
         }
         break;
       case "session/setSessionId":
