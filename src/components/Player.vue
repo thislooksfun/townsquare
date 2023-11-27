@@ -256,6 +256,11 @@ export default {
     },
     alignmentMismatch: function () {
       if (!this.player.role.id) return null;
+
+      if (this.player.role.team === "traveler") {
+        return this.alignment === "alignmentUnknown";
+      }
+
       return alignmentMap[this.player.role.team] !== this.alignment;
     },
     team: function () {
@@ -606,6 +611,7 @@ export default {
 
 @include mismatchColor("alignment", "good", $townsfolk);
 @include mismatchColor("alignment", "evil", $demon);
+@include mismatchColor("alignment", "traveler", $traveler);
 
 @include mismatchColor("team", "townsfolk", $townsfolk);
 @include mismatchColor("team", "outsider", $outsider);
