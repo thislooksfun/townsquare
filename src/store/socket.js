@@ -135,6 +135,9 @@ class LiveSession {
       case "getGamestate":
         this.sendGamestate(params);
         break;
+      case "newGame":
+        this._newGame();
+        break;
       case "edition":
         this._updateEdition(params);
         break;
@@ -444,6 +447,11 @@ class LiveSession {
     }
   }
 
+  newGame() {
+    if (this._isSpectator) return;
+    this._send("newGame");
+  }
+
   /**
    * Publish an edition update. ST only
    * @param playerId
@@ -696,6 +704,17 @@ class LiveSession {
     }
   }
 
+  /** Prompt the player to clear their board. */
+  _newGame() {
+    if (this._isCohost) return;
+
+    const prompt =
+      "A new game is starting! Would you like to clear your roles?";
+    if (confirm(prompt)) {
+      this._store.dispatch("players/clearRoles");
+    }
+  }
+
   /**
    * Update a player id associated with that seat.
    * @param index seat index or -1
@@ -923,6 +942,15 @@ class LiveSession {
 export default (store) => {
   // setup
   const session = new LiveSession(store);
+
+  // listen to actions
+  store.subscribeAction(({ type }) => {
+    switch (type) {
+      case "newGame":
+        session.newGame();
+        break;
+    }
+  });
 
   // listen to mutations
   store.subscribe(({ type, payload }, state) => {

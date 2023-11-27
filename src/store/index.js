@@ -170,6 +170,13 @@ export default new Vuex.Store({
     },
     rolesJSONbyId: () => rolesJSONbyId,
   },
+  actions: {
+    newGame({ state, dispatch, commit }) {
+      if (state.session.isSpectator) return;
+      dispatch("players/clearRoles");
+      commit("toggleModal", "roles");
+    },
+  },
   mutations: {
     setZoom: set("zoom"),
     setBackground: set("background"),
