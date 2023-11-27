@@ -1,4 +1,23 @@
-# Release Notes
+# Changelog
+
+## [3.0.0](https://github.com/thislooksfun/townsquare/compare/fb40d98fd66415d67b3d0f9b87a7e4c8a56cfe1b...v3.0.0) (2023-11-27)
+
+This is a big release to rework some features the way I want them and add some missing stuff as well.
+The major version bump is to differentiate my changes from those in the base project.
+
+### Features
+
+- Co-host support. This allows people to join the game as a co-host rather than a player. Co-hosts will see an exact copy of the host's grimoire, and will not be able to edit anything.
+- Add an option to make the "Demon bluffs" / "Other characters" display smaller
+- Add an option to show team (townsfolk/outsider/minion/demon) colors for all players
+- Add an option to show a warning if a player's team/character doesn't match their character token (i.e. Good/Evil/Drunk tokens)
+- Make pronouns always visible
+
+### Bug Fixes
+
+- Reduce the size of the shroud toggle click target
+
+---
 
 ### Version 2.16.2
 - fixed custom script format to support new script tool JSON
