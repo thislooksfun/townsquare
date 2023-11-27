@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.0.1](https://github.com/thislooksfun/townsquare/compare/v3.0.0...v3.0.1) (2023-11-27)
+
+
+### Bug Fixes
+
+* better character display on narrow windows ([79e14a4](https://github.com/thislooksfun/townsquare/commit/79e14a4cd8a8874e60cc4bead7bc93d1208c63c6))
+* change default voting speed to 1s ([9d491cc](https://github.com/thislooksfun/townsquare/commit/9d491ccccb8d70d133c65be0407562452bf61f97))
+* scale warning triangle with token size ([f81fe3e](https://github.com/thislooksfun/townsquare/commit/f81fe3ea842dd3cd1ac3ebd6eb29bac5dbbf93fc))
+* special-case traveler warning ([2af80ca](https://github.com/thislooksfun/townsquare/commit/2af80cae1d073971303a7f5ca3d30c1dff84169e))
+
 ## [3.0.0](https://github.com/thislooksfun/townsquare/compare/fb40d98fd66415d67b3d0f9b87a7e4c8a56cfe1b...v3.0.0) (2023-11-27)
 
 This is a big release to rework some features the way I want them and add some missing stuff as well.
