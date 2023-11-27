@@ -3,6 +3,7 @@
   "version": "3.0.0",
   "description": "Blood on the Clocktower Town Square",
   "author": "Steffen Baumgart",
+  "private": true,
   "scripts": {
     "start": "node server/index.js",
     "serve": "vue-cli-service serve",
