@@ -18,9 +18,9 @@ jobs:
 
       - name: Checkout 🛎️
         if: ${{ steps.release.outputs.release_created }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         if: ${{ steps.release.outputs.release_created }}
         with:
           node-version: '18'
@@ -33,7 +33,7 @@ jobs:
 
       - name: Deploy 🚀
         if: ${{ steps.release.outputs.release_created }}
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: dist
