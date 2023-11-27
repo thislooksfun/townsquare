@@ -15,7 +15,6 @@ jobs:
         with:
           release-type: node
           package-name: townsquare
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
 
       - name: Checkout 🛎️
         if: ${{ steps.release.outputs.release_created }}
