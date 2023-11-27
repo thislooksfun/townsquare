@@ -1,26 +1,38 @@
-name: Deploy to GitHub Pages
+name: Version and release
+
 on:
   push:
     branches:
-      - main
+      - develop
+
 jobs:
   build-and-deploy:
     concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
+      - id: release
+        uses: google-github-actions/release-please-action@v3
+        with:
+          release-type: node
+          package-name: townsquare
+
       - name: Checkout 🛎️
+        if: ${{ steps.release.outputs.release_created }}
         uses: actions/checkout@v2
 
       - uses: actions/setup-node@v2
+        if: ${{ steps.release.outputs.release_created }}
         with:
           node-version: '18'
 
       - name: Install and Build 🔧
+        if: ${{ steps.release.outputs.release_created }}
         run: |
           npm ci
           npm run build
 
       - name: Deploy 🚀
+        if: ${{ steps.release.outputs.release_created }}
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
