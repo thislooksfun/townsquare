@@ -1,5 +1,5 @@
 const fs = require("fs");
-const https = require("https");
+const http = require("http");
 const WebSocket = require("ws");
 const client = require("prom-client");
 
@@ -16,12 +16,7 @@ const options = {};
 
 const isProd = process.env.NODE_ENV === "production";
 
-if (isProd) {
-  options.cert = fs.readFileSync("cert.pem");
-  options.key = fs.readFileSync("key.pem");
-}
-
-const server = https.createServer(options);
+const server = http.createServer(options);
 const wss = new WebSocket.Server({
   ...(isProd ? { server } : { port: 8081 }),
   verifyClient: info =>
