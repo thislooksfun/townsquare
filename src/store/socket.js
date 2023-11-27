@@ -166,7 +166,6 @@ class LiveSession {
         break;
       case "registerCohost":
         if (this._isSpectator) return;
-        console.log("Hi");
         this._store.commit("cohosts/add", params);
         this.sendFullGrim(params);
         break;
@@ -384,9 +383,6 @@ class LiveSession {
           role: this._getRole(roleId) || {},
         });
       });
-
-      console.log("Updated bluffs");
-      console.log(this._store.state.players.bluffs);
     }
     // update status for each player
     gamestate.forEach((state, x) => {
