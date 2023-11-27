@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.1](https://github.com/thislooksfun/townsquare/compare/v3.1.0...v3.1.1) (2023-11-27)
+
+
+### Bug Fixes
+
+* point websocket to correct location ([c4fb1ee](https://github.com/thislooksfun/townsquare/commit/c4fb1ee8301b9db8eaf74b79880ffefb30d55ccb))
+
 ## [3.1.0](https://github.com/thislooksfun/townsquare/compare/v3.0.1...v3.1.0) (2023-11-27)
 
 
