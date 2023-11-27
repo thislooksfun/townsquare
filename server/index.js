@@ -253,6 +253,13 @@ if (isProd) {
   console.log("server starting");
   server.listen(8080);
   server.on("request", (req, res) => {
+    console.log(req.method, req.url);
+    if (req.url === "/health") {
+      res.writeHead(200);
+      res.end("OK");
+      return;
+    }
+
     res.setHeader("Content-Type", register.contentType);
     register.metrics().then(out => res.end(out));
   });
