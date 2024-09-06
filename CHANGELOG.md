@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.2.0](https://github.com/thislooksfun/townsquare/compare/v3.1.1...v3.2.0) (2024-09-06)
+
+
+### Features
+
+* add a "New Game" button ([3a7f937](https://github.com/thislooksfun/townsquare/commit/3a7f93760486c2af9560de83255052a3deed88dc))
+
+
+### Bug Fixes
+
+* don't persist cohosts ([48200ea](https://github.com/thislooksfun/townsquare/commit/48200ead2a988ca80d352520b4a9e934f0ea9454))
+
 ## [3.1.1](https://github.com/thislooksfun/townsquare/compare/v3.1.0...v3.1.1) (2023-11-27)
 
 
