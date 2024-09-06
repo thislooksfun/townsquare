@@ -7,7 +7,7 @@ const client = require("prom-client");
 const register = new client.Registry();
 // Add a default label which is added to all metrics
 register.setDefaultLabels({
-  app: "clocktower-online"
+  app: "clocktower-online",
 });
 
 const PING_INTERVAL = 30000; // 30 seconds
@@ -19,13 +19,9 @@ const isProd = process.env.NODE_ENV === "production";
 const server = http.createServer(options);
 const wss = new WebSocket.Server({
   ...(isProd ? { server } : { port: 8081 }),
-  verifyClient: info =>
-    !isProd || (
-      info.origin &&
-      !!info.origin.match(
-        /^https:\/\/botc\.thislooks\.fun/i
-      )
-    )
+  verifyClient: (info) =>
+    !isProd ||
+    (info.origin && !!info.origin.match(/^https:\/\/botc\.thislooks\.fun/i)),
 });
 
 function noop() {}
@@ -47,14 +43,14 @@ const metrics = {
     help: "Concurrent Players",
     collect() {
       this.set(wss.clients.size);
-    }
+    },
   }),
   channels_concurrent: new client.Gauge({
     name: "channels_concurrent",
     help: "Concurrent Channels",
     collect() {
       this.set(Object.keys(channels).length);
-    }
+    },
   }),
   channels_list: new client.Gauge({
     name: "channel_players",
@@ -65,35 +61,35 @@ const metrics = {
         this.set(
           { name: channel },
           channels[channel].filter(
-            ws =>
+            (ws) =>
               ws &&
               (ws.readyState === WebSocket.OPEN ||
                 ws.readyState === WebSocket.CONNECTING)
           ).length
         );
       }
-    }
+    },
   }),
   messages_incoming: new client.Counter({
     name: "messages_incoming",
-    help: "Incoming messages"
+    help: "Incoming messages",
   }),
   messages_outgoing: new client.Counter({
     name: "messages_outgoing",
-    help: "Outgoing messages"
+    help: "Outgoing messages",
   }),
   connection_terminated_host: new client.Counter({
     name: "connection_terminated_host",
-    help: "Terminated connection due to host already present"
+    help: "Terminated connection due to host already present",
   }),
   connection_terminated_spam: new client.Counter({
     name: "connection_terminated_spam",
-    help: "Terminated connection due to message spam"
+    help: "Terminated connection due to message spam",
   }),
   connection_terminated_timeout: new client.Counter({
     name: "connection_terminated_timeout",
-    help: "Terminated connection due to timeout"
-  })
+    help: "Terminated connection due to timeout",
+  }),
 };
 
 // register metrics
@@ -112,7 +108,7 @@ wss.on("connection", function connection(ws, req) {
     ws.playerId === "host" &&
     channels[ws.channel] &&
     channels[ws.channel].some(
-      client =>
+      (client) =>
         client !== ws &&
         client.readyState === WebSocket.OPEN &&
         client.playerId === "host"
@@ -148,11 +144,7 @@ wss.on("connection", function connection(ws, req) {
       metrics.connection_terminated_spam.inc();
       return;
     }
-    const messageType = data
-      .toLocaleLowerCase()
-      .substr(1)
-      .split(",", 1)
-      .pop();
+    const messageType = data.toLocaleLowerCase().substr(1).split(",", 1).pop();
     switch (messageType) {
       case '"ping"':
         // ping messages will only be sent host -> all or all -> host
@@ -231,7 +223,7 @@ const interval = setInterval(function ping() {
     if (
       !channels[channel].length ||
       !channels[channel].some(
-        ws =>
+        (ws) =>
           ws &&
           (ws.readyState === WebSocket.OPEN ||
             ws.readyState === WebSocket.CONNECTING)
@@ -261,6 +253,6 @@ if (isProd) {
     }
 
     res.setHeader("Content-Type", register.contentType);
-    register.metrics().then(out => res.end(out));
+    register.metrics().then((out) => res.end(out));
   });
 }
