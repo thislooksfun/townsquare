@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const http = require("http");
 const WebSocket = require("ws");
 const client = require("prom-client");
@@ -249,6 +250,17 @@ if (isProd) {
     if (req.url === "/health") {
       res.writeHead(200);
       res.end("OK");
+      return;
+    }
+
+    if (req.url === "/robots.txt") {
+      const filePath = path.resolve(__dirname, "../public/robots.txt");
+      const stat = fs.statSync(filePath);
+      res.writeHead(200, {
+        "content-type": "text/plain",
+        "content-length": stat.size,
+      });
+      fs.createReadStream(filePath).pipe(res);
       return;
     }
 

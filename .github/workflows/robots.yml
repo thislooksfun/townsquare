@@ -1,0 +1,19 @@
+name: Update robots.txt
+
+on:
+  schedule:
+    # Run at at 03:45 and 15:45 utc
+    - cron: "45 3,15 * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  robots:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update robots.txt
+        uses: thislooksfun/anti-ai-robots@v1
+        with:
+          path: public/robots.txt
