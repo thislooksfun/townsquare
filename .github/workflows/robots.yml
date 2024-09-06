@@ -17,3 +17,4 @@ jobs:
         uses: thislooksfun/anti-ai-robots@v1
         with:
           path: public/robots.txt
+          commit-message: "fix: update robots.txt"
