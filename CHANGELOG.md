@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.4](https://github.com/thislooksfun/townsquare/compare/v3.2.3...v3.2.4) (2024-09-07)
+
+
+### Bug Fixes
+
+* use correctly scoped container name ([b003c3c](https://github.com/thislooksfun/townsquare/commit/b003c3cfc74680af29eb9f493e22bd7a940926a7))
+
 ## [3.2.3](https://github.com/thislooksfun/townsquare/compare/v3.2.2...v3.2.3) (2024-09-07)
 
 
