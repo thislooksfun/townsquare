@@ -5,10 +5,13 @@ on:
     branches:
       - develop
 
+concurrency: ci-${{ github.ref }}
+
 jobs:
-  build-and-deploy:
-    concurrency: ci-${{ github.ref }}
+  release:
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
     steps:
       - id: release
         uses: google-github-actions/release-please-action@v3
@@ -16,24 +19,70 @@ jobs:
           release-type: node
           package-name: townsquare
 
-      - name: Checkout 🛎️
-        if: ${{ steps.release.outputs.release_created }}
-        uses: actions/checkout@v4
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    needs: release
+    if: ${{ needs.release.outputs.release_created }}
+    steps:
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
-        if: ${{ steps.release.outputs.release_created }}
         with:
           node-version-file: .nvmrc
 
       - name: Install and Build 🔧
-        if: ${{ steps.release.outputs.release_created }}
         run: |
           npm ci
           npm run build
 
       - name: Deploy 🚀
-        if: ${{ steps.release.outputs.release_created }}
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: dist
+
+  deploy-server:
+    runs-on: ubuntu-latest
+    needs: release
+    if: ${{ needs.release.outputs.release_created }}
+    env:
+      REGISTRY: ghcr.io
+      IMAGE_NAME: townsquare-socket
+      PROJECT_ID: townsquare
+      SERVICE_ID: sockets
+      CREDENTIALS_ID: github
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./server/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            NODE_VERSION=$(cat .nvmrc | tr -cd '[:digit:]'.)
+
+      - name: Deploy to Northflank
+        uses: northflank/deploy-to-northflank@v1
+        with:
+          northflank-api-key: ${{ secrets.NORTHFLANK_API_KEY }}
+          project-id: ${{ env.PROJECT_ID }}
+          service-id: ${{ env.SERVICE_ID }}
+          image-path: ${{ steps.meta.outputs.tags }}
+          credentials-id: ${{ env.CREDENTIALS_ID }}
