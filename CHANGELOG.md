@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.2.1](https://github.com/thislooksfun/townsquare/compare/v3.2.0...v3.2.1) (2024-09-07)
+
+
+### Bug Fixes
+
+* deny all crawlers access to the socket server ([c344489](https://github.com/thislooksfun/townsquare/commit/c344489837f0d1addd065826a2a050ae73dbe7ae))
+* update robots.txt ([d84d224](https://github.com/thislooksfun/townsquare/commit/d84d224ecf4c387700a126dfc5abed8f8338abf0))
+
 ## [3.2.0](https://github.com/thislooksfun/townsquare/compare/v3.1.1...v3.2.0) (2024-09-06)
 
 
