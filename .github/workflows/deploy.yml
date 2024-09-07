@@ -66,6 +66,12 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: Get target node version
+        id: node_version
+        run: |
+          version=$(cat .nvmrc | tr -cd '[:digit:]'.)
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
@@ -75,7 +81,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            NODE_VERSION=$(cat .nvmrc | tr -cd '[:digit:]'.)
+            NODE_VERSION=${{ steps.node_version.outputs.version }}
 
       - name: Deploy to Northflank
         uses: northflank/deploy-to-northflank@v1
