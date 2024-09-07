@@ -708,8 +708,7 @@ class LiveSession {
   _newGame() {
     if (this._isCohost) return;
 
-    const prompt =
-      "A new game is starting! Would you like to clear your roles?";
+    const prompt = "A new game is starting! Press OK to clear your board.";
     if (confirm(prompt)) {
       this._store.dispatch("players/clearRoles");
     }
