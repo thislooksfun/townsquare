@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.2](https://github.com/thislooksfun/townsquare/compare/v3.2.1...v3.2.2) (2024-09-07)
+
+
+### Bug Fixes
+
+* update release-please action to v4 ([1f4412a](https://github.com/thislooksfun/townsquare/commit/1f4412aea1d506102681157099573f4edbc22fe5))
+
 ## [3.2.1](https://github.com/thislooksfun/townsquare/compare/v3.2.0...v3.2.1) (2024-09-07)
 
 
