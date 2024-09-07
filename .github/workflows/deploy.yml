@@ -50,6 +50,7 @@ jobs:
       PROJECT_ID: townsquare
       SERVICE_ID: sockets
       CREDENTIALS_ID: github
+    environment: sockets
     steps:
       - uses: actions/checkout@v4
 
