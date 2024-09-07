@@ -46,7 +46,7 @@ jobs:
     if: ${{ needs.release.outputs.release_created }}
     env:
       REGISTRY: ghcr.io
-      IMAGE_NAME: townsquare-socket
+      IMAGE_NAME: ${{ github.repository }}-socket
       PROJECT_ID: townsquare
       SERVICE_ID: sockets
       CREDENTIALS_ID: github
