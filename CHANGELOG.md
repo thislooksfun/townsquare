@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.3](https://github.com/thislooksfun/townsquare/compare/v3.2.2...v3.2.3) (2024-09-07)
+
+
+### Bug Fixes
+
+* read node version correctly ([47fad3b](https://github.com/thislooksfun/townsquare/commit/47fad3b51d8f499791db550e9c75c14237787c2a))
+
 ## [3.2.2](https://github.com/thislooksfun/townsquare/compare/v3.2.1...v3.2.2) (2024-09-07)
 
 
