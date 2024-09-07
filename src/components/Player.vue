@@ -114,7 +114,12 @@
       <div class="marked">
         <font-awesome-icon icon="skull" />
       </div>
-      <div class="info" @click="toggleMenu" :class="{ active: isMenuOpen }">
+      <div
+        class="info"
+        ref="menuBtn"
+        @click="openMenu"
+        :class="{ active: isMenuOpen }"
+      >
         <span class="name">{{ player.name }}</span>
         <span v-if="player.pronouns" class="pronouns">{{
           player.pronouns
@@ -122,7 +127,7 @@
       </div>
 
       <transition name="fold">
-        <ul class="menu" v-if="isMenuOpen">
+        <ul class="menu" v-if="isMenuOpen" v-on-click-outside="menuClickConfig">
           <li
             @click="changePronouns"
             v-if="
@@ -217,6 +222,7 @@
 <script>
 import Token from "./Token";
 import { mapGetters, mapState } from "vuex";
+import { vOnClickOutside } from "@vueuse/components";
 
 const alignmentMap = {
   townsfolk: "good",
@@ -228,6 +234,9 @@ const alignmentMap = {
 export default {
   components: {
     Token,
+  },
+  directives: {
+    onClickOutside: vOnClickOutside,
   },
   props: {
     player: {
@@ -262,6 +271,9 @@ export default {
       }
 
       return alignmentMap[this.player.role.team] !== this.alignment;
+    },
+    menuClickConfig: function () {
+      return [() => this.closeMenu(), { ignore: [this.$refs.menuBtn] }];
     },
     team: function () {
       if (!this.player.role.id) return null;
@@ -336,9 +348,12 @@ export default {
         }
       }
     },
-    toggleMenu() {
+    openMenu() {
       if (this.session.isCohost) return;
-      this.isMenuOpen = !this.isMenuOpen;
+      this.isMenuOpen = true;
+    },
+    closeMenu() {
+      this.isMenuOpen = false;
     },
     changeName() {
       if (this.session.isSpectator) return;

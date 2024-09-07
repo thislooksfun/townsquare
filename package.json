@@ -18,6 +18,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "@vue/cli-service": "^5.0.8",
+    "@vueuse/components": "^11.0.3",
+    "@vueuse/core": "^11.0.3",
     "prom-client": "^13.0.0",
     "sass": "^1.30.0",
     "sass-loader": "^8.0.2",
