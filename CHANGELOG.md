@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.3.0](https://github.com/thislooksfun/townsquare/compare/v3.2.4...v3.3.0) (2024-09-09)
+
+
+### Features
+
+* close player menu on click outside ([ceb5e0e](https://github.com/thislooksfun/townsquare/commit/ceb5e0e8caca3be949d05ec699057255f87cd1d0))
+
+
+### Bug Fixes
+
+* improve new game prompt ([5af684e](https://github.com/thislooksfun/townsquare/commit/5af684e9e445106c19faaf3b066a9d23fd930e05))
+* update robots.txt ([febbf7a](https://github.com/thislooksfun/townsquare/commit/febbf7a4d64df8a475d5c023b29e401c27082eb0))
+
 ## [3.2.4](https://github.com/thislooksfun/townsquare/compare/v3.2.3...v3.2.4) (2024-09-07)
 
 
