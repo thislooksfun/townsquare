@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.4](https://github.com/thislooksfun/townsquare/compare/v3.3.3...v3.3.4) (2024-10-19)
+
+
+### Bug Fixes
+
+* update robots.txt ([60895dd](https://github.com/thislooksfun/townsquare/commit/60895dde05da835c8f3a7513e28f9d726172e2b1))
+
 ## [3.3.3](https://github.com/thislooksfun/townsquare/compare/v3.3.2...v3.3.3) (2024-10-01)
 
 
