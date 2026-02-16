@@ -106,7 +106,7 @@ export default new Vuex.Store({
     grimoire: {
       isNight: false,
       isNightOrder: true,
-      isPublic: true,
+      isPublic: false,
       isMenuOpen: false,
       isStatic: false,
       isMuted: false,
