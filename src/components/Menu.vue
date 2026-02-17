@@ -1,6 +1,22 @@
 <template>
   <div id="controls">
     <span
+      class="whoami"
+      :class="{
+        standalone: !session.sessionId,
+        cohost: session.isCohost,
+        spectator: session.isSpectator,
+      }"
+    >
+      {{
+        session.isCohost
+          ? "Cohost"
+          : session.isSpectator
+          ? "Player"
+          : "Storyteller"
+      }}
+    </span>
+    <span
       class="nomlog-summary"
       v-show="session.voteHistory.length && session.sessionId"
       @click="toggleModal('voteHistory')"
@@ -468,6 +484,32 @@ export default {
     display: inline-block;
     cursor: pointer;
     z-index: 5;
+  }
+
+  span.whoami {
+    display: inline-block;
+    margin: 0;
+    padding: 4px 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    border: 3px solid black;
+    box-shadow: 0 0 5px black;
+    font-size: 0.75em;
+    line-height: 0.75em;
+    cursor: default;
+
+    color: $demon;
+    &.spectator {
+      // color: $townsfolk;
+      display: none !important;
+    }
+    &.cohost {
+      color: $traveler;
+    }
+
+    &.standalone {
+      display: none !important;
+    }
   }
 
   span.nomlog-summary {
