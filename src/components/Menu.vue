@@ -12,11 +12,10 @@
       {{ session.voteHistory.length }}
     </span>
     <span
-      class="session"
+      class="connection"
       :class="{
-        cohost: session.isCohost,
-        spectator: session.isSpectator,
-        reconnecting: session.isReconnecting,
+        connecting: session.isConnecting,
+        error: session.connectionErrored,
       }"
       v-if="session.sessionId"
       @click="leaveSession"
@@ -470,16 +469,14 @@ export default {
     color: $townsfolk;
   }
 
-  span.session {
-    color: $demon;
-    &.spectator {
+  span.connection {
+    color: $success;
+    &.connecting {
       color: $townsfolk;
-    }
-    &.cohost {
-      color: $traveler;
-    }
-    &.reconnecting {
       animation: blink 1s infinite;
+    }
+    &.error {
+      color: $demon;
     }
   }
 }

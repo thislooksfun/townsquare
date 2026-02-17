@@ -25,6 +25,7 @@ class LiveSession {
    */
   _open(channel) {
     this.disconnect();
+    this._store.commit("session/setConnecting", true);
     this._socket = new WebSocket(
       this._wss +
         channel +
@@ -32,6 +33,10 @@ class LiveSession {
         (this._isSpectator ? this._store.state.session.playerId : "host"),
     );
     this._socket.addEventListener("message", this._handleMessage.bind(this));
+    this._socket.onerror = () => {
+      this._store.commit("session/setConnecting", false);
+      this._store.commit("session/setConnectionErrored", true);
+    };
     this._socket.onopen = this._onOpen.bind(this);
     this._socket.onclose = (err) => {
       this._socket = null;
@@ -39,7 +44,7 @@ class LiveSession {
       this._pingTimer = null;
       if (err.code !== 1000) {
         // connection interrupted, reconnect after 3 seconds
-        this._store.commit("session/setReconnecting", true);
+        this._store.commit("session/setConnecting", true);
         this._reconnectTimer = setTimeout(
           () => this.connect(channel),
           3 * 1000,
@@ -84,6 +89,8 @@ class LiveSession {
    * @private
    */
   _onOpen() {
+    this._store.commit("session/setConnecting", false);
+    this._store.commit("session/setConnectionErrored", false);
     if (this._isCohost) {
       this._sendDirect(
         "host",
@@ -251,7 +258,7 @@ class LiveSession {
     this._pings = {};
     this._store.commit("session/setPlayerCount", 0);
     this._store.commit("session/setPing", 0);
-    this._store.commit("session/setReconnecting", false);
+    this._store.commit("session/setConnecting", false);
     clearTimeout(this._reconnectTimer);
     if (this._socket) {
       if (this._isSpectator) {
