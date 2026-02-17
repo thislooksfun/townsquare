@@ -27,8 +27,11 @@
       {{ session.playerCount }}
     </span>
     <div class="menu" :class="{ open: grimoire.isMenuOpen }">
-      <font-awesome-icon icon="cog" @click="toggleMenu" />
-      <ul>
+      <font-awesome-icon
+        :icon="grimoire.isMenuOpen ? 'times' : 'cog'"
+        @click="toggleMenu"
+      />
+      <ul v-show="grimoire.isMenuOpen">
         <li class="tabs" :class="tab">
           <font-awesome-icon icon="book-open" @click="tab = 'grimoire'" />
           <font-awesome-icon icon="broadcast-tower" @click="tab = 'session'" />
@@ -442,12 +445,16 @@ export default {
 
 // Controls
 #controls {
+  height: 40px;
   position: absolute;
-  right: 3px;
-  top: 3px;
+  right: 8px;
+  top: 4px;
   text-align: right;
   padding-right: 50px;
   z-index: 75;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
   svg {
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 1));
@@ -461,8 +468,6 @@ export default {
     display: inline-block;
     cursor: pointer;
     z-index: 5;
-    margin-top: 7px;
-    margin-left: 10px;
   }
 
   span.nomlog-summary {
@@ -491,26 +496,19 @@ export default {
 .menu {
   width: 230px;
   transform-origin: 210px 22px;
-  transition: transform 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  transform: rotate(-90deg);
   position: absolute;
   right: 0;
   top: 0;
-
-  &.open {
-    transform: rotate(0deg);
-  }
 
   > svg {
     cursor: pointer;
     background: rgba(0, 0, 0, 0.5);
     border: 3px solid black;
     width: 40px;
-    height: 50px;
-    margin-bottom: -8px;
+    height: 40px;
     border-bottom: 0;
-    border-radius: 10px 10px 0 0;
-    padding: 5px 5px 15px;
+    border-radius: 10px;
+    padding: 5px;
   }
 
   a {
