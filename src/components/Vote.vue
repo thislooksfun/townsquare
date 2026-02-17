@@ -352,11 +352,11 @@ export default {
   }
   .nominator:before {
     background-image: url("../assets/clock-small.png");
-    animation: arrow-ccw 1s ease-out;
+    animation: arrow-ccw 0.5s ease-out;
   }
   .nominee:before {
     background-image: url("../assets/clock-big.png");
-    animation: arrow-cw 1s ease-out;
+    animation: arrow-cw 0.5s ease-out;
   }
 }
 
