@@ -161,7 +161,7 @@
               Empty seat
             </li>
             <template v-if="!session.nomination">
-              <li @click="nominatePlayer()">
+              <li @click="openNominationMenu()">
                 <font-awesome-icon icon="hand-point-right" />
                 Nomination
               </li>
@@ -351,9 +351,13 @@ export default {
     openMenu() {
       if (this.session.isCohost) return;
       this.isMenuOpen = true;
+      if (!this.session.nomination) {
+        this.$emit("trigger", ["quickNominate", true]);
+      }
     },
     closeMenu() {
       this.isMenuOpen = false;
+      this.$emit("trigger", ["quickNominate", false]);
     },
     changeName() {
       if (this.session.isSpectator) return;
@@ -394,9 +398,13 @@ export default {
       this.isMenuOpen = false;
       this.$emit("trigger", ["movePlayer", player]);
     },
-    nominatePlayer(player) {
+    openNominationMenu() {
       this.isMenuOpen = false;
-      this.$emit("trigger", ["nominatePlayer", player]);
+      this.$emit("trigger", ["fullNominate", true]);
+    },
+    nominatePlayer(nomination) {
+      this.isMenuOpen = false;
+      this.$emit("trigger", ["nominatePlayer", nomination]);
     },
     cancel() {
       this.$emit("trigger", ["cancel"]);

@@ -18,10 +18,10 @@
         :player="player"
         @trigger="handleTrigger(index, $event)"
         :class="{
-          from: Math.max(swap, move, nominate) === index,
+          from: Math.max(swap, move, showNomOptions ? nominator : -1) === index,
           swap: swap > -1,
           move: move > -1,
-          nominate: nominate > -1,
+          nominate: showNomOptions && index !== quickNominator,
         }"
       ></Player>
     </ul>
@@ -116,7 +116,9 @@ export default {
       bluffSize: 3,
       swap: -1,
       move: -1,
-      nominate: -1,
+      nominator: -1,
+      quickNominator: -1,
+      showNomOptions: false,
       isBluffsOpen: true,
       isFabledOpen: true,
     };
@@ -240,23 +242,34 @@ export default {
         this.cancel();
       }
     },
-    nominatePlayer(from, to) {
+    quickNominate(from, open) {
       if (this.session.isSpectator || this.session.lockedVote) return;
-      if (to === undefined) {
-        this.cancel();
-        if (from !== this.nominate) {
-          this.nominate = from;
-        }
-      } else {
-        const nomination = [this.nominate, this.players.indexOf(to)];
-        this.$store.commit("session/nomination", { nomination });
-        this.cancel();
+      this.cancel();
+      if (open) {
+        this.nominator = from;
+        this.quickNominator = from;
+        this.showNomOptions = true;
       }
+    },
+    fullNominate(from, open) {
+      if (this.session.isSpectator || this.session.lockedVote) return;
+      this.cancel();
+      if (open) {
+        this.nominator = from;
+        this.showNomOptions = true;
+      }
+    },
+    nominatePlayer(_, target) {
+      if (this.session.isSpectator || this.session.lockedVote) return;
+      const nomination = [this.nominator, this.players.indexOf(target)];
+      this.$store.commit("session/nomination", { nomination });
+      this.cancel();
     },
     cancel() {
       this.move = -1;
       this.swap = -1;
-      this.nominate = -1;
+      this.quickNominator = -1;
+      this.showNomOptions = false;
     },
   },
 };
