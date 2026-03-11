@@ -469,7 +469,7 @@ export default {
     .shroud-target {
       cursor: pointer;
       width: 100%;
-      height: 44%;
+      height: 75%;
 
       pointer-events: all;
 
