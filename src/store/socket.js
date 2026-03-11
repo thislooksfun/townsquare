@@ -747,11 +747,7 @@ class LiveSession {
   /** Prompt the player to clear their board. */
   _newGame() {
     if (this._isCohost) return;
-
-    const prompt = "A new game is starting! Press OK to clear your board.";
-    if (confirm(prompt)) {
-      this._store.dispatch("players/clearRoles");
-    }
+    this._store.dispatch("players/clearRoles");
   }
 
   /**
