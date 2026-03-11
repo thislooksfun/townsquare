@@ -206,7 +206,9 @@
         <template v-if="tab === 'players' && !session.isSpectator">
           <!-- Users -->
           <li class="headline">Players</li>
-          <li @click="addPlayer" v-if="players.length < 20">Add<em>[A]</em></li>
+          <li @click="addPlayers" v-if="players.length < 20">
+            Add<em>[A]</em>
+          </li>
           <li @click="randomizeSeatings" v-if="players.length > 2">
             Randomize
             <em><font-awesome-icon icon="dice" /></em>
@@ -400,13 +402,35 @@ export default {
         this.$store.commit("session/setSessionId", "");
       }
     },
-    addPlayer() {
+    addPlayers() {
       if (this.session.isSpectator) return;
-      if (this.players.length >= 20) return;
-      const name = prompt("Player name");
-      if (name) {
-        this.$store.commit("players/add", name);
+
+      const remainingSeats = 20 - this.players.length;
+      if (remainingSeats <= 0) {
+        alert("Max players already added");
+        return;
       }
+
+      const answer = prompt("How many players would you like to add?");
+      if (!answer) return;
+      const count = parseInt(answer);
+
+      if (Number.isNaN(count)) {
+        alert("Please enter a valid number");
+        return;
+      }
+
+      if (count < 1) {
+        alert("Please enter a number greater than 0");
+        return;
+      }
+
+      if (count > remainingSeats) {
+        alert(`You can only add ${remainingSeats} more player(s)`);
+        return;
+      }
+
+      this.$store.commit("players/add", count);
     },
     randomizeSeatings() {
       if (this.session.isSpectator) return;

@@ -380,7 +380,7 @@ class LiveSession {
     // adjust number of players
     if (players.length < gamestate.length) {
       for (let x = players.length; x < gamestate.length; x++) {
-        this._store.commit("players/add", gamestate[x].name);
+        this._store.commit("players/add");
       }
     } else if (players.length > gamestate.length) {
       for (let x = players.length; x > gamestate.length; x--) {

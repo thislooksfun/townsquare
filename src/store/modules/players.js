@@ -116,11 +116,10 @@ const mutations = {
       state.players[index][property] = value;
     }
   },
-  add(state, name) {
-    state.players.push({
-      ...NEWPLAYER,
-      name,
-    });
+  add(state, count = 1) {
+    for (let i = 0; i < count; ++i) {
+      state.players.push({ ...NEWPLAYER });
+    }
   },
   remove(state, index) {
     state.players.splice(index, 1);

@@ -90,7 +90,7 @@ export default {
           this.$store.commit("toggleGrimoire");
           break;
         case "a":
-          this.$refs.menu.addPlayer();
+          this.$refs.menu.addPlayers();
           break;
         case "h":
           this.$refs.menu.hostSession();
