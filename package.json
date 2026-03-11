@@ -3,6 +3,10 @@
   "version": "3.3.57",
   "description": "Blood on the Clocktower Town Square",
   "author": "Steffen Baumgart",
+  "contributors": [
+    "Steffen Baumgart",
+    "thislooksfun"
+  ],
   "private": true,
   "scripts": {
     "start": "node server/index.js",
@@ -45,6 +49,6 @@
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com//bra1n/townsquare.git"
+    "url": "https://github.com/thislooksfun/townsquare.git"
   }
 }

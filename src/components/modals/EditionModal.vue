@@ -40,7 +40,7 @@
       <br />
       To play with custom characters, please read
       <a
-        href="https://github.com/bra1n/townsquare#custom-characters"
+        href="https://github.com/thislooksfun/townsquare#custom-characters"
         target="_blank"
         >the documentation</a
       >

@@ -11,7 +11,7 @@ Before submitting your contribution, please make sure to take a moment and read 
 
 ## Issue Reporting Guidelines
 
-- Report a new issue either through [GitHub](https://github.com/bra1n/townsquare/issues/new/choose) or [Email](mailto:steffen@baumgart.biz)
+- Report a new issue through [GitHub](https://github.com/thislooksfun/townsquare/issues/new/choose)
 - Please include with your issue the browser and operating system you're using as well as steps necessary to reproduce the bug, if any
 - Be patient, I'm working on this project in my spare time :-)
 
