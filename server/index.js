@@ -27,7 +27,7 @@ function noop() {}
 
 // calculate latency on heartbeat
 function heartbeat() {
-  this.latency = Math.round((new Date().getTime() - this.pingStart) / 2);
+  this.latency = Math.round((Date.now() - this.pingStart) / 2);
   this.counter = 0;
   this.isAlive = true;
 }
@@ -119,7 +119,7 @@ wss.on("connection", function connection(ws, req) {
     return;
   }
   ws.isAlive = true;
-  ws.pingStart = new Date().getTime();
+  ws.pingStart = Date.now();
   ws.counter = 0;
   // add channel to list
   if (!channels[ws.channel]) {
@@ -214,7 +214,7 @@ const interval = setInterval(function ping() {
       return ws.terminate();
     }
     ws.isAlive = false;
-    ws.pingStart = new Date().getTime();
+    ws.pingStart = Date.now();
     ws.ping(noop);
   });
   // clean up empty channels

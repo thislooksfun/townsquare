@@ -657,7 +657,7 @@ class LiveSession {
    * @private
    */
   _handlePing([playerIdOrCount = 0, latency] = []) {
-    const now = new Date().getTime();
+    const now = Date.now();
     if (!this._isSpectator) {
       // remove players that haven't sent a ping in twice the timespan
       for (let player in this._players) {
