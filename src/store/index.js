@@ -176,6 +176,7 @@ export default new Vuex.Store({
     newGame({ state, dispatch, commit }) {
       if (state.session.isSpectator) return;
       dispatch("players/clearRoles");
+      commit("session/clearVoteHistory");
       commit("toggleModal", "roles");
     },
   },
