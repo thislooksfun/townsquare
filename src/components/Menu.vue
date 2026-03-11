@@ -517,9 +517,9 @@ export default {
   }
 
   span.connection {
-    color: $success;
+    color: white;
     &.connecting {
-      color: $townsfolk;
+      color: $success;
       animation: blink 1s infinite;
     }
     &.error {
