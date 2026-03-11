@@ -29,6 +29,12 @@ module.exports = (store) => {
   if (localStorage.getItem("zoom")) {
     store.commit("setZoom", parseFloat(localStorage.getItem("zoom")));
   }
+  if (localStorage.getItem("playerName")) {
+    store.commit("setPlayerName", localStorage.getItem("playerName"));
+  }
+  if (localStorage.getItem("playerPronouns")) {
+    store.commit("setPlayerPronouns", localStorage.getItem("playerPronouns"));
+  }
   if (localStorage.getItem("isGrimoire")) {
     store.commit("toggleGrimoire", false);
     updatePagetitle(false);
@@ -166,6 +172,20 @@ module.exports = (store) => {
           localStorage.removeItem("roles");
         } else {
           localStorage.setItem("roles", JSON.stringify(payload));
+        }
+        break;
+      case "setPlayerName":
+        if (payload) {
+          localStorage.setItem("playerName", payload);
+        } else {
+          localStorage.removeItem("playerName");
+        }
+        break;
+      case "setPlayerPronouns":
+        if (payload) {
+          localStorage.setItem("playerPronouns", payload);
+        } else {
+          localStorage.removeItem("playerPronouns");
         }
         break;
       case "players/setBluff":

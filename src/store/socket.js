@@ -732,15 +732,15 @@ class LiveSession {
   }
 
   /**
-   * Claim a seat, needs to be confirmed by the Storyteller.
-   * Seats already occupied can't be claimed.
+   * Claim a seat. Seats already occupied can't be claimed.
    * @param seat either -1 to vacate or the index of the seat claimed
    */
-  claimSeat(seat) {
+  claimSeat({ seat, name, pronouns }) {
     if (!this._isSpectator) return;
     const players = this._store.state.players.players;
     if (players.length > seat && (seat < 0 || !players[seat].id)) {
-      this._send("claim", [seat, this._store.state.session.playerId]);
+      const playerId = this._store.state.session.playerId;
+      this._send("claim", [seat, playerId, name, pronouns]);
     }
   }
 
@@ -758,9 +758,11 @@ class LiveSession {
    * Update a player id associated with that seat.
    * @param index seat index or -1
    * @param value playerId to add / remove
+   * @param name player name
+   * @param pronouns player pronouns
    * @private
    */
-  _updateSeat([index, value]) {
+  _updateSeat([index, value, name, pronouns]) {
     if (this._isSpectator) return;
     const property = "id";
     const players = this._store.state.players.players;
@@ -778,6 +780,20 @@ class LiveSession {
       const player = players[index];
       if (!player) return;
       this._store.commit("players/update", { player, property, value });
+      if (name != null) {
+        this._store.commit("players/update", {
+          player,
+          property: "name",
+          value: name,
+        });
+      }
+      if (pronouns != null) {
+        this._store.commit("players/update", {
+          player,
+          property: "pronouns",
+          value: pronouns,
+        });
+      }
     }
     // update player session list as if this was a ping
     this._handlePing([value, 0]);

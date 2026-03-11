@@ -43,6 +43,8 @@ const set = (key) => (state, val) => {
 
 const mutations = {
   setPlayerId: set("playerId"),
+  setPlayerName: set("playerName"),
+  setPlayerPronouns: set("playerPronouns"),
   setCohost: set("isCohost"),
   setSpectator: set("isSpectator"),
   setConnecting: set("isConnecting"),

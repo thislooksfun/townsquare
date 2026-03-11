@@ -8,7 +8,7 @@
           dead: player.isDead,
           marked: session.markedPlayer === index,
           'no-vote': player.isVoteless,
-          you: session.sessionId && player.id && player.id === session.playerId,
+          you: session.sessionId && player.id && isCurrentSeat,
           'vote-yes': session.votes[index],
           'vote-lock': voteLocked,
         },
@@ -273,6 +273,9 @@ export default {
     menuClickConfig: function () {
       return [() => this.closeMenu(), { ignore: [this.$refs.menuBtn] }];
     },
+    isCurrentSeat: function () {
+      return this.player.id === this.session.playerId;
+    },
     team: function () {
       if (!this.player.role.id) return null;
 
@@ -315,21 +318,25 @@ export default {
   },
   methods: {
     changeName() {
-      if (this.session.isSpectator && this.player.id !== this.session.playerId)
-        return;
+      if (this.session.isSpectator && !this.isCurrentSeat) return;
       const name = prompt("Enter name", this.player.name) || this.player.name;
       // Null return means the prompt was cancelled
       if (name !== null) {
         this.updatePlayer("name-pronouns", { name }, true);
+        if (this.isCurrentSeat) {
+          this.$store.commit("setPlayerName", name);
+        }
       }
     },
     changePronouns() {
-      if (this.session.isSpectator && this.player.id !== this.session.playerId)
-        return;
+      if (this.session.isSpectator && !this.isCurrentSeat) return;
       const pronouns = prompt("Enter pronouns", this.player.pronouns);
       // Null return means the prompt was cancelled
       if (pronouns !== null) {
         this.updatePlayer("name-pronouns", { pronouns }, true);
+        if (this.isCurrentSeat) {
+          this.$store.commit("setPlayerPronouns", pronouns);
+        }
       }
     },
     toggleStatus() {

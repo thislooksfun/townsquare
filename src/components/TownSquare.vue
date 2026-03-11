@@ -142,9 +142,31 @@ export default {
     claimSeat(playerIndex) {
       if (!this.session.isSpectator) return;
       if (this.session.playerId === this.players[playerIndex].id) {
-        this.$store.commit("session/claimSeat", -1);
+        this.$store.commit("session/claimSeat", { seat: -1 });
       } else {
-        this.$store.commit("session/claimSeat", playerIndex);
+        let name = this.grimoire.playerName;
+        let pronouns = this.grimoire.playerPronouns;
+
+        while (!name) {
+          name = prompt("Enter your name");
+          if (name == null) return;
+        }
+        if (name !== this.grimoire.playerName) {
+          this.$store.commit("setPlayerName", name);
+
+          if (!pronouns) {
+            pronouns =
+              prompt("Enter your pronouns (optional, leave blank to skip)") ??
+              "";
+            this.$store.commit("setPlayerPronouns", pronouns);
+          }
+        }
+
+        this.$store.commit("session/claimSeat", {
+          seat: playerIndex,
+          name,
+          pronouns,
+        });
       }
     },
     openReminderModal(playerIndex) {

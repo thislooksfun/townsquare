@@ -116,6 +116,8 @@ export default new Vuex.Store({
       teamColors: false,
       zoom: 0,
       background: "",
+      playerName: "",
+      playerPronouns: "",
     },
     modals: {
       edition: false,
@@ -180,6 +182,8 @@ export default new Vuex.Store({
   mutations: {
     setZoom: set("zoom"),
     setBackground: set("background"),
+    setPlayerName: set("playerName"),
+    setPlayerPronouns: set("playerPronouns"),
     toggleMuted: toggle("isMuted"),
     toggleMenu: toggle("isMenuOpen"),
     toggleMismatchWarnings: toggle("mismatchWarnings"),
