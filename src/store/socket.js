@@ -662,12 +662,14 @@ class LiveSession {
    */
   _handlePing([playerIdOrCount = 0, latency] = []) {
     const now = Date.now();
+    let playersChanged = false;
     if (!this._isSpectator) {
       // remove players that haven't sent a ping in twice the timespan
       for (let player in this._players) {
         if (now - this._players[player] > this._pingInterval * 2) {
           delete this._players[player];
           delete this._pings[player];
+          playersChanged = true;
         }
       }
       // remove claimed seats from players that are no longer connected
@@ -682,6 +684,7 @@ class LiveSession {
       });
       // store new player data
       if (playerIdOrCount) {
+        playersChanged = playersChanged || !this._players[playerIdOrCount];
         this._players[playerIdOrCount] = now;
         const ping = parseInt(latency, 10);
         if (ping && ping > 0 && ping < 30 * 1000) {
@@ -693,6 +696,12 @@ class LiveSession {
             Math.round(pings.reduce((a, b) => a + b, 0) / pings.length),
           );
         }
+      }
+
+      if (playersChanged) {
+        // If the set of players changed, send out an immediate ping to ensure
+        // that all players' connection count numbers are up-to-date
+        this._ping();
       }
     } else if (latency) {
       // ping to ST
