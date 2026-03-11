@@ -384,34 +384,34 @@ export default {
         value,
       });
       if (closeMenu) {
-        this.isMenuOpen = false;
+        this.closeMenu();
       }
     },
     removePlayer() {
-      this.isMenuOpen = false;
+      this.closeMenu();
       this.$emit("trigger", ["removePlayer"]);
     },
     swapPlayer(player) {
-      this.isMenuOpen = false;
+      this.closeMenu();
       this.$emit("trigger", ["swapPlayer", player]);
     },
     movePlayer(player) {
-      this.isMenuOpen = false;
+      this.closeMenu();
       this.$emit("trigger", ["movePlayer", player]);
     },
     openNominationMenu() {
-      this.isMenuOpen = false;
+      this.closeMenu();
       this.$emit("trigger", ["fullNominate", true]);
     },
     nominatePlayer(nomination) {
-      this.isMenuOpen = false;
+      this.closeMenu();
       this.$emit("trigger", ["nominatePlayer", nomination]);
     },
     cancel() {
       this.$emit("trigger", ["cancel"]);
     },
     claimSeat() {
-      this.isMenuOpen = false;
+      this.closeMenu();
       this.$emit("trigger", ["claimSeat"]);
     },
     /**
