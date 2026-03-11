@@ -24,6 +24,7 @@ class LiveSession {
    * @private
    */
   _open(channel) {
+    console.log("Opening connecting to channel", channel);
     this.disconnect();
     this._store.commit("session/setConnecting", true);
     this._socket = new WebSocket(
@@ -33,9 +34,10 @@ class LiveSession {
         (this._isSpectator ? this._store.state.session.playerId : "host"),
     );
     this._socket.addEventListener("message", this._handleMessage.bind(this));
-    this._socket.onerror = () => {
+    this._socket.onerror = (err) => {
       this._store.commit("session/setConnecting", false);
       this._store.commit("session/setConnectionErrored", true);
+      console.err("Socket error", err);
     };
     this._socket.onopen = this._onOpen.bind(this);
     this._socket.onclose = (err) => {
@@ -89,6 +91,7 @@ class LiveSession {
    * @private
    */
   _onOpen() {
+    console.log("Socket connection opened");
     this._store.commit("session/setConnecting", false);
     this._store.commit("session/setConnectionErrored", false);
     if (this._isCohost) {
@@ -237,6 +240,7 @@ class LiveSession {
    * @param channel
    */
   connect(channel) {
+    console.log("Connecting to live session with channel", channel);
     if (!this._store.state.session.playerId) {
       this._store.commit(
         "session/setPlayerId",
@@ -1063,6 +1067,10 @@ export default (store) => {
   // check for session Id in hash
   const sessionId = window.location.hash.substr(1);
   if (sessionId && sessionId !== store.state.session.sessionId) {
+    console.log(
+      "Found session ID in URL hash, connecting to session",
+      sessionId,
+    );
     store.commit("session/setSpectator", true);
     store.commit("session/setSessionId", sessionId);
     store.commit("toggleGrimoire", false);
