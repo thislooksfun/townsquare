@@ -790,6 +790,11 @@ li.move:not(.from) .player .overlay svg.move {
   animation: townsfolk-glow 5s ease-in-out infinite;
 }
 
+.static .player.you .token {
+  box-shadow: 0 0 20px 16px rgba($townsfolk, 0.25);
+  border-color: $townsfolk;
+}
+
 /****** Marked icon ******/
 .player .marked {
   position: absolute;
