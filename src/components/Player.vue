@@ -116,6 +116,7 @@
           highlight: session.isRolesDistributed,
         }"
       >
+        <font-awesome-icon icon="chair" class="seat-warning" />
         <span class="name">{{
           player.id ? player.name : `Seat ${index + 1}`
         }}</span>
@@ -876,6 +877,18 @@ li.move:not(.from) .player .overlay svg.move {
     opacity: 0.75;
   }
 
+  .seat-warning {
+    position: absolute;
+    top: 0;
+    left: 8px;
+    height: 100%;
+    font-size: 0.75em;
+    opacity: 0;
+    transition: opacity 250ms;
+    pointer-events: none;
+    color: $demon;
+  }
+
   .pronouns {
     align-items: center;
     font-size: 0.5em;
@@ -894,6 +907,10 @@ li.move:not(.from) .player .overlay svg.move {
   &.active {
     color: red;
   }
+}
+
+#townsquare:not(.spectator).vote .empty .seat-warning {
+  opacity: 1;
 }
 
 .player.dead > .info {
