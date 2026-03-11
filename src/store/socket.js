@@ -771,7 +771,7 @@ class LiveSession {
       this._store.commit("players/update", { player, property, value });
     }
     // update player session list as if this was a ping
-    this._handlePing([true, value, 0]);
+    this._handlePing([value, 0]);
   }
 
   /**
