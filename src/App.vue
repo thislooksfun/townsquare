@@ -24,7 +24,7 @@
     <transition name="blur">
       <Intro v-if="!players.length"></Intro>
       <TownInfo v-if="players.length && !session.nomination"></TownInfo>
-      <Vote v-if="session.nomination"></Vote>
+      <Vote ref="vote" v-if="session.nomination"></Vote>
     </transition>
     <TownSquare></TownSquare>
     <Menu ref="menu"></Menu>
@@ -86,6 +86,9 @@ export default {
     keyup({ key, ctrlKey, metaKey }) {
       if (ctrlKey || metaKey) return;
       switch (key.toLocaleLowerCase()) {
+        case " ":
+          this.$refs.vote?.toggleVote();
+          break;
         case "g":
           this.$store.commit("toggleGrimoire");
           break;

@@ -238,6 +238,10 @@ export default {
       this.$store.commit("session/addHistory", this.players);
       this.$store.commit("session/nomination");
     },
+    toggleVote() {
+      if (!this.canVote) return false;
+      this.vote(!this.currentVote);
+    },
     vote(vote) {
       if (!this.canVote) return false;
       const index = this.players.findIndex(
