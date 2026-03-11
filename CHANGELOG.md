@@ -1,5 +1,41 @@
 # Changelog
 
+## [3.4.0](https://github.com/thislooksfun/townsquare/compare/v3.3.57...v3.4.0) (2026-03-11)
+
+
+### Features
+
+* add a "who am I" indicator ([11b7af1](https://github.com/thislooksfun/townsquare/commit/11b7af168068bd22cb1a86e2e70c80a6e2ad0928))
+* add a warning if a seat is empty during voting ([46cea9c](https://github.com/thislooksfun/townsquare/commit/46cea9c555e7d32df8ec18d3b62d5ef091e3f15f)), closes [#147](https://github.com/thislooksfun/townsquare/issues/147)
+* add a way to quickly nominate ([8465be2](https://github.com/thislooksfun/townsquare/commit/8465be2ef2ebb0853081a99a66e33af60c946935)), closes [#132](https://github.com/thislooksfun/townsquare/issues/132)
+* allow players to change their own name ([29d5814](https://github.com/thislooksfun/townsquare/commit/29d58145c7f5e238fe1116be31197dc57d57d1ca)), closes [#146](https://github.com/thislooksfun/townsquare/issues/146)
+* allow players to claim empty seats in one click ([9b28e77](https://github.com/thislooksfun/townsquare/commit/9b28e77c69fd2ed394c0effabeb09e017420fcb2))
+* allow toggling hand up/down via spacebar ([056bcc9](https://github.com/thislooksfun/townsquare/commit/056bcc91afe428dc81b9c50ca25a5bef9e894ad2)), closes [#152](https://github.com/thislooksfun/townsquare/issues/152)
+* make it easier to add players ([5cb68e9](https://github.com/thislooksfun/townsquare/commit/5cb68e997e8d49ff45fecec57c2e7c09cd34785e)), closes [#140](https://github.com/thislooksfun/townsquare/issues/140)
+* rework connection status colors ([04eaaca](https://github.com/thislooksfun/townsquare/commit/04eaaca725ceb99031a5885ed78b8041b59ff00e))
+* show actual connection status ([cc85193](https://github.com/thislooksfun/townsquare/commit/cc85193e71c020da5eb4c56858ecb1543114f0da))
+* show when seats are claimable ([abc2cf3](https://github.com/thislooksfun/townsquare/commit/abc2cf3ee86bbac973116431ee3e22b8bd35567d))
+* simplify the menu ([a77af68](https://github.com/thislooksfun/townsquare/commit/a77af6856c86c7e36f7e4f0e19b18d3e5ed249c7))
+* speed up nomination appear animation ([754559d](https://github.com/thislooksfun/townsquare/commit/754559de320b05a9f00c20649c97038a0547fa3b))
+* store and use players' names and pronouns when claiming seats ([64fdce7](https://github.com/thislooksfun/townsquare/commit/64fdce7d21991207a50cacc23bad0e2fec90de17))
+* update the url to contain the session id when hosting ([9e06096](https://github.com/thislooksfun/townsquare/commit/9e06096009b3e67b9f49e6966aff0a80cb4d2c3a)), closes [#141](https://github.com/thislooksfun/townsquare/issues/141)
+
+
+### Bug Fixes
+
+* call _handlePing with correct options ([9b7b3b4](https://github.com/thislooksfun/townsquare/commit/9b7b3b474108631eef43489deaeb00e184d7d367))
+* clear the vote history when starting a new game ([0c24480](https://github.com/thislooksfun/townsquare/commit/0c244805535ebb61fe27b60690c2afaa816656f4)), closes [#149](https://github.com/thislooksfun/townsquare/issues/149)
+* hide quick nomination when taking other actions ([5bb685d](https://github.com/thislooksfun/townsquare/commit/5bb685d921a6a7b6c0b0bd61f6c669cf62f4b444))
+* immediately clear board when resetting game ([ca07495](https://github.com/thislooksfun/townsquare/commit/ca074955281671cbe3957b2e756dc9d67a1272d4))
+* immediately re-ping all players when player list changes ([7330da6](https://github.com/thislooksfun/townsquare/commit/7330da64c234fa53422a429312b84ade81056c91))
+* increase size of shroud toggle click target ([caf4ae3](https://github.com/thislooksfun/townsquare/commit/caf4ae3fb208844cef0cadc95b532e2862e5fe8a)), closes [#142](https://github.com/thislooksfun/townsquare/issues/142)
+* make "you are here" highlight work with animations disabled ([da626a1](https://github.com/thislooksfun/townsquare/commit/da626a13202a7f5942b9448f3fd46ff4fbc0a771))
+* make countdown work with animations disabled ([4946a9b](https://github.com/thislooksfun/townsquare/commit/4946a9b98b4f5c44501d252c328d0481cdab8ce7))
+* make view default to grimoire ([ce29f0a](https://github.com/thislooksfun/townsquare/commit/ce29f0ac77cb03a58f8183a5345dce7c7af3b1a7))
+* ping more frequently ([eeb1320](https://github.com/thislooksfun/townsquare/commit/eeb132076e0cc72744c2dacf4c7c67929bcd5000))
+* update references to bra1n / Steffen Baumgart ([54534b2](https://github.com/thislooksfun/townsquare/commit/54534b22f2c7c2568a98609eb9931efd7d6dcde6))
+* update robots.txt ([4cbf182](https://github.com/thislooksfun/townsquare/commit/4cbf1825b02ddf9691d656b564b9a966da680fb3))
+
 ## [3.3.57](https://github.com/thislooksfun/townsquare/compare/v3.3.56...v3.3.57) (2026-02-14)
 
 
