@@ -63,8 +63,8 @@ const metrics = {
             (ws) =>
               ws &&
               (ws.readyState === WebSocket.OPEN ||
-                ws.readyState === WebSocket.CONNECTING)
-          ).length
+                ws.readyState === WebSocket.CONNECTING),
+          ).length,
         );
       }
     },
@@ -110,7 +110,7 @@ wss.on("connection", function connection(ws, req) {
       (client) =>
         client !== ws &&
         client.readyState === WebSocket.OPEN &&
-        client.playerId === "host"
+        client.playerId === "host",
     )
   ) {
     console.log(ws.channel, "duplicate host");
@@ -138,7 +138,7 @@ wss.on("connection", function connection(ws, req) {
       console.log(ws.channel, "disconnecting user due to spam");
       ws.close(
         1000,
-        "Your app seems to be malfunctioning, please clear your browser cache."
+        "Your app seems to be malfunctioning, please clear your browser cache.",
       );
       metrics.connection_terminated_spam.inc();
       return;
@@ -154,7 +154,10 @@ wss.on("connection", function connection(ws, req) {
             (ws.playerId === "host" || client.playerId === "host")
           ) {
             client.send(
-              data.replace(/latency/, (client.latency || 0) + (ws.latency || 0))
+              data.replace(
+                /latency/,
+                (client.latency || 0) + (ws.latency || 0),
+              ),
             );
             metrics.messages_outgoing.inc();
           }
@@ -167,7 +170,7 @@ wss.on("connection", function connection(ws, req) {
           wss.clients.size,
           ws.channel,
           ws.playerId,
-          data
+          data,
         );
         try {
           const dataToPlayer = JSON.parse(data)[1];
@@ -192,7 +195,7 @@ wss.on("connection", function connection(ws, req) {
           wss.clients.size,
           ws.channel,
           ws.playerId,
-          data
+          data,
         );
         channels[ws.channel].forEach(function each(client) {
           if (client !== ws && client.readyState === WebSocket.OPEN) {
@@ -225,7 +228,7 @@ const interval = setInterval(function ping() {
         (ws) =>
           ws &&
           (ws.readyState === WebSocket.OPEN ||
-            ws.readyState === WebSocket.CONNECTING)
+            ws.readyState === WebSocket.CONNECTING),
       )
     ) {
       metrics.channels_list.remove({ name: channel });
