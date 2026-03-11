@@ -117,8 +117,8 @@
       <div
         class="info"
         ref="menuBtn"
-        @click="openMenu"
-        :class="{ active: isMenuOpen }"
+        @click="handleMenuClick"
+        :class="{ active: isMenuOpen, empty: !player.id }"
       >
         <span class="name">{{ player.name }}</span>
         <span v-if="player.pronouns" class="pronouns">{{
@@ -171,10 +171,8 @@
             :class="{ disabled: player.id && player.id !== session.playerId }"
           >
             <font-awesome-icon icon="chair" />
-            <template v-if="!player.id">Claim seat</template>
-            <template v-else-if="player.id === session.playerId"
-              >Vacate seat</template
-            >
+            <template v-if="!player.id">Move to seat</template>
+            <template v-else-if="isCurrentSeat">Vacate seat</template>
             <template v-else>Seat occupied</template>
           </li>
         </ul>
@@ -273,6 +271,9 @@ export default {
     menuClickConfig: function () {
       return [() => this.closeMenu(), { ignore: [this.$refs.menuBtn] }];
     },
+    playerIsSeated: function () {
+      return this.players.some((p) => p.id === this.session.playerId);
+    },
     isCurrentSeat: function () {
       return this.player.id === this.session.playerId;
     },
@@ -360,6 +361,13 @@ export default {
         if (this.player.isVoteless) {
           this.updatePlayer("isVoteless", false);
         }
+      }
+    },
+    handleMenuClick() {
+      if (this.session.isSpectator && !this.playerIsSeated) {
+        this.claimSeat();
+      } else {
+        this.openMenu();
       }
     },
     openMenu() {
