@@ -27,10 +27,12 @@ Before submitting your contribution, please make sure to take a moment and read 
 - It's OK to have multiple small commits as you work on the PR - GitHub will automatically squash it before merging.
 
 - If adding a new feature:
+
   - Provide a convincing reason to add this feature. Ideally, you should open a suggestion issue first before working on it.
   - Feel free to write a test for it, but so far I didn't have time for that.
 
 - If fixing a bug:
+
   - If you are resolving a special issue, add `(fix #xxxx[,#xxxx])` (#xxxx is the issue id) in your PR title for a better release log, e.g. `update entities encoding/decoding (fix #3899)`.
   - Provide a detailed description of the bug in the PR. Live demo preferred.
 
@@ -43,7 +45,7 @@ You will need [Node.js](http://nodejs.org) **version 8+** and a Chrome browser.
 
 After cloning the repo, run:
 
-``` bash
+```bash
 $ npm install
 ```
 
@@ -59,9 +61,10 @@ will think it should be served at botc.thislooks.fun instead of \<user\>.github.
 
 For example, deploying your forked `townsquare` project to GitHub pages would need the following
 `vue.config.js` changes:
+
 ```js
 module.exports = {
-  publicPath: process.env.NODE_ENV === "production" ? "/townsquare/" : "/"
+  publicPath: process.env.NODE_ENV === "production" ? "/townsquare/" : "/",
 };
 ```
 
@@ -71,7 +74,7 @@ Commit messages should be verbose enough to allow someone else to follow your ch
 
 ### Commonly used NPM scripts
 
-``` bash
+```bash
 # watch and auto re-build dist/
 $ npm run serve
 
