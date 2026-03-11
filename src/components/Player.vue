@@ -93,14 +93,6 @@
         />
       </div>
 
-      <!-- Claimed seat icon -->
-      <font-awesome-icon
-        icon="chair"
-        v-if="player.id && session.sessionId"
-        class="seat"
-        :class="{ highlight: session.isRolesDistributed }"
-      />
-
       <!-- Ghost vote icon -->
       <font-awesome-icon
         icon="vote-yea"
@@ -118,19 +110,23 @@
         class="info"
         ref="menuBtn"
         @click="handleMenuClick"
-        :class="{ active: isMenuOpen, empty: !player.id }"
+        :class="{
+          active: isMenuOpen,
+          empty: !player.id,
+          highlight: session.isRolesDistributed,
+        }"
       >
-        <span class="name">{{ player.name }}</span>
-        <span v-if="player.pronouns" class="pronouns">{{
-          player.pronouns
+        <span class="name">{{
+          player.id ? player.name : `Seat ${index + 1}`
+        }}</span>
+        <span v-if="!player.id || player.pronouns" class="pronouns">{{
+          player.id ? player.pronouns : "Click to claim"
         }}</span>
       </div>
 
       <transition name="fold">
         <ul class="menu" v-if="isMenuOpen" v-on-click-outside="menuClickConfig">
-          <template
-            v-if="!session.isSpectator || player.id === session.playerId"
-          >
+          <template v-if="player.id && (!session.isSpectator || isCurrentSeat)">
             <li @click="changeName">
               <font-awesome-icon icon="user-edit" />Change Name
             </li>
@@ -825,21 +821,6 @@ li.move:not(.from) .player .overlay svg.move {
   opacity: 0.5;
 }
 
-/****** Seat icon ********/
-.player .seat {
-  position: absolute;
-  left: 2px;
-  margin-top: -15%;
-  color: #fff;
-  filter: drop-shadow(0 0 3px black);
-  cursor: default;
-  z-index: 2;
-  &.highlight {
-    animation-iteration-count: 1;
-    animation: redToWhite 1s normal forwards;
-  }
-}
-
 // highlight animation
 @keyframes redToWhite {
   from {
@@ -848,10 +829,6 @@ li.move:not(.from) .player .overlay svg.move {
   to {
     color: white;
   }
-}
-
-.player.you .seat {
-  color: $townsfolk;
 }
 
 /***** Player name *****/
@@ -888,6 +865,15 @@ li.move:not(.from) .player .overlay svg.move {
 
   .name {
     white-space: nowrap;
+  }
+
+  &.highlight .name {
+    animation-iteration-count: 1;
+    animation: redToWhite 1s normal forwards;
+  }
+
+  &.empty .name {
+    opacity: 0.75;
   }
 
   .pronouns {

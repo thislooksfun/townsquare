@@ -6,8 +6,10 @@
     </div>
     <div class="overlay">
       <audio src="../assets/sounds/countdown.mp3" preload="auto"></audio>
-      <em class="blue">{{ nominator.name }}</em> nominated
-      <em>{{ nominee.name }}</em
+      <em class="blue">{{
+        nominator.id ? nominator.name : `Seat ${nominator.seat}`
+      }}</em>
+      nominated <em>{{ nominee.id ? nominee.name : `Seat ${nominee.seat}` }}</em
       >!
       <br />
       <em class="blue">
@@ -119,7 +121,10 @@ export default {
     ...mapState(["session", "grimoire"]),
     ...mapGetters({ alive: "players/alive" }),
     nominator: function () {
-      return this.players[this.session.nomination[0]];
+      return {
+        ...this.players[this.session.nomination[0]],
+        seat: this.session.nomination[0] + 1,
+      };
     },
     nominatorStyle: function () {
       const players = this.players.length;
@@ -130,7 +135,10 @@ export default {
       };
     },
     nominee: function () {
-      return this.players[this.session.nomination[1]];
+      return {
+        ...this.players[this.session.nomination[1]],
+        seat: this.session.nomination[1] + 1,
+      };
     },
     nomineeStyle: function () {
       const players = this.players.length;
