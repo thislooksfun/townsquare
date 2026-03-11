@@ -72,13 +72,20 @@ module.exports = (store) => {
   if (localStorage.getItem("playerId")) {
     store.commit("session/setPlayerId", localStorage.getItem("playerId"));
   }
-  if (localStorage.getItem("session") && !window.location.hash.substr(1)) {
+  if (localStorage.getItem("session")) {
     const [spectator, sessionId, cohost] = JSON.parse(
       localStorage.getItem("session"),
     );
-    store.commit("session/setSpectator", spectator);
-    store.commit("session/setSessionId", sessionId);
-    store.commit("session/setCohost", !!cohost);
+
+    const newSessionId = window.location.hash.substr(1);
+    console.dir({ newSessionId, sessionId });
+    if (!newSessionId || newSessionId === sessionId) {
+      console.log("Restoring session from localStorage");
+      store.commit("session/setSpectator", spectator);
+      store.commit("session/setSessionId", sessionId);
+      store.commit("session/setCohost", !!cohost);
+      window.location.hash = sessionId;
+    }
   }
 
   // listen to mutations

@@ -983,6 +983,7 @@ export default (store) => {
     switch (type) {
       case "session/setSessionId":
         if (state.session.sessionId) {
+          window.location.hash = state.session.sessionId;
           session.connect(state.session.sessionId);
         } else {
           window.location.hash = "";
@@ -1061,7 +1062,7 @@ export default (store) => {
 
   // check for session Id in hash
   const sessionId = window.location.hash.substr(1);
-  if (sessionId) {
+  if (sessionId && sessionId !== store.state.session.sessionId) {
     store.commit("session/setSpectator", true);
     store.commit("session/setSessionId", sessionId);
     store.commit("toggleGrimoire", false);
