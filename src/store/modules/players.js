@@ -104,7 +104,7 @@ const mutations = {
   },
   /**
   The update mutation also has a property for isFromSockets
-  this property can be addded to payload object for any mutations
+  this property can be added to payload object for any mutations
   then can be used to prevent infinite loops when a property is
   able to be set from multiple different session on websockets.
   An example of this is in the sendPlayerPronouns and _updatePlayerPronouns
