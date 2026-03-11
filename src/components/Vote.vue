@@ -412,6 +412,24 @@ export default {
   }
 }
 
+@keyframes show {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes hide {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .countdown {
   display: flex;
   position: absolute;
@@ -440,6 +458,33 @@ export default {
   }
   span:nth-child(4) {
     animation: countdown-go 1100ms normal forwards 3000ms;
+  }
+}
+
+#app.static .countdown {
+  span:nth-child(1) {
+    color: $townsfolk;
+    animation:
+      show 0ms normal forwards 0ms,
+      hide 0ms normal forwards 1000ms !important;
+  }
+  span:nth-child(2) {
+    color: $townsfolk;
+    animation:
+      show 0ms normal forwards 1000ms,
+      hide 0ms normal forwards 2000ms !important;
+  }
+  span:nth-child(3) {
+    color: $townsfolk;
+    animation:
+      show 0ms normal forwards 2000ms,
+      hide 0ms normal forwards 3000ms !important;
+  }
+  span:nth-child(4) {
+    color: $demon;
+    animation:
+      show 0ms normal forwards 3000ms,
+      hide 0ms normal forwards 4000ms !important;
   }
 }
 </style>
