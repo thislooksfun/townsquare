@@ -128,19 +128,17 @@
 
       <transition name="fold">
         <ul class="menu" v-if="isMenuOpen" v-on-click-outside="menuClickConfig">
-          <li
-            @click="changePronouns"
-            v-if="
-              !session.isSpectator ||
-              (session.isSpectator && player.id === session.playerId)
-            "
+          <template
+            v-if="!session.isSpectator || player.id === session.playerId"
           >
-            <font-awesome-icon icon="venus-mars" />Change Pronouns
-          </li>
-          <template v-if="!session.isSpectator">
             <li @click="changeName">
-              <font-awesome-icon icon="user-edit" />Rename
+              <font-awesome-icon icon="user-edit" />Change Name
             </li>
+            <li @click="changePronouns">
+              <font-awesome-icon icon="venus-mars" />Change Pronouns
+            </li>
+          </template>
+          <template v-if="!session.isSpectator">
             <li @click="movePlayer()" :class="{ disabled: session.lockedVote }">
               <font-awesome-icon icon="redo-alt" />
               Move player
@@ -173,11 +171,11 @@
             :class="{ disabled: player.id && player.id !== session.playerId }"
           >
             <font-awesome-icon icon="chair" />
-            <template v-if="!player.id"> Claim seat </template>
-            <template v-else-if="player.id === session.playerId">
-              Vacate seat
-            </template>
-            <template v-else> Seat occupied</template>
+            <template v-if="!player.id">Claim seat</template>
+            <template v-else-if="player.id === session.playerId"
+              >Vacate seat</template
+            >
+            <template v-else>Seat occupied</template>
           </li>
         </ul>
       </transition>
@@ -316,13 +314,22 @@ export default {
     };
   },
   methods: {
+    changeName() {
+      if (this.session.isSpectator && this.player.id !== this.session.playerId)
+        return;
+      const name = prompt("Enter name", this.player.name) || this.player.name;
+      // Null return means the prompt was cancelled
+      if (name !== null) {
+        this.updatePlayer("name-pronouns", { name }, true);
+      }
+    },
     changePronouns() {
       if (this.session.isSpectator && this.player.id !== this.session.playerId)
         return;
-      const pronouns = prompt("Player pronouns", this.player.pronouns);
-      //Only update pronouns if not null (prompt was not cancelled)
+      const pronouns = prompt("Enter pronouns", this.player.pronouns);
+      // Null return means the prompt was cancelled
       if (pronouns !== null) {
-        this.updatePlayer("pronouns", pronouns, true);
+        this.updatePlayer("name-pronouns", { pronouns }, true);
       }
     },
     toggleStatus() {
@@ -359,11 +366,6 @@ export default {
       this.isMenuOpen = false;
       this.$emit("trigger", ["quickNominate", false]);
     },
-    changeName() {
-      if (this.session.isSpectator) return;
-      const name = prompt("Player name", this.player.name) || this.player.name;
-      this.updatePlayer("name", name, true);
-    },
     removeReminder(reminder) {
       if (this.session.isCohost) return;
       const reminders = [...this.player.reminders];
@@ -373,8 +375,7 @@ export default {
     updatePlayer(property, value, closeMenu = false) {
       if (
         this.session.isSpectator &&
-        property !== "reminders" &&
-        property !== "pronouns"
+        !["reminders", "name-pronouns"].includes(property)
       )
         return;
       this.$store.commit("players/update", {

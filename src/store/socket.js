@@ -225,8 +225,8 @@ class LiveSession {
       case "bye":
         this._handleBye(params);
         break;
-      case "pronouns":
-        this._updatePlayerPronouns(params);
+      case "name-pronouns":
+        this._updatePlayerNamePronouns(params);
         break;
     }
   }
@@ -596,38 +596,58 @@ class LiveSession {
   }
 
   /**
-   * Publish a player pronouns update
+   * Publish a player name/pronouns update
    * @param player
    * @param value
    * @param isFromSockets
    */
-  sendPlayerPronouns({ player, value, isFromSockets }) {
-    //send pronoun only for the seated player or storyteller
-    //Do not re-send pronoun data for an update that was recieved from the sockets layer
+  sendPlayerNamePronouns({ player, value, isFromSockets }) {
+    // Send name/pronouns only for the seated player or storyteller. Do not
+    // re-send name/pronouns data for an update that was received from the
+    // sockets layer
     if (
       isFromSockets ||
       (this._isSpectator && this._store.state.session.playerId !== player.id)
     )
       return;
     const index = this._store.state.players.players.indexOf(player);
-    this._send("pronouns", [index, value]);
+    this._send("name-pronouns", [index, value]);
   }
 
   /**
-   * Update a pronouns based on incoming data.
+   * Update a player's name and/or pronouns based on incoming data.
    * @param index
    * @param value
    * @private
    */
-  _updatePlayerPronouns([index, value]) {
+  _updatePlayerNamePronouns([index, value]) {
     const player = this._store.state.players.players[index];
 
-    this._store.commit("players/update", {
-      player,
-      property: "pronouns",
+    const { name, pronouns } = value;
+    console.log("Updating player name/pronouns", {
+      index,
+      name,
+      pronouns,
       value,
-      isFromSockets: true,
     });
+
+    if (name) {
+      this._store.commit("players/update", {
+        player,
+        property: "name",
+        value: name,
+        isFromSockets: true,
+      });
+    }
+
+    if (pronouns !== null) {
+      this._store.commit("players/update", {
+        player,
+        property: "pronouns",
+        value: pronouns,
+        isFromSockets: true,
+      });
+    }
   }
 
   /**
@@ -1027,8 +1047,8 @@ export default (store) => {
         session.updateCohosts();
         break;
       case "players/update":
-        if (payload.property === "pronouns") {
-          session.sendPlayerPronouns(payload);
+        if (payload.property === "name-pronouns") {
+          session.sendPlayerNamePronouns(payload);
         } else {
           session.sendPlayer(payload);
         }
