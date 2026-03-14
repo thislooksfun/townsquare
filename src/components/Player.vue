@@ -174,7 +174,7 @@
           <li
             @click="claimSeat"
             v-if="session.isSpectator"
-            :class="{ disabled: player.id && player.id !== session.playerId }"
+            :class="{ disabled: player.id && !isCurrentSeat }"
           >
             <font-awesome-icon icon="chair" />
             <template v-if="!player.id">Move to seat</template>
@@ -437,6 +437,7 @@ export default {
       this.$emit("trigger", ["cancel"]);
     },
     claimSeat() {
+      if (this.player.id && !this.isCurrentSeat) return;
       this.closeMenu();
       this.$emit("trigger", ["claimSeat"]);
     },
