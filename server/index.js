@@ -9,7 +9,7 @@ register.setDefaultLabels({
   app: "clocktower-online",
 });
 
-const PING_INTERVAL = 30000; // 30 seconds
+const PING_INTERVAL = 2 * 1000; // 2 seconds
 
 const options = {};
 
@@ -121,27 +121,43 @@ wss.on("connection", function connection(ws, req) {
   ws.isAlive = true;
   ws.pingStart = Date.now();
   ws.counter = 0;
+  ws.misbehaved = 0;
   // add channel to list
   if (!channels[ws.channel]) {
     channels[ws.channel] = [];
   }
   channels[ws.channel].push(ws);
+
+  function disconnectSpam() {
+    console.log(ws.channel, "disconnecting user due to spam");
+    ws.close(
+      1000,
+      "Your app seems to be malfunctioning, please clear your browser cache.",
+    );
+    metrics.connection_terminated_spam.inc();
+  }
+
   // start ping pong
   ws.ping(noop);
   ws.on("pong", heartbeat);
   // handle message
   ws.on("message", function incoming(data) {
     metrics.messages_incoming.inc();
-    // check rate limit (max 5msg/second)
     ws.counter++;
-    if (ws.counter > (5 * PING_INTERVAL) / 1000) {
-      console.log(ws.channel, "disconnecting user due to spam");
-      ws.close(
-        1000,
-        "Your app seems to be malfunctioning, please clear your browser cache.",
-      );
-      metrics.connection_terminated_spam.inc();
+    // Immediately disconnect clients if they exceed 150msgs/second.
+    if (ws.counter > (150 * PING_INTERVAL) / 1000) {
+      disconnectSpam();
       return;
+    }
+    // Disconnect clients if they exceed 50msgs/second three times in a row.
+    else if (ws.counter > (50 * PING_INTERVAL) / 1000) {
+      ws.misbehaved++;
+      if (ws.misbehaved >= 3) {
+        disconnectSpam();
+        return;
+      }
+    } else {
+      ws.misbehaved = Math.max(0, ws.misbehaved - 1);
     }
     const messageType = data.toLocaleLowerCase().substr(1).split(",", 1).pop();
     switch (messageType) {
