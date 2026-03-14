@@ -2,7 +2,11 @@ const knownTeams = ["townsfolk", "outsider", "minion", "demon", "fabled"];
 
 function imageForRole(roleOrReminder, grimoire) {
   if (roleOrReminder.image && grimoire.isImageOptIn) {
-    return roleOrReminder.image;
+    if (Array.isArray(roleOrReminder.image)) {
+      return roleOrReminder.image[0];
+    } else {
+      return roleOrReminder.image;
+    }
   }
 
   const roleId = roleOrReminder.role || roleOrReminder.id;
