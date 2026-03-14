@@ -127,7 +127,7 @@
 
       <transition name="fold">
         <ul class="menu" v-if="isMenuOpen" v-on-click-outside="menuClickConfig">
-          <template v-if="player.id && (!session.isSpectator || isCurrentSeat)">
+          <template v-if="isCurrentSeat">
             <li @click="changeName">
               <font-awesome-icon icon="user-edit" />Change Name
             </li>
