@@ -129,10 +129,14 @@
         <ul class="menu" v-if="isMenuOpen" v-on-click-outside="menuClickConfig">
           <template v-if="isCurrentSeat">
             <li @click="changeName">
-              <font-awesome-icon icon="user-edit" />Change Name
+              <font-awesome-icon icon="user-edit" />{{
+                player.name ? "Change name" : "Set name"
+              }}
             </li>
             <li @click="changePronouns">
-              <font-awesome-icon icon="venus-mars" />Change Pronouns
+              <font-awesome-icon icon="venus-mars" />{{
+                player.pronouns ? "Change pronouns" : "Set pronouns"
+              }}
             </li>
           </template>
           <template v-if="!session.isSpectator">
