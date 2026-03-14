@@ -117,6 +117,12 @@
         }"
       >
         <font-awesome-icon icon="chair" class="seat-warning" />
+        <font-awesome-icon
+          v-if="player.id && player.timedOut"
+          icon="hourglass-half"
+          class="timeout-warning"
+        />
+
         <span class="name">{{
           player.id ? player.name : `Seat ${index + 1}`
         }}</span>
@@ -894,16 +900,20 @@ li.move:not(.from) .player .overlay svg.move {
     opacity: 0.5;
   }
 
-  .seat-warning {
+  .seat-warning,
+  .timeout-warning {
     position: absolute;
     top: 0;
     left: 8px;
     height: 100%;
     font-size: 0.75em;
-    opacity: 0;
     transition: opacity 250ms;
     pointer-events: none;
+  }
+
+  .seat-warning {
     color: $demon;
+    opacity: 0;
   }
 
   .pronouns {

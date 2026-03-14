@@ -5,6 +5,7 @@ const NEWPLAYER = {
   reminders: [],
   isVoteless: false,
   isDead: false,
+  timedOut: false,
   pronouns: "",
 };
 
@@ -95,10 +96,12 @@ const actions = {
     commit("update", { player, property: "id", value: undefined });
     commit("update", { player, property: "name", value: "" });
     commit("update", { player, property: "pronouns", value: "" });
+    commit("update", { player, property: "timedOut", value: false });
   },
   disconnect({ state, commit }) {
     state.players.forEach((player) => {
       commit("update", { player, property: "id", value: undefined });
+      commit("update", { player, property: "timedOut", value: false });
     });
   },
 };

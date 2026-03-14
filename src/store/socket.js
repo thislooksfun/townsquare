@@ -7,7 +7,7 @@ class LiveSession {
     this._isCohost = false;
     this._gamestate = [];
     this._store = store;
-    this._pingInterval = 5 * 1000;
+    this._pingInterval = 2 * 1000;
     this._pingTimer = null;
     this._reconnectTimer = null;
     this._players = {}; // map of players connected to a session
@@ -672,13 +672,14 @@ class LiveSession {
           playersChanged = true;
         }
       }
-      // remove claimed seats from players that are no longer connected
+      // Marked timed out players as having timed out
       this._store.state.players.players.forEach((player) => {
-        if (player.id && !this._players[player.id]) {
+        const timedOut = player.id && !this._players[player.id];
+        if (player.timedOut !== timedOut) {
           this._store.commit("players/update", {
             player,
-            property: "id",
-            value: "",
+            property: "timedOut",
+            value: timedOut,
           });
         }
       });
