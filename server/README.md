@@ -1,4 +1,5 @@
 ## Live session server
+
 This is the home of the NodeJS live session backend.
 It allows a Storyteller and their player to communicate through
 a Websocket interface with each other.

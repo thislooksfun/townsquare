@@ -32,7 +32,19 @@
     "author": "The Pandemonium Institute",
     "description": "",
     "level": "Veteran",
-    "roles": ["balloonist", "savant", "amnesiac", "fisherman", "artist", "cannibal", "mutant", "lunatic", "widow", "goblin", "leviathan"],
+    "roles": [
+      "balloonist",
+      "savant",
+      "amnesiac",
+      "fisherman",
+      "artist",
+      "cannibal",
+      "mutant",
+      "lunatic",
+      "widow",
+      "goblin",
+      "leviathan"
+    ],
     "isOfficial": true
   }
 ]
