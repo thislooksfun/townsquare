@@ -400,6 +400,7 @@ export default {
         this.$store.commit("session/setSpectator", false);
         this.$store.commit("session/setCohost", false);
         this.$store.commit("session/setSessionId", "");
+        this.$store.dispatch("players/disconnect");
       }
     },
     addPlayers() {

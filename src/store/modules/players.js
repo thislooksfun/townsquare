@@ -96,6 +96,11 @@ const actions = {
     commit("update", { player, property: "name", value: "" });
     commit("update", { player, property: "pronouns", value: "" });
   },
+  disconnect({ state, commit }) {
+    state.players.forEach((player) => {
+      commit("update", { player, property: "id", value: undefined });
+    });
+  },
 };
 
 const mutations = {
