@@ -880,6 +880,10 @@ li.move:not(.from) .player .overlay svg.move {
   .name {
     white-space: nowrap;
   }
+  &:hover .name {
+    color: $demon;
+    opacity: 1 !important;
+  }
 
   &.highlight .name {
     animation-iteration-count: 1;
