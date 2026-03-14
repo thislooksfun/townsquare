@@ -120,9 +120,11 @@
         <span class="name">{{
           player.id ? player.name : `Seat ${index + 1}`
         }}</span>
-        <span v-if="!player.id || player.pronouns" class="pronouns">{{
-          player.id ? player.pronouns : "Click to claim"
-        }}</span>
+        <span
+          v-if="player.id ? player.pronouns : session.isSpectator"
+          class="pronouns"
+          >{{ player.id ? player.pronouns : "Click to claim" }}</span
+        >
       </div>
 
       <transition name="fold">
