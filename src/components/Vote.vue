@@ -25,12 +25,12 @@
         <div v-if="!session.isVoteInProgress && session.lockedVote < 1">
           Time per player:
           <font-awesome-icon
-            @mousedown.prevent="setVotingSpeed(-500)"
+            @mousedown.prevent="setVotingSpeed(-100)"
             icon="minus-circle"
           />
           {{ session.votingSpeed / 1000 }}s
           <font-awesome-icon
-            @mousedown.prevent="setVotingSpeed(500)"
+            @mousedown.prevent="setVotingSpeed(100)"
             icon="plus-circle"
           />
         </div>
