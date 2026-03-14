@@ -28,17 +28,7 @@
           <span
             class="icon"
             v-if="role.id"
-            :style="{
-              backgroundImage: `url(${
-                role.image && grimoire.isImageOptIn
-                  ? role.image
-                  : require(
-                      '../../assets/icons/' +
-                        (role.imageAlt || role.id) +
-                        '.png',
-                    )
-              })`,
-            }"
+            :style="{ backgroundImage: `url(${imageForRole(role)})` }"
           ></span>
           <div class="role">
             <span class="player" v-if="Object.keys(playersByRole).length">{{
@@ -92,6 +82,7 @@
 <script>
 import Modal from "./Modal";
 import { mapMutations, mapState } from "vuex";
+import { imageForRole } from "../../utils";
 
 export default {
   components: {
@@ -147,6 +138,9 @@ export default {
   },
   methods: {
     ...mapMutations(["toggleModal"]),
+    imageForRole(role) {
+      return imageForRole(role, this.grimoire);
+    },
   },
 };
 </script>

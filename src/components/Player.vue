@@ -195,17 +195,7 @@
       >
         <span
           class="icon"
-          :style="{
-            backgroundImage: `url(${
-              reminder.image && grimoire.isImageOptIn
-                ? reminder.image
-                : require(
-                    '../assets/icons/' +
-                      (reminder.imageAlt || reminder.role) +
-                      '.png',
-                  )
-            })`,
-          }"
+          :style="{ backgroundImage: `url(${imageForRole(reminder)})` }"
         ></span>
         <span class="text">{{ reminder.name }}</span>
       </div>
@@ -225,6 +215,7 @@
 import Token from "./Token";
 import { mapGetters, mapState } from "vuex";
 import { vOnClickOutside } from "@vueuse/components";
+import { imageForRole } from "../utils";
 
 const alignmentMap = {
   townsfolk: "good",
@@ -380,6 +371,9 @@ export default {
       } else {
         this.openMenu();
       }
+    },
+    imageForRole(role) {
+      return imageForRole(role, this.grimoire);
     },
     openMenu() {
       if (this.session.isCohost) return;

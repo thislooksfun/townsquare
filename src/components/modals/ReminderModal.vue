@@ -14,17 +14,7 @@
       >
         <span
           class="icon"
-          :style="{
-            backgroundImage: `url(${
-              reminder.image && grimoire.isImageOptIn
-                ? reminder.image
-                : require(
-                    '../../assets/icons/' +
-                      (reminder.imageAlt || reminder.role) +
-                      '.png',
-                  )
-            })`,
-          }"
+          :style="{ backgroundImage: `url(${imageForRole(reminder)})` }"
         ></span>
         <span class="text">{{ reminder.name }}</span>
       </li>
@@ -35,20 +25,16 @@
 <script>
 import Modal from "./Modal";
 import { mapMutations, mapState } from "vuex";
+import { imageForRole } from "../../utils";
 
 /**
  * Helper function that maps a reminder name with a role-based object that provides necessary visual data.
  * @param role The role for which the reminder should be generated
- * @return {function(*): {image: string|string[]|string|*, role: *, name: *, imageAlt: string|*}}
+ * @return {function(*): {image: string|string[]|string|*, role: *, name: *}}
  */
 const mapReminder =
-  ({ id, image, imageAlt }) =>
-  (name) => ({
-    role: id,
-    image,
-    imageAlt,
-    name,
-  });
+  ({ id, image }) =>
+  (name) => ({ role: id, image, name });
 
 export default {
   components: { Modal },
@@ -113,6 +99,9 @@ export default {
       this.$store.commit("toggleModal", "reminder");
     },
     ...mapMutations(["toggleModal"]),
+    imageForRole(role) {
+      return imageForRole(role, this.grimoire);
+    },
   },
 };
 </script>

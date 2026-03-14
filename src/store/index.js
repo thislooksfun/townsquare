@@ -241,14 +241,6 @@ export default new Vuex.Store({
         // default empty icons and placeholders, clean up firstNight / otherNight
         .map((role) => {
           if (rolesJSONbyId.get(role.id)) return role;
-          role.imageAlt = // map team to generic icon
-            {
-              townsfolk: "good",
-              outsider: "outsider",
-              minion: "minion",
-              demon: "evil",
-              fabled: "fabled",
-            }[role.team] || "custom";
           role.firstNight = Math.abs(role.firstNight);
           role.otherNight = Math.abs(role.otherNight);
           return role;

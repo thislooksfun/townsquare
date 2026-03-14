@@ -3,13 +3,7 @@
     <span
       class="icon"
       v-if="role.id"
-      :style="{
-        backgroundImage: `url(${
-          role.image && grimoire.isImageOptIn
-            ? role.image
-            : require('../assets/icons/' + (role.imageAlt || role.id) + '.png')
-        })`,
-      }"
+      :style="{ backgroundImage: `url(${imageForRole(role)})` }"
     ></span>
     <span
       class="leaf-left"
@@ -48,6 +42,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { imageForRole } from "../utils";
 
 export default {
   name: "Token",
@@ -73,6 +68,9 @@ export default {
     nameToFontSize: (name) => (name && name.length > 10 ? "90%" : "110%"),
   },
   methods: {
+    imageForRole(role) {
+      return imageForRole(role, this.grimoire);
+    },
     setRole() {
       this.$emit("set-role");
     },
