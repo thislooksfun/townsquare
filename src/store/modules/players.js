@@ -116,6 +116,7 @@ const mutations = {
   in socket.js.
    */
   update(state, { player, property, value }) {
+    if (property === "name-pronouns") return;
     const index = state.players.indexOf(player);
     if (index >= 0) {
       state.players[index][property] = value;
