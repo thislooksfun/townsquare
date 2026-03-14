@@ -1052,12 +1052,12 @@ li.move:not(.from) .player .overlay svg.move {
     background-size: 100%;
     background-position: center 0;
     background-repeat: no-repeat;
-    background-image: url("../assets/icons/plus.png");
+    background-image: url("../assets/plus.png");
     transition: opacity 200ms;
   }
 
   &:after {
-    background-image: url("../assets/icons/x.png");
+    background-image: url("../assets/x.png");
     opacity: 0;
     top: 5%;
   }
