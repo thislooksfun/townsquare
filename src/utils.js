@@ -14,7 +14,7 @@ function imageForRole(roleOrReminder, grimoire) {
     if (knownTeams.includes(roleOrReminder.team)) {
       return require(`./assets/icons/${roleOrReminder.team}.png`);
     } else {
-      return require("./assets/icons/custom.png");
+      return require("./assets/custom.png");
     }
   }
 }
