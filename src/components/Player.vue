@@ -856,6 +856,7 @@ li.move:not(.from) .player .overlay svg.move {
   line-height: 1em;
   cursor: pointer;
   width: 120%;
+  height: 1.75em;
   background: rgba(0, 0, 0, 0.5);
   border: 3px solid black;
   border-radius: 10px;
@@ -874,7 +875,6 @@ li.move:not(.from) .player .overlay svg.move {
     text-overflow: ellipsis;
     white-space: nowrap;
     text-align: center;
-    flex-grow: 1;
   }
 
   .name {
