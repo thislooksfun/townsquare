@@ -891,7 +891,7 @@ li.move:not(.from) .player .overlay svg.move {
   }
 
   &.empty .name {
-    opacity: 0.75;
+    opacity: 0.5;
   }
 
   .seat-warning {
@@ -914,6 +914,9 @@ li.move:not(.from) .player .overlay svg.move {
     margin-bottom: 4px;
 
     opacity: 0.75;
+  }
+  &.empty .pronouns {
+    opacity: 0.5;
   }
 
   .cohost & {
