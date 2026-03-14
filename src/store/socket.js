@@ -37,7 +37,7 @@ class LiveSession {
     this._socket.onerror = (err) => {
       this._store.commit("session/setConnecting", false);
       this._store.commit("session/setConnectionErrored", true);
-      console.err("Socket error", err);
+      console.error("Socket error", err);
     };
     this._socket.onopen = this._onOpen.bind(this);
     this._socket.onclose = (err) => {
