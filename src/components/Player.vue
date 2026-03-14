@@ -148,10 +148,7 @@
               <font-awesome-icon icon="times-circle" />
               Remove
             </li>
-            <li
-              @click="updatePlayer('id', '', true)"
-              v-if="player.id && session.sessionId"
-            >
+            <li @click="emptySeat" v-if="player.id && session.sessionId">
               <font-awesome-icon icon="chair" />
               Empty seat
             </li>
@@ -336,6 +333,11 @@ export default {
           this.$store.commit("setPlayerPronouns", pronouns);
         }
       }
+    },
+    emptySeat() {
+      console.log("emptying seat");
+      this.$store.dispatch("players/reset", this.player);
+      this.closeMenu();
     },
     toggleStatus() {
       if (this.grimoire.isPublic) {

@@ -91,6 +91,11 @@ const actions = {
     commit("set", players);
     commit("setBluff");
   },
+  reset({ commit }, player) {
+    commit("update", { player, property: "id", value: undefined });
+    commit("update", { player, property: "name", value: "" });
+    commit("update", { player, property: "pronouns", value: "" });
+  },
 };
 
 const mutations = {

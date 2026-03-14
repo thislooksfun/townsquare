@@ -765,11 +765,7 @@ class LiveSession {
     // remove previous seat
     const oldIndex = players.findIndex(({ id }) => id === value);
     if (oldIndex >= 0 && oldIndex !== index) {
-      this._store.commit("players/update", {
-        player: players[oldIndex],
-        property,
-        value: "",
-      });
+      this._store.dispatch("players/reset", players[oldIndex]);
     }
     // add playerId to new seat
     if (index >= 0) {
