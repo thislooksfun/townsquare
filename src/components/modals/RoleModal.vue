@@ -8,7 +8,7 @@
           : "bluffing"
       }}
     </h3>
-    <ul class="tokens" v-if="tab === 'editionRoles' || !otherTravellers.size">
+    <ul class="tokens" v-if="tab === 'editionRoles'">
       <li
         v-for="role in availableRoles"
         :class="[role.team]"
@@ -18,7 +18,17 @@
         <Token :role="role" />
       </li>
     </ul>
-    <ul class="tokens" v-if="tab === 'otherTravellers' && otherTravellers.size">
+    <ul class="tokens" v-if="tab === 'genericRoles'">
+      <li
+        v-for="role in genericRoles"
+        :class="[role.team]"
+        :key="role.id"
+        @click="setRole(role)"
+      >
+        <Token :role="role" />
+      </li>
+    </ul>
+    <ul class="tokens" v-if="tab === 'otherTravellers'">
       <li
         v-for="role in otherTravellers.values()"
         :class="[role.team]"
@@ -28,10 +38,7 @@
         <Token :role="role" />
       </li>
     </ul>
-    <div
-      class="button-group"
-      v-if="playerIndex >= 0 && otherTravellers.size && !session.isSpectator"
-    >
+    <div class="button-group" v-if="playerIndex >= 0">
       <span
         class="button"
         :class="{ townsfolk: tab === 'editionRoles' }"
@@ -40,6 +47,13 @@
       >
       <span
         class="button"
+        :class="{ townsfolk: tab === 'genericRoles' }"
+        @click="tab = 'genericRoles'"
+        >Generic Roles</span
+      >
+      <span
+        class="button"
+        v-if="otherTravellers.size && !session.isSpectator"
         :class="{ townsfolk: tab === 'otherTravellers' }"
         @click="tab = 'otherTravellers'"
         >Other Travellers</span
@@ -52,6 +66,8 @@
 import { mapMutations, mapState } from "vuex";
 import Modal from "./Modal";
 import Token from "../Token";
+import { upperFirst } from "lodash-es";
+import { setupRole } from "../../utils";
 
 export default {
   components: { Token, Modal },
@@ -72,6 +88,20 @@ export default {
       });
       availableRoles.push({});
       return availableRoles;
+    },
+    genericRoles() {
+      const teams = new Set();
+      this.roles.forEach((role) => teams.add(role.team));
+      teams.delete("traveller");
+
+      const genericRoles = [setupRole({ id: "good", name: "Good" })];
+      teams.forEach((team) => {
+        genericRoles.push(
+          setupRole({ team, id: team, name: upperFirst(team) }),
+        );
+      });
+      genericRoles.push(setupRole({ id: "evil", name: "Evil" }));
+      return genericRoles;
     },
     ...mapState(["modals", "roles", "session"]),
     ...mapState("players", ["players"]),
