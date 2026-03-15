@@ -1,0 +1,3 @@
+[submodule "src/assets/icons"]
+	path = src/assets/icons
+	url = git@github.com:tomozbot/botc-icons.git
