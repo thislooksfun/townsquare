@@ -274,6 +274,10 @@
               </a>
             </em>
           </li>
+          <li @click="nukeAppState">
+            Reset app
+            <em><font-awesome-icon icon="radiation" /></em>
+          </li>
         </template>
       </ul>
     </div>
@@ -448,6 +452,16 @@ export default {
       this.$store.commit("toggleNight");
       if (this.grimoire.isNight) {
         this.$store.commit("session/setMarkedPlayer", -1);
+      }
+    },
+    nukeAppState() {
+      if (
+        confirm(
+          "This will reset ALL your app data, including sessions, players, and settings. Are you sure?",
+        )
+      ) {
+        localStorage.clear();
+        window.location = window.location.href.split("#")[0];
       }
     },
     ...mapMutations([
