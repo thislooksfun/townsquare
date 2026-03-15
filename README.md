@@ -6,6 +6,8 @@ This is an **unofficial** online tool to run Blood on the Clocktower games throu
 
 [You can try it online!](https://botc.thislooks.fun)
 
+> [!NOTE]
+> This is a companion app tuned for me and my friends, NOT a standalone playing experience. The only inter-player communication built into this app is displaying player's names and pronouns, and simple hand raising. This app DOES NOT and WILL NEVER include any in-built text, voice, or video chat. If you want an all-in-one solution, use the [official Blood on the Clocktower app](https://botc.app).
 
 ### How to host a game
 
