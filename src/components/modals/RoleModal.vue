@@ -4,7 +4,7 @@
       Choose a new character for
       {{
         playerIndex >= 0 && players.length
-          ? players[playerIndex].name
+          ? players[playerIndex].name || `Seat ${playerIndex + 1}`
           : "bluffing"
       }}
     </h3>

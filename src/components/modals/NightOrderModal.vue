@@ -32,7 +32,8 @@
                 :class="{ dead: player.isDead }"
                 :key="index"
                 >{{
-                  player.name + (role.players.length > index + 1 ? "," : "")
+                  (player.name || `Seat ${index + 1}`) +
+                  (role.players.length > index + 1 ? "," : "")
                 }}</small
               >
             </span>
@@ -68,7 +69,8 @@
                 :class="{ dead: player.isDead }"
                 :key="index"
                 >{{
-                  player.name + (role.players.length > index + 1 ? "," : "")
+                  (player.name || `Seat ${index + 1}`) +
+                  (role.players.length > index + 1 ? "," : "")
                 }}</small
               >
             </span>

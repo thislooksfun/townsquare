@@ -185,7 +185,9 @@ export default {
       if (this.session.isSpectator || this.session.lockedVote) return;
       if (
         confirm(
-          `Do you really want to remove ${this.players[playerIndex].name}?`,
+          `Do you really want to remove ${
+            this.players[playerIndex].name || `Seat ${playerIndex + 1}`
+          }?`,
         )
       ) {
         const { nomination } = this.session;

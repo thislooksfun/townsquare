@@ -86,15 +86,19 @@ const mutations = {
     const isExile = players[state.nomination[1]].role.team === "traveler";
     state.voteHistory.push({
       timestamp: new Date(),
-      nominator: players[state.nomination[0]].name,
-      nominee: players[state.nomination[1]].name,
+      // TODO: Make these dynamic at render time, not at vote time.
+      nominator:
+        players[state.nomination[0]].name || `Seat ${state.nomination[0] + 1}`,
+      nominee:
+        players[state.nomination[1]].name || `Seat ${state.nomination[1] + 1}`,
       type: isExile ? "Exile" : "Execution",
       majority: Math.ceil(
         players.filter((player) => !player.isDead || isExile).length / 2,
       ),
       votes: players
         .filter((player, index) => state.votes[index])
-        .map(({ name }) => name),
+        // TODO: Make this dynamic at render time, not at vote time.
+        .map(({ name }, index) => name || `Seat ${index + 1}`),
     });
   },
   clearVoteHistory(state) {

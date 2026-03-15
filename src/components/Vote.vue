@@ -175,7 +175,9 @@ export default {
       const voters = Array(this.players.length)
         .fill("")
         .map((x, index) =>
-          this.session.votes[index] ? this.players[index].name : "",
+          this.session.votes[index]
+            ? this.players[index].name || `Seat ${index + 1}`
+            : "",
         );
       const reorder = [
         ...voters.slice(nomination + 1),
