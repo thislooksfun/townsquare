@@ -6,7 +6,6 @@ This is an **unofficial** online tool to run Blood on the Clocktower games throu
 
 [You can try it online!](https://botc.thislooks.fun)
 
-If you want to learn more about how to use the app as a player, [JayBotC](https://www.youtube.com/channel/UCNZy-4Rp877XtTHaIZdWYFQ) kindly created two tutorial videos.
 
 ### How to host a game
 
