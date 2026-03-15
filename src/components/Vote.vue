@@ -16,7 +16,7 @@
         {{ voters.length }} vote{{ voters.length !== 1 ? "s" : "" }}
       </em>
       in favor
-      <em v-if="nominee.role.team !== 'traveler'">
+      <em v-if="nominee.role.team !== 'traveller'">
         (majority is {{ Math.ceil(alive / 2) }})
       </em>
       <em v-else>(majority is {{ Math.ceil(players.length / 2) }})</em>
@@ -57,7 +57,7 @@
           </template>
           <div class="button demon" @click="finish">Close</div>
         </div>
-        <div class="button-group mark" v-if="nominee.role.team !== 'traveler'">
+        <div class="button-group mark" v-if="nominee.role.team !== 'traveller'">
           <div
             class="button"
             :class="{
@@ -161,7 +161,7 @@ export default {
     },
     canVote: function () {
       if (!this.player) return false;
-      if (this.player.isVoteless && this.nominee.role.team !== "traveler")
+      if (this.player.isVoteless && this.nominee.role.team !== "traveller")
         return false;
       const session = this.session;
       const players = this.players.length;

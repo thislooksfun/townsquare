@@ -259,7 +259,7 @@ export default {
     alignmentMismatch: function () {
       if (!this.player.role.id) return null;
 
-      if (this.player.role.team === "traveler") {
+      if (this.player.role.team === "traveller") {
         return this.alignment === "alignmentUnknown";
       }
 
@@ -582,7 +582,7 @@ export default {
     }
   }
 
-  &.traveler .life {
+  &.traveller .life {
     filter: grayscale(100%);
   }
 }
@@ -597,13 +597,13 @@ export default {
     transform: perspective(400px) rotateY(0deg);
   }
 
-  &.traveler:not(.dead) .token {
+  &.traveller:not(.dead) .token {
     transform: perspective(400px) scale(0.8);
     pointer-events: none;
     transition-delay: 0s;
   }
 
-  &.traveler.dead .token {
+  &.traveller.dead .token {
     transition-delay: 0s;
   }
 }
@@ -656,13 +656,13 @@ export default {
 
 @include mismatchColor("alignment", "good", $townsfolk);
 @include mismatchColor("alignment", "evil", $demon);
-@include mismatchColor("alignment", "traveler", $traveler);
+@include mismatchColor("alignment", "traveller", $traveller);
 
 @include mismatchColor("team", "townsfolk", $townsfolk);
 @include mismatchColor("team", "outsider", $outsider);
 @include mismatchColor("team", "demon", $demon);
 @include mismatchColor("team", "minion", $minion);
-@include mismatchColor("team", "traveler", $traveler);
+@include mismatchColor("team", "traveller", $traveller);
 
 /****** Player choice icons *******/
 .player .overlay {
@@ -793,7 +793,7 @@ li.move:not(.from) .player .overlay svg.move {
 @include glow("outsider", $outsider);
 @include glow("demon", $demon);
 @include glow("minion", $minion);
-@include glow("traveler", $traveler);
+@include glow("traveller", $traveller);
 
 .player.you .token {
   animation: townsfolk-glow 5s ease-in-out infinite;

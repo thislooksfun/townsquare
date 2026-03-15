@@ -525,7 +525,7 @@ export default {
       display: none !important;
     }
     &.cohost {
-      color: $traveler;
+      color: $traveller;
     }
 
     &.standalone {
