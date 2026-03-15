@@ -145,10 +145,19 @@ export default {
 <style scoped lang="scss">
 @import "../../vars.scss";
 
+ul.tokens {
+  gap: 24px;
+  margin: 24px 0;
+  padding: 8px;
+  // FIXME: Make this relative to the containing element!
+  max-height: 66vh;
+  overflow-y: scroll;
+  align-content: flex-start;
+}
+
 ul.tokens li {
   border-radius: 50%;
   width: 100px;
-  margin: 1%;
   transition: transform 500ms ease;
 
   &.townsfolk {
