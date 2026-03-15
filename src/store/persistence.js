@@ -206,6 +206,7 @@ module.exports = (store) => {
         break;
       case "players/add":
       case "players/update":
+      case "players/setAlignment":
       case "players/remove":
       case "players/clear":
       case "players/set":

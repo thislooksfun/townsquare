@@ -8,13 +8,13 @@
       <li
         v-for="reminder in availableReminders"
         class="reminder"
-        :class="[reminder.role]"
-        :key="reminder.role + ' ' + reminder.name"
+        :class="[reminder.role.id]"
+        :key="reminder.role.id + ' ' + reminder.name"
         @click="addReminder(reminder)"
       >
         <span
           class="icon"
-          :style="{ backgroundImage: `url(${imageForRole(reminder)})` }"
+          :style="{ backgroundImage: `url(${imageForRole(reminder.role)})` }"
         ></span>
         <span class="text">{{ reminder.name }}</span>
       </li>
@@ -25,16 +25,11 @@
 <script>
 import Modal from "./Modal";
 import { mapMutations, mapState } from "vuex";
-import { imageForRole } from "../../utils";
+import { imageForRole, setupRole } from "../../utils";
 
-/**
- * Helper function that maps a reminder name with a role-based object that provides necessary visual data.
- * @param role The role for which the reminder should be generated
- * @return {function(*): {image: string|string[]|string|*, role: *, name: *}}
- */
-const mapReminder =
-  ({ id, image }) =>
-  (name) => ({ role: id, image, name });
+const customRole = setupRole("custom");
+
+const mapReminder = (role) => (name) => ({ role, name });
 
 export default {
   components: { Modal },
@@ -72,9 +67,7 @@ export default {
         }
       });
 
-      reminders.push({ role: "good", name: "Good" });
-      reminders.push({ role: "evil", name: "Evil" });
-      reminders.push({ role: "custom", name: "Custom note" });
+      reminders.push({ role: customRole, name: "Custom note" });
       return reminders;
     },
     ...mapState(["modals", "grimoire"]),
@@ -84,10 +77,10 @@ export default {
     addReminder(reminder) {
       const player = this.$store.state.players.players[this.playerIndex];
       let value;
-      if (reminder.role === "custom") {
+      if (reminder.role === customRole) {
         const name = prompt("Add a custom reminder note");
         if (!name) return;
-        value = [...player.reminders, { role: "custom", name }];
+        value = [...player.reminders, { role: customRole, name }];
       } else {
         value = [...player.reminders, reminder];
       }

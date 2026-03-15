@@ -1,34 +1,61 @@
-const knownTeams = [
-  "townsfolk",
-  "outsider",
-  "minion",
-  "demon",
-  "traveller",
-  "fabled",
-  "loric",
-];
+function loadIcon(name) {
+  return require(`./assets/icons/PNG/${name}.png`);
+}
 
-function imageForRole(roleOrReminder, grimoire) {
-  if (roleOrReminder.image && grimoire.isImageOptIn) {
-    if (Array.isArray(roleOrReminder.image)) {
-      return roleOrReminder.image[0];
-    } else {
-      return roleOrReminder.image;
-    }
-  }
-
-  const roleId = roleOrReminder.role || roleOrReminder.id;
-
+function tryLoad(...icons) {
   try {
-    return require(`./assets/icons/PNG/${roleId}.png`);
-  } catch (e) {
-    console.warn(`Couldn't find image for ${roleId}, using fallback`, e);
-    if (knownTeams.includes(roleOrReminder.team)) {
-      return require(`./assets/icons/PNG/${roleOrReminder.team}.png`);
-    } else {
-      return require("./assets/custom.png");
-    }
+    return icons.map(loadIcon);
+  } catch {
+    return undefined;
   }
 }
 
-export { imageForRole };
+function tryLoadSet(role) {
+  return (
+    tryLoad(role, `Alternate/${role}`) ??
+    tryLoad(role, `Alternate/${role}_g`, `Alternate/${role}_e`) ??
+    tryLoad(role)
+  );
+}
+
+function imagesForRole(role) {
+  return (
+    tryLoadSet(role.id) ??
+    tryLoadSet(role.team) ??
+    require("./assets/custom.png")
+  );
+}
+
+function setupRole(role) {
+  if (typeof role === "string") return setupRole({ id: role });
+
+  if (role.image) {
+    role.customImages = Array.isArray(role.image) ? role.image : [role.image];
+    delete role.image;
+  }
+
+  role.images = imagesForRole(role);
+
+  return role;
+}
+
+function resolveImages(role, grimoire) {
+  const images =
+    role.customImages && grimoire.isImageOptIn
+      ? role.customImages
+      : role.images;
+  return Array.isArray(images) ? images : [images];
+}
+
+function getAlignmentCount(role, grimoire) {
+  return resolveImages(role, grimoire).length;
+}
+
+function imageForRole(role, grimoire) {
+  console.log(`resolving image for role ${role.id}`, role);
+  const images = resolveImages(role, grimoire);
+  // TODO: Dynamically invert the image if there is only one!
+  return images[role.alignment ?? 0];
+}
+
+export { getAlignmentCount, imageForRole, setupRole };

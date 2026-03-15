@@ -9,13 +9,17 @@ import editionJSON from "../editions.json";
 import rolesJSON from "../roles.json";
 import fabledJSON from "../fabled.json";
 import jinxesJSON from "../hatred.json";
+import { setupRole } from "../utils";
 
 Vue.use(Vuex);
+
+const allRoles = rolesJSON.map(setupRole);
+const allFabled = fabledJSON.map(setupRole);
 
 // helper functions
 const getRolesByEdition = (edition = editionJSON[0]) => {
   return new Map(
-    rolesJSON
+    allRoles
       .filter((r) => r.edition === edition.id || edition.roles.includes(r.id))
       .sort((a, b) => b.team.localeCompare(a.team))
       .map((role) => [role.id, role]),
@@ -24,7 +28,7 @@ const getRolesByEdition = (edition = editionJSON[0]) => {
 
 const getTravellersNotInEdition = (edition = editionJSON[0]) => {
   return new Map(
-    rolesJSON
+    allRoles
       .filter(
         (r) =>
           r.team === "traveller" &&
@@ -57,7 +61,7 @@ const clean = (id) => id.toLocaleLowerCase().replace(/[^a-z0-9]/g, "");
 const editionJSONbyId = new Map(
   editionJSON.map((edition) => [edition.id, edition]),
 );
-const rolesJSONbyId = new Map(rolesJSON.map((role) => [role.id, role]));
+const rolesJSONbyId = new Map(allRoles.map((role) => [role.id, role]));
 const fabled = new Map(fabledJSON.map((role) => [role.id, role]));
 
 // jinxes
@@ -82,7 +86,9 @@ try {
 const customRole = {
   id: "",
   name: "",
-  image: "",
+  images: [],
+  customImages: undefined,
+  alignment: 0,
   ability: "",
   edition: "custom",
   firstNight: 0,
@@ -231,6 +237,7 @@ export default new Vuex.Store({
           role.id = clean(role.id);
           return role;
         })
+        .map(setupRole)
         // map existing roles to base definition or pre-populate custom roles to ensure all properties
         .map(
           (role) =>
@@ -260,11 +267,11 @@ export default new Vuex.Store({
         ...processedRoles
           .filter((r) => r.team === "fabled")
           .map((r) => [r.id, r]),
-        ...fabledJSON.map((role) => [role.id, role]),
+        ...allFabled.map((role) => [role.id, role]),
       ]);
       // update extraTravellers map to only show travellers not in this script
       state.otherTravellers = new Map(
-        rolesJSON
+        allRoles
           .filter(
             (r) => r.team === "traveller" && !roles.some((i) => i.id === r.id),
           )

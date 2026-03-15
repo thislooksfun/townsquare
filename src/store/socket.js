@@ -422,7 +422,7 @@ class LiveSession {
           this._store.commit("players/update", {
             player,
             property: "role",
-            value: role,
+            value: { ...role },
           });
         }
       } else if (!roleId && player.role.team === "traveller") {
@@ -590,7 +590,7 @@ class LiveSession {
         this._store.commit("players/update", {
           player,
           property: "role",
-          value: role,
+          value: { ...role },
         });
       }
     } else {

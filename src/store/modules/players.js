@@ -130,6 +130,15 @@ const mutations = {
       state.players[index][property] = value;
     }
   },
+  setAlignment(state, { player, alignment }) {
+    const index = state.players.indexOf(player);
+    if (index >= 0) {
+      state.players[index].role = {
+        ...state.players[index].role,
+        alignment,
+      };
+    }
+  },
   add(state, count = 1) {
     for (let i = 0; i < count; ++i) {
       state.players.push({ ...NEWPLAYER });

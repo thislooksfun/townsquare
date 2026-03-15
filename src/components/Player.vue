@@ -171,6 +171,10 @@
               </li>
             </template>
           </template>
+          <li v-if="player.role.id" @click="changeAlignment">
+            <font-awesome-icon icon="theater-masks" />
+            Change alignment
+          </li>
           <li
             @click="claimSeat"
             v-if="session.isSpectator"
@@ -188,14 +192,14 @@
     <template v-if="player.reminders">
       <div
         class="reminder"
-        :key="reminder.role + ' ' + reminder.name"
         v-for="reminder in player.reminders"
-        :class="[reminder.role]"
+        :key="reminder.role.id + ' ' + reminder.name"
+        :class="[reminder.role.id]"
         @click="removeReminder(reminder)"
       >
         <span
           class="icon"
-          :style="{ backgroundImage: `url(${imageForRole(reminder)})` }"
+          :style="{ backgroundImage: `url(${imageForRole(reminder.role)})` }"
         ></span>
         <span class="text">{{ reminder.name }}</span>
       </div>
@@ -215,7 +219,7 @@
 import Token from "./Token";
 import { mapGetters, mapState } from "vuex";
 import { vOnClickOutside } from "@vueuse/components";
-import { imageForRole } from "../utils";
+import { getAlignmentCount, imageForRole } from "../utils";
 
 const alignmentMap = {
   townsfolk: "good",
@@ -385,6 +389,20 @@ export default {
     closeMenu() {
       this.isMenuOpen = false;
       this.$emit("trigger", ["quickNominate", false]);
+    },
+    changeAlignment() {
+      const currentAlignment = this.player.role.alignment ?? 0;
+      const alignmentCount = getAlignmentCount(this.player.role, this.grimoire);
+      const nextAlignment = (currentAlignment + 1) % alignmentCount;
+      console.log(`changing alignment to ${nextAlignment}`, {
+        currentAlignment,
+        alignmentCount,
+      });
+      this.$store.commit("players/setAlignment", {
+        player: this.player,
+        alignment: nextAlignment,
+      });
+      this.closeMenu();
     },
     removeReminder(reminder) {
       if (this.session.isCohost) return;

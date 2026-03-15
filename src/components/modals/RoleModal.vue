@@ -97,7 +97,7 @@ export default {
         this.$store.commit("players/update", {
           player,
           property: "role",
-          value: role,
+          value: { ...role },
         });
       }
       this.tab = "editionRoles";
