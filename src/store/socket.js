@@ -1082,15 +1082,42 @@ export default (store) => {
     }
   });
 
-  // check for session Id in hash
-  const sessionId = window.location.hash.substr(1);
-  if (sessionId && sessionId !== store.state.session.sessionId) {
-    console.log(
-      "Found session ID in URL hash, connecting to session",
-      sessionId,
-    );
-    store.commit("session/setSpectator", true);
-    store.commit("session/setSessionId", sessionId);
-    store.commit("toggleGrimoire", false);
+  function updateSessionFromHash() {
+    // check for session Id in hash
+    const newId = window.location.hash.substr(1);
+    const oldId = store.state.session.sessionId;
+
+    function commit() {
+      store.commit("session/setSpectator", true);
+      store.commit("session/setSessionId", newId);
+      store.commit("toggleGrimoire", false);
+    }
+
+    function abort() {
+      // If the user aborted, restore the hash to the old session ID (if any).
+      window.location.hash = oldId || "";
+    }
+
+    if (newId === oldId) return;
+    if (!newId && !oldId) return;
+
+    if (oldId) {
+      // We're already connected, ask the user if they want to switch sessions.
+      const prompt = newId
+        ? `You are already connected to session ${oldId}. Do you want to switch to session ${newId}?`
+        : `Do you want to disconnect from session ${oldId}?`;
+
+      if (confirm(prompt)) {
+        commit();
+      } else {
+        abort();
+      }
+    } else {
+      // We're not connected yet, do so!
+      commit();
+    }
   }
+
+  window.addEventListener("hashchange", updateSessionFromHash);
+  updateSessionFromHash();
 };
