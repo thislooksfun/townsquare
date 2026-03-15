@@ -320,7 +320,7 @@ export default {
       let sessionId = prompt(
         "Enter the channel number / name of the session you want to co-host",
       );
-      if (sessionId.match(/^https?:\/\//i)) {
+      if (sessionId?.match(/^https?:\/\//i)) {
         sessionId = sessionId.split("#").pop();
       }
       if (sessionId) {
@@ -372,7 +372,7 @@ export default {
       let sessionId = prompt(
         "Enter the channel number / name of the session you want to join",
       );
-      if (sessionId.match(/^https?:\/\//i)) {
+      if (sessionId?.match(/^https?:\/\//i)) {
         sessionId = sessionId.split("#").pop();
       }
       if (sessionId) {
