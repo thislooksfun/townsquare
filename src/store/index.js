@@ -64,17 +64,17 @@ const editionJSONbyId = new Map(
 const rolesJSONbyId = new Map(allRoles.map((role) => [role.id, role]));
 const fabled = new Map(fabledJSON.map((role) => [role.id, role]));
 
-// jinxes
-let jinxes = {};
-try {
-  jinxes = new Map(
-    jinxesJSON.map(({ id, jinxes }) => [
-      clean(id),
-      new Map(jinxes.map(({ id, reason }) => [clean(id), reason])),
-    ]),
-  );
-} catch (e) {
-  console.error("couldn't load jinxes", e);
+const allJinxes = new Map();
+for (const [first, jinxes] of Object.entries(jinxesJSON)) {
+  if (!rolesJSONbyId.has(first))
+    throw new Error(`Jinx references nonexistent role '${first}'`);
+  const jinxMap = new Map();
+  for (const [second, jinx] of Object.entries(jinxes)) {
+    if (!rolesJSONbyId.has(second))
+      throw new Error(`Jinx references nonexistent role '${second}'`);
+    jinxMap.set(second, jinx);
+  }
+  allJinxes.set(first, jinxMap);
 }
 
 // base definition for custom roles
@@ -135,7 +135,7 @@ export default new Vuex.Store({
     roles: getRolesByEdition(),
     otherTravellers: getTravellersNotInEdition(),
     fabled,
-    jinxes,
+    jinxes: allJinxes,
   },
   getters: {
     /**
