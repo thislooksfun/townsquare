@@ -100,25 +100,12 @@ export default {
       if (this.players.length > 6) {
         rolesFirstNight.push(
           {
-            id: "evil",
-            name: "Minion info",
-            firstNight: 5,
-            team: "minion",
+            ...this.$store.getters.rolesJSONbyId.get("minioninfo"),
             players: this.players.filter((p) => p.role.team === "minion"),
-            firstNightReminder:
-              "• If more than one Minion, they all make eye contact with each other. " +
-              "• Show the “This is the Demon” card. Point to the Demon.",
           },
           {
-            id: "evil",
-            name: "Demon info & bluffs",
-            firstNight: 8,
-            team: "demon",
+            ...this.$store.getters.rolesJSONbyId.get("demoninfo"),
             players: this.players.filter((p) => p.role.team === "demon"),
-            firstNightReminder:
-              "• Show the “These are your minions” card. Point to each Minion. " +
-              "• Show the “These characters are not in play” card. Show 3 character tokens of good " +
-              "characters not in play.",
           },
         );
       }

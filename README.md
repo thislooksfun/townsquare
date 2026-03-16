@@ -91,7 +91,7 @@ This definition JSON includes a custom character, the Acrobat, and 2 base game c
 - **remindersGlobal**: global reminder tokens that will always be available, no matter if the character is assigned to a player or not
 - **setup**: whether this token affects setup (orange leaf), like the Drunk or Baron
 - **name**: the displayed name of this character
-- **team**: the team of the character, has to be one of `townsfolk`, `outsider`, `minion`, `demon`, `traveller` or `fabled`<br>
+- **team**: the team of the character, has to be one of `townsfolk`, `outsider`, `minion`, `demon`, `traveller`, `fabled`, or `loric`<br>
   _Note_: if you create a custom Fabled character, it will be automatically added to the game when the custom script is loaded
 - **ability**: the displayed ability text of the character
 
