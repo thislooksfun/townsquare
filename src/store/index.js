@@ -12,7 +12,10 @@ import { setupRole } from "../utils";
 
 Vue.use(Vuex);
 
-const allRoles = rolesJSON.map(setupRole);
+const allRoles = Object.entries(rolesJSON).map(([id, role]) =>
+  setupRole({ id, ...role }),
+);
+
 const allFabled = allRoles.filter((r) => r.team === "fabled");
 
 // helper functions
