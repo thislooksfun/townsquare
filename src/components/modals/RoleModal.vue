@@ -153,6 +153,7 @@ ul.tokens {
   max-height: 64vh;
   width: 100%;
   overflow-y: scroll;
+  overflow-x: hidden;
   align-content: flex-start;
 }
 
