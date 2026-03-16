@@ -1,7 +1,7 @@
 <template>
   <Modal
     class="vote-history"
-    v-if="modals.voteHistory && (session.voteHistory || !session.isSpectator)"
+    v-if="modals.voteHistory && (voteHistory.length || !session.isSpectator)"
     @close="toggleModal('voteHistory')"
   >
     <font-awesome-icon
@@ -47,31 +47,38 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(vote, index) in session.voteHistory" :key="index">
-          <td>
-            {{ vote.timestamp.getHours().toString().padStart(2, "0") }}:{{
-              vote.timestamp.getMinutes().toString().padStart(2, "0")
-            }}
-          </td>
-          <td>{{ vote.nominator }}</td>
-          <td>{{ vote.nominee }}</td>
-          <td>{{ vote.type }}</td>
-          <td>
-            {{ vote.votes.length }}
-            <font-awesome-icon icon="hand-paper" />
-          </td>
-          <td>
-            {{ vote.majority }}
-            <font-awesome-icon
-              :icon="[
-                'fas',
-                vote.votes.length >= vote.majority ? 'check-square' : 'square',
-              ]"
-            />
-          </td>
-          <td>
-            {{ vote.votes.join(", ") }}
-          </td>
+        <tr v-for="(vote, index) in voteHistory" :key="index">
+          <template v-if="vote.type === 'night'">
+            <td colspan="7" class="night-marker"><div class="line"></div></td>
+          </template>
+          <template v-else>
+            <td>
+              {{ vote.timestamp.getHours().toString().padStart(2, "0") }}:{{
+                vote.timestamp.getMinutes().toString().padStart(2, "0")
+              }}
+            </td>
+            <td>{{ vote.nominator }}</td>
+            <td>{{ vote.nominee }}</td>
+            <td style="text-transform: capitalize">{{ vote.type }}</td>
+            <td>
+              {{ vote.votes.length }}
+              <font-awesome-icon icon="hand-paper" />
+            </td>
+            <td>
+              {{ vote.majority }}
+              <font-awesome-icon
+                :icon="[
+                  'fas',
+                  vote.votes.length >= vote.majority
+                    ? 'check-square'
+                    : 'square',
+                ]"
+              />
+            </td>
+            <td>
+              {{ vote.votes.join(", ") }}
+            </td>
+          </template>
         </tr>
       </tbody>
     </table>
@@ -88,6 +95,22 @@ export default {
   },
   computed: {
     ...mapState(["session", "modals"]),
+    voteHistory() {
+      let history = this.session.voteHistory ?? [];
+      history = history.filter(
+        (entry, index, history) =>
+          // Filter out consecutive night markers
+          index === 0 ||
+          entry.type !== "night" ||
+          history[index - 1].type !== "night",
+      );
+
+      if (history.at(-1)?.type === "night") {
+        history.pop();
+      }
+
+      return history;
+    },
   },
   methods: {
     clearVoteHistory() {
@@ -167,6 +190,19 @@ tbody {
   }
   td:nth-child(6) {
     text-align: center;
+  }
+}
+
+.night-marker {
+  padding: 10px 0;
+
+  & .line {
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  & + .night-marker {
+    display: none;
   }
 }
 </style>

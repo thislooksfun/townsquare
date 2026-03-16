@@ -92,7 +92,7 @@ const mutations = {
         players[state.nomination[0]].name || `Seat ${state.nomination[0] + 1}`,
       nominee:
         players[state.nomination[1]].name || `Seat ${state.nomination[1] + 1}`,
-      type: isExile ? "Exile" : "Execution",
+      type: isExile ? "exile" : "execution",
       majority: Math.ceil(
         players.filter((player) => !player.isDead || isExile).length / 2,
       ),
@@ -100,6 +100,12 @@ const mutations = {
         .filter((player, index) => state.votes[index])
         // TODO: Make this dynamic at render time, not at vote time.
         .map(({ name }, index) => name || `Seat ${index + 1}`),
+    });
+  },
+  addNightMarker(state) {
+    state.voteHistory.push({
+      timestamp: new Date(),
+      type: "night",
     });
   },
   clearVoteHistory(state) {

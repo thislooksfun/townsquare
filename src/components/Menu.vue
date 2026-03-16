@@ -449,8 +449,10 @@ export default {
       }
     },
     toggleNight() {
+      if (this.session.isSpectator) return;
       this.$store.commit("toggleNight");
       if (this.grimoire.isNight) {
+        this.$store.commit("session/addNightMarker");
         this.$store.commit("session/setMarkedPlayer", -1);
       }
     },
