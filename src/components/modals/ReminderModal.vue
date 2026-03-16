@@ -3,8 +3,8 @@
     v-if="modals.reminder && availableReminders.length && players[playerIndex]"
     @close="toggleModal('reminder')"
   >
-    <h3>Choose a reminder token:</h3>
-    <ul class="reminders">
+    <h3>Choose a reminder token</h3>
+    <ul class="reminders" v-if="tab === 'inPlayReminders'">
       <li
         v-for="reminder in availableReminders"
         class="reminder"
@@ -19,6 +19,35 @@
         <span class="text">{{ reminder.name }}</span>
       </li>
     </ul>
+    <ul class="reminders" v-if="tab === 'allReminders'">
+      <li
+        v-for="reminder in allReminders"
+        class="reminder"
+        :class="[reminder.role.id]"
+        :key="reminder.role.id + ' ' + reminder.name"
+        @click="addReminder(reminder)"
+      >
+        <span
+          class="icon"
+          :style="{ backgroundImage: `url(${imageForRole(reminder.role)})` }"
+        ></span>
+        <span class="text">{{ reminder.name }}</span>
+      </li>
+    </ul>
+    <div class="button-group" v-if="playerIndex >= 0">
+      <span
+        class="button"
+        :class="{ townsfolk: tab === 'inPlayReminders' }"
+        @click="tab = 'inPlayReminders'"
+        >In-Play Reminders</span
+      >
+      <span
+        class="button"
+        :class="{ townsfolk: tab === 'allReminders' }"
+        @click="tab = 'allReminders'"
+        >All Reminders</span
+      >
+    </div>
   </Modal>
 </template>
 
@@ -35,6 +64,41 @@ export default {
   components: { Modal },
   props: ["playerIndex"],
   computed: {
+    allReminders() {
+      let reminders = [];
+      this.$store.state.roles.forEach((role) => {
+        reminders = [...reminders, ...role.reminders.map(mapReminder(role))];
+        if (role.remindersGlobal && role.remindersGlobal.length) {
+          reminders = [
+            ...reminders,
+            ...role.remindersGlobal.map(mapReminder(role)),
+          ];
+        }
+      });
+
+      // add fabled reminders
+      this.$store.state.players.fabled.forEach((role) => {
+        reminders = [...reminders, ...role.reminders.map(mapReminder(role))];
+      });
+
+      // add out of script traveller reminders
+      this.$store.state.otherTravellers.forEach((role) => {
+        reminders = [...reminders, ...role.reminders.map(mapReminder(role))];
+      });
+
+      const sortOrder = [
+        "townsfolk",
+        "outsider",
+        "minion",
+        "demon",
+        "traveller",
+        "fabled",
+      ];
+      return reminders.toSorted(
+        (a, b) =>
+          sortOrder.indexOf(a.role.team) - sortOrder.indexOf(b.role.team),
+      );
+    },
     availableReminders() {
       let reminders = [];
       const { players, bluffs } = this.$store.state.players;
@@ -73,6 +137,11 @@ export default {
     ...mapState(["modals", "grimoire"]),
     ...mapState("players", ["players"]),
   },
+  data() {
+    return {
+      tab: "inPlayReminders",
+    };
+  },
   methods: {
     addReminder(reminder) {
       const player = this.$store.state.players.players[this.playerIndex];
@@ -89,6 +158,7 @@ export default {
         property: "reminders",
         value,
       });
+      this.tab = "inPlayReminders";
       this.$store.commit("toggleModal", "reminder");
     },
     ...mapMutations(["toggleModal"]),
@@ -100,6 +170,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
+ul.reminders {
+  gap: 24px;
+  margin: 24px 0;
+  padding: 8px;
+  // FIXME: Make this relative to the containing element!
+  max-height: 64vh;
+  width: 100%;
+  overflow-y: scroll;
+  align-content: flex-start;
+}
+
 ul.reminders .reminder {
   background: url("../../assets/reminder.png") center center;
   background-size: 100%;
@@ -110,7 +191,6 @@ ul.reminders .reminder {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1%;
 
   border-radius: 50%;
   border: 3px solid black;

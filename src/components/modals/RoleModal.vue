@@ -150,7 +150,8 @@ ul.tokens {
   margin: 24px 0;
   padding: 8px;
   // FIXME: Make this relative to the containing element!
-  max-height: 66vh;
+  max-height: 64vh;
+  width: 100%;
   overflow-y: scroll;
   align-content: flex-start;
 }
