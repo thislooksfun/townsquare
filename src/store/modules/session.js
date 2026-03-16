@@ -28,7 +28,7 @@ const state = () => ({
   isVoteInProgress: false,
   voteHistory: [],
   markedPlayer: -1,
-  isVoteHistoryAllowed: true,
+  isVoteHistoryAllowed: false,
   isRolesDistributed: false,
 });
 
