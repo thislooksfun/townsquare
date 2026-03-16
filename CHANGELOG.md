@@ -1,5 +1,47 @@
 # Changelog
 
+## [3.5.0](https://github.com/thislooksfun/townsquare/compare/v3.4.0...v3.5.0) (2026-03-16)
+
+
+### Features
+
+* add a button to completely reset the app state ([7542346](https://github.com/thislooksfun/townsquare/commit/75423463badec4aa6b07e1e87e27a9072a5f0186))
+* add stub team character tokens ([9bb6155](https://github.com/thislooksfun/townsquare/commit/9bb6155089cd96135a2db32229fac044cffaf040))
+* allow adding reminder tokens for not-in-play characters ([cae226c](https://github.com/thislooksfun/townsquare/commit/cae226cff57997dc3fc4ba118f600c3e200d4b67)), closes [#160](https://github.com/thislooksfun/townsquare/issues/160)
+* allow changing alignment ([523dce0](https://github.com/thislooksfun/townsquare/commit/523dce09ec5b269ec8adaaea9c6d8d85a74d6a04)), closes [#161](https://github.com/thislooksfun/townsquare/issues/161)
+* allow changing voting time in 0.1s increments ([b3e2bae](https://github.com/thislooksfun/townsquare/commit/b3e2baea73c3d432a62029af4e97093064fd5897))
+* allow characters to have duplicate reminder tokens ([b566f61](https://github.com/thislooksfun/townsquare/commit/b566f610d7aeacec0ade3bff12b24d151d96f2b0))
+* clear all player ids when disconnecting ([d9c575f](https://github.com/thislooksfun/townsquare/commit/d9c575f2d747ec248d69ce2c4bdf77ddd3e85664))
+* clear name/pronouns when a player leaves a seat ([5c1dffa](https://github.com/thislooksfun/townsquare/commit/5c1dffa3899ba767154fa0154febb95a032c3815))
+* ensure all characters are up-to-date ([40dc445](https://github.com/thislooksfun/townsquare/commit/40dc445fe35ce4e2f256821221ed4658860c2880)), closes [#145](https://github.com/thislooksfun/townsquare/issues/145)
+* only show claim seat text to players ([317cd1b](https://github.com/thislooksfun/townsquare/commit/317cd1bc5e1dce11b47109ed3c1ccfbf290dfa6e))
+* separate days in the vote history ([45f69be](https://github.com/thislooksfun/townsquare/commit/45f69be01773f96f497ea46769c84e09e537fd76)), closes [#148](https://github.com/thislooksfun/townsquare/issues/148)
+* show "set name/pronouns" when seat has no name/pronouns set ([d612ed8](https://github.com/thislooksfun/townsquare/commit/d612ed8dbf107b34319c44912ffa87904599a0fc))
+* show dusk and dawn in night order ([da5d5a9](https://github.com/thislooksfun/townsquare/commit/da5d5a9299670eefceb7ec66cbd7e8ddeea28810))
+* show players that have timed out ([497e286](https://github.com/thislooksfun/townsquare/commit/497e2861cef8c3a61e2c77ab645289ae9088bc33)), closes [#163](https://github.com/thislooksfun/townsquare/issues/163) [#157](https://github.com/thislooksfun/townsquare/issues/157)
+* update character art using botc-icons ([b25091c](https://github.com/thislooksfun/townsquare/commit/b25091c9e9e70c40bc0f85a823c779c492a05a8a)), closes [#143](https://github.com/thislooksfun/townsquare/issues/143)
+* update session when hash changes ([6411462](https://github.com/thislooksfun/townsquare/commit/641146287086405c5ae91571420f4819387698fb)), closes [#167](https://github.com/thislooksfun/townsquare/issues/167)
+
+
+### Bug Fixes
+
+* change color when hovering a player's name ([ae0cfaa](https://github.com/thislooksfun/townsquare/commit/ae0cfaa00340600e3adaf4680c95c9696ba71b6a))
+* don't allow trying to claim already-claimed seats ([4e422e8](https://github.com/thislooksfun/townsquare/commit/4e422e8f85de9a2581489a2c9a505c66f7fddbd4)), closes [#155](https://github.com/thislooksfun/townsquare/issues/155)
+* fix jinx display ([e0be4a8](https://github.com/thislooksfun/townsquare/commit/e0be4a8336b0f4430f0bacf39f9d9af99f52737a))
+* handle custom roles with multiple images ([03424f1](https://github.com/thislooksfun/townsquare/commit/03424f1d36fd1f24ccc4191b8b83d7c90da26091))
+* handle dismissing the join prompt without erroring ([273b765](https://github.com/thislooksfun/townsquare/commit/273b7657ed5d15667b788cd0332de28669c315ef))
+* improve layout of character picker modal ([e115ca0](https://github.com/thislooksfun/townsquare/commit/e115ca0a987f6ae76df82f002a93045e3cfcc76c))
+* make empty seat text color more transparent ([42b3608](https://github.com/thislooksfun/townsquare/commit/42b360836c659fee4efb2bd467476eb3a5119b7f))
+* make player nameplate fixed height ([adbf15c](https://github.com/thislooksfun/townsquare/commit/adbf15cc7547fe2119a3a4a495b56ac124aa6b60))
+* make server rate limits more forgiving ([9107edf](https://github.com/thislooksfun/townsquare/commit/9107edf11a9d4a44db8c1c3802c414894a721c2d))
+* make vote history default to hidden ([7f6d270](https://github.com/thislooksfun/townsquare/commit/7f6d27040b27e00ecbdde297751c90310e2dc172))
+* persist vote history ([b6f2362](https://github.com/thislooksfun/townsquare/commit/b6f236242b186afce6d23c3adf16e1a5d9c66e4f))
+* remove change name/pronouns options from st menu ([88fbfb8](https://github.com/thislooksfun/townsquare/commit/88fbfb8857400ab36cd5e5f2055a6efa0457aace))
+* remove discord link ([1c1bc6a](https://github.com/thislooksfun/townsquare/commit/1c1bc6a53f1a15ce4f1dde92af2ffddfccc9a411)), closes [#164](https://github.com/thislooksfun/townsquare/issues/164)
+* skip update for name-pronouns pseudo property ([201d8e3](https://github.com/thislooksfun/townsquare/commit/201d8e3000317d12aeae49c50b6e83109014c17a))
+* use proper console method for logging errors ([f13c667](https://github.com/thislooksfun/townsquare/commit/f13c667a9e6220e50a62a43c9fed39533031e3cd))
+* use seat number if seat has no player name set ([c5ecc5a](https://github.com/thislooksfun/townsquare/commit/c5ecc5a8012ebc61ef1b207ebe18ac3b55e87316))
+
 ## [3.4.0](https://github.com/thislooksfun/townsquare/compare/v3.3.57...v3.4.0) (2026-03-11)
 
 
