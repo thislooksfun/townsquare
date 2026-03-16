@@ -7,14 +7,13 @@ import players from "./modules/players";
 import session from "./modules/session";
 import editionJSON from "../editions.json";
 import rolesJSON from "../roles.json";
-import fabledJSON from "../fabled.json";
 import jinxesJSON from "../jinxes.json";
 import { setupRole } from "../utils";
 
 Vue.use(Vuex);
 
 const allRoles = rolesJSON.map(setupRole);
-const allFabled = fabledJSON.map(setupRole);
+const allFabled = allRoles.filter((r) => r.team === "fabled");
 
 // helper functions
 const getRolesByEdition = (edition = editionJSON[0]) => {
@@ -62,7 +61,7 @@ const editionJSONbyId = new Map(
   editionJSON.map((edition) => [edition.id, edition]),
 );
 const rolesJSONbyId = new Map(allRoles.map((role) => [role.id, role]));
-const fabled = new Map(fabledJSON.map((role) => [role.id, role]));
+const fabled = new Map(allFabled.map((role) => [role.id, role]));
 
 const allJinxes = new Map();
 for (const [first, jinxes] of Object.entries(jinxesJSON)) {
