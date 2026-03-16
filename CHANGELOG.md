@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.5.1](https://github.com/thislooksfun/townsquare/compare/v3.5.0...v3.5.1) (2026-03-16)
+
+
+### Bug Fixes
+
+* checkout submodules in ci ([7eedf4a](https://github.com/thislooksfun/townsquare/commit/7eedf4a1eba4d580438bbb6ea3355e760ad1eeee))
+
 ## [3.5.0](https://github.com/thislooksfun/townsquare/compare/v3.4.0...v3.5.0) (2026-03-16)
 
 
