@@ -95,7 +95,10 @@ export default {
   },
   computed: {
     rolesFirstNight: function () {
-      const rolesFirstNight = [];
+      const rolesFirstNight = [
+        { ...this.$store.getters.rolesJSONbyId.get("dusk"), players: [] },
+        { ...this.$store.getters.rolesJSONbyId.get("dawn"), players: [] },
+      ];
       // add minion / demon infos to night order sheet
       if (this.players.length > 6) {
         rolesFirstNight.push(
@@ -124,7 +127,10 @@ export default {
       return rolesFirstNight;
     },
     rolesOtherNight: function () {
-      const rolesOtherNight = [];
+      const rolesOtherNight = [
+        { ...this.$store.getters.rolesJSONbyId.get("dusk"), players: [] },
+        { ...this.$store.getters.rolesJSONbyId.get("dawn"), players: [] },
+      ];
       this.roles.forEach((role) => {
         const players = this.players.filter((p) => p.role.id === role.id);
         if (role.otherNight && (role.team !== "traveller" || players.length)) {
