@@ -1,7 +1,7 @@
 [
   {
     "id": "Chambermaid",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Mathematician",
         "reason": "The Chambermaid learns if the Mathematician wakes tonight or not, even though the Chambermaid wakes first."
@@ -10,7 +10,7 @@
   },
   {
     "id": "Butler",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Cannibal",
         "reason": "If the Cannibal gains the Butler ability, the Cannibal learns this."
@@ -19,7 +19,7 @@
   },
   {
     "id": "Lunatic",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Mathematician",
         "reason": "The Mathematician learns if the Lunatic attacks a different player(s) than the real Demon attacked."
@@ -28,7 +28,7 @@
   },
   {
     "id": "Pit-Hag",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Heretic",
         "reason": "A Pit-Hag can not create a Heretic. "
@@ -45,7 +45,7 @@
   },
   {
     "id": "Cerenovus",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Goblin",
         "reason": "The Cerenovus may choose to make a player mad that they are the Goblin."
@@ -54,7 +54,7 @@
   },
   {
     "id": "Leviathan",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Soldier",
         "reason": "If Leviathan nominates and executes the Soldier, the Soldier does not die."
@@ -87,7 +87,7 @@
   },
   {
     "id": "Al-Hadikhia",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Scarlet Woman",
         "reason": "If there are two living Al-Hadikhias, the Scarlet Woman Al-Hadikhia becomes the Scarlet Woman again."
@@ -100,7 +100,7 @@
   },
   {
     "id": "Lil' Monsta",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Poppy Grower",
         "reason": "If the Poppy Grower is in play, Minions don't wake together. They are woken one by one, until one of them chooses to take the Lil' Monsta token."
@@ -117,7 +117,7 @@
   },
   {
     "id": "Lycanthrope",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Gambler",
         "reason": "If the Lycanthrope is alive and the Gambler kills themself at night, no other players can die tonight."
@@ -126,7 +126,7 @@
   },
   {
     "id": "Legion",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Engineer",
         "reason": "Legion and the Engineer can not both be in play at the start of the game. If the Engineer creates Legion, most players (including all evil players) become evil Legion."
@@ -139,7 +139,7 @@
   },
   {
     "id": "Fang Gu",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Scarlet Woman",
         "reason": "If the Fang Gu chooses an Outsider and dies, the Scarlet Woman does not become the Fang Gu."
@@ -148,7 +148,7 @@
   },
   {
     "id": "Spy",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Magician",
         "reason": "When the Spy sees the Grimoire, the Demon and Magician's character tokens are removed."
@@ -173,7 +173,7 @@
   },
   {
     "id": "Widow",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Magician",
         "reason": "When the Widow sees the Grimoire, the Demon and Magician's character tokens are removed."
@@ -198,7 +198,7 @@
   },
   {
     "id": "Godfather",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Heretic",
         "reason": "Only 1 jinxed character can be in play."
@@ -207,7 +207,7 @@
   },
   {
     "id": "Baron",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Heretic",
         "reason": "The Baron might only add 1 Outsider, not 2."
@@ -216,7 +216,7 @@
   },
   {
     "id": "Marionette",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Lil' Monsta",
         "reason": "The Marionette neighbors a Minion, not the Demon. The Marionette is not woken to choose who takes the Lil' Monsta token."
@@ -245,7 +245,7 @@
   },
   {
     "id": "Riot",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Engineer",
         "reason": "Riot and the Engineer can not both be in play at the start of the game. \nIf the Engineer creates Riot, the evil players become Riot."
@@ -358,7 +358,7 @@
   },
   {
     "id": "Lleech",
-    "hatred": [
+    "jinxes": [
       {
         "id": "Mastermind",
         "reason": "If the Mastermind is alive and the Lleech's host dies by execution, the Lleech lives but loses their ability. "

@@ -8,7 +8,7 @@ import session from "./modules/session";
 import editionJSON from "../editions.json";
 import rolesJSON from "../roles.json";
 import fabledJSON from "../fabled.json";
-import jinxesJSON from "../hatred.json";
+import jinxesJSON from "../jinxes.json";
 import { setupRole } from "../utils";
 
 Vue.use(Vuex);
@@ -67,17 +67,12 @@ const fabled = new Map(fabledJSON.map((role) => [role.id, role]));
 // jinxes
 let jinxes = {};
 try {
-  // Note: can't fetch live list due to lack of CORS headers
-  // fetch("https://bloodontheclocktower.com/script/data/hatred.json")
-  //   .then(res => res.json())
-  //   .then(jinxesJSON => {
   jinxes = new Map(
-    jinxesJSON.map(({ id, hatred }) => [
+    jinxesJSON.map(({ id, jinxes }) => [
       clean(id),
-      new Map(hatred.map(({ id, reason }) => [clean(id), reason])),
+      new Map(jinxes.map(({ id, reason }) => [clean(id), reason])),
     ]),
   );
-  // });
 } catch (e) {
   console.error("couldn't load jinxes", e);
 }
