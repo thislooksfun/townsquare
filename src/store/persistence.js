@@ -39,33 +39,34 @@ module.exports = (store) => {
     store.commit("toggleGrimoire", false);
     updatePagetitle(false);
   }
-  if (localStorage.roles !== undefined) {
-    store.commit("setCustomRoles", JSON.parse(localStorage.roles));
+  if (localStorage.getItem("roles")) {
+    store.commit("setCustomRoles", JSON.parse(localStorage.getItem("roles")));
     store.commit("setEdition", { id: "custom" });
   }
-  if (localStorage.edition !== undefined) {
+  if (localStorage.getItem("edition")) {
     // this will initialize state.roles for official editions
-    store.commit("setEdition", JSON.parse(localStorage.edition));
+    store.commit("setEdition", JSON.parse(localStorage.getItem("edition")));
   }
-  if (localStorage.bluffs !== undefined) {
-    JSON.parse(localStorage.bluffs).forEach((role, index) => {
+  if (localStorage.getItem("bluffs")) {
+    console.log("Loading bluffs");
+    JSON.parse(localStorage.getItem("bluffs")).forEach((role, index) => {
       store.commit("players/setBluff", {
         index,
         role: store.state.roles.get(role) || {},
       });
     });
   }
-  if (localStorage.fabled !== undefined) {
+  if (localStorage.getItem("fabled")) {
     store.commit("players/setFabled", {
-      fabled: JSON.parse(localStorage.fabled).map(
+      fabled: JSON.parse(localStorage.getItem("fabled")).map(
         (fabled) => store.state.fabled.get(fabled.id) || fabled,
       ),
     });
   }
-  if (localStorage.players) {
+  if (localStorage.getItem("players")) {
     store.commit(
       "players/set",
-      JSON.parse(localStorage.players).map((player) => ({
+      JSON.parse(localStorage.getItem("players")).map((player) => ({
         ...player,
         role:
           store.state.roles.get(player.role) ||
