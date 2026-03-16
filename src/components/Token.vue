@@ -54,10 +54,11 @@ export default {
   },
   computed: {
     reminderLeaves: function () {
-      return (
-        (this.role.reminders || []).length +
-        (this.role.remindersGlobal || []).length
-      );
+      const uniqueReminders = new Set([
+        ...(this.role.reminders || []),
+        ...(this.role.remindersGlobal || []),
+      ]);
+      return uniqueReminders.size;
     },
     ...mapState(["grimoire"]),
   },

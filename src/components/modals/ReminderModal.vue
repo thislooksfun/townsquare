@@ -59,6 +59,15 @@ import { imageForRole, setupRole } from "../../utils";
 const customRole = setupRole("custom");
 
 const mapReminder = (role) => (name) => ({ role, name });
+const dedupeReminders = (reminders) => {
+  const seen = new Set();
+  return reminders.filter((r) => {
+    const key = `${r.role.id}-${r.name}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+};
 
 export default {
   components: { Modal },
@@ -94,6 +103,8 @@ export default {
         "traveller",
         "fabled",
       ];
+
+      reminders = dedupeReminders(reminders);
       return reminders.toSorted(
         (a, b) =>
           sortOrder.indexOf(a.role.team) - sortOrder.indexOf(b.role.team),
@@ -132,6 +143,8 @@ export default {
       });
 
       reminders.push({ role: customRole, name: "Custom note" });
+
+      reminders = dedupeReminders(reminders);
       return reminders;
     },
     ...mapState(["modals", "grimoire"]),
