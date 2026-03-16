@@ -75,6 +75,15 @@ module.exports = (store) => {
       })),
     );
   }
+  if (localStorage.getItem("voteHistory")) {
+    store.commit(
+      "session/setVoteHistory",
+      JSON.parse(localStorage.getItem("voteHistory")).map((entry) => ({
+        ...entry,
+        timestamp: new Date(entry.timestamp),
+      })),
+    );
+  }
   /**** Session related data *****/
   if (localStorage.getItem("playerId")) {
     store.commit("session/setPlayerId", localStorage.getItem("playerId"));
@@ -247,6 +256,19 @@ module.exports = (store) => {
           localStorage.setItem("playerId", payload);
         } else {
           localStorage.removeItem("playerId");
+        }
+        break;
+      case "session/setVoteHistory":
+      case "session/addHistory":
+      case "session/addNightMarker":
+      case "session/clearVoteHistory":
+        if (state.session.voteHistory.length) {
+          localStorage.setItem(
+            "voteHistory",
+            JSON.stringify(state.session.voteHistory),
+          );
+        } else {
+          localStorage.removeItem("voteHistory");
         }
         break;
     }
