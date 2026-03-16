@@ -45,24 +45,20 @@
 
     <div class="team jinxed" v-if="jinxed.length">
       <aside>
-        <h4>Jinxed</h4>
+        <h4>Jinxes</h4>
       </aside>
       <ul>
         <li v-for="(jinx, index) in jinxed" :key="index">
           <span
             class="icon"
             :style="{
-              backgroundImage: `url(${require(
-                '../../assets/icons/' + jinx.first.id + '.png',
-              )})`,
+              backgroundImage: `url(${imageForRole(jinx.first)})`,
             }"
           ></span>
           <span
             class="icon"
             :style="{
-              backgroundImage: `url(${require(
-                '../../assets/icons/' + jinx.second.id + '.png',
-              )})`,
+              backgroundImage: `url(${imageForRole(jinx.second)})`,
             }"
           ></span>
           <div class="role">
