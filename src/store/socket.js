@@ -1,6 +1,6 @@
 class LiveSession {
   constructor(store) {
-    this._wss = "wss://socket.botc.thislooks.fun/";
+    this._wss = "wss://web--sockets--kq8yj5v49j66.code.run/";
     // this._wss = "ws://localhost:8081/"; // uncomment if using local server with NODE_ENV=development
     this._socket = null;
     this._isSpectator = true;
