@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.5.3](https://github.com/thislooksfun/townsquare/compare/v3.5.2...v3.5.3) (2026-03-21)
+
+
+### Bug Fixes
+
+* handle roles with no reminders ([0a12f23](https://github.com/thislooksfun/townsquare/commit/0a12f23e9f41e7d505f4f7df5ea8d67b2787c5cb))
+
 ## [3.5.2](https://github.com/thislooksfun/townsquare/compare/v3.5.1...v3.5.2) (2026-03-21)
 
 
