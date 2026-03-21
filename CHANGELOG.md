@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.5.2](https://github.com/thislooksfun/townsquare/compare/v3.5.1...v3.5.2) (2026-03-21)
+
+
+### Bug Fixes
+
+* use code.run domain for socket for now ([0cb265b](https://github.com/thislooksfun/townsquare/commit/0cb265b2461df7d022acccee5b71ea7b29e5761f))
+
 ## [3.5.1](https://github.com/thislooksfun/townsquare/compare/v3.5.0...v3.5.1) (2026-03-16)
 
 
