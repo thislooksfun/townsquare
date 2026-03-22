@@ -86,6 +86,12 @@ module.exports = (store) => {
       }),
     );
   }
+  if (localStorage.getItem("votingSpeed")) {
+    store.commit(
+      "session/setVotingSpeed",
+      Number.parseInt(localStorage.getItem("votingSpeed")),
+    );
+  }
   if (localStorage.getItem("voteHistory")) {
     store.commit(
       "session/setVoteHistory",
@@ -273,6 +279,9 @@ module.exports = (store) => {
         } else {
           localStorage.removeItem("playerId");
         }
+        break;
+      case "session/setVotingSpeed":
+        localStorage.setItem("votingSpeed", payload);
         break;
       case "session/setVoteHistory":
       case "session/addHistory":
