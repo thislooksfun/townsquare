@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import editionJSON from "../../editions";
+import editionJSON from "../../data/editions.json";
 import { mapMutations, mapState } from "vuex";
 import Modal from "./Modal";
 

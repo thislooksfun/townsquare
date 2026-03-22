@@ -5,9 +5,9 @@ import socket from "./socket";
 import cohosts from "./modules/cohosts";
 import players from "./modules/players";
 import session from "./modules/session";
-import editionJSON from "../editions.json";
-import rolesJSON from "../roles.json";
-import jinxesJSON from "../jinxes.json";
+import editionJSON from "../data/editions.json";
+import rolesJSON from "../data/roles.json";
+import jinxesJSON from "../data/jinxes.json";
 import { setupRole } from "../utils";
 
 Vue.use(Vuex);

@@ -61,7 +61,7 @@
 
 <script>
 import Modal from "./Modal";
-import gameJSON from "./../../game";
+import gameJSON from "./../../data/game.json";
 import Token from "./../Token";
 import { mapGetters, mapMutations, mapState } from "vuex";
 

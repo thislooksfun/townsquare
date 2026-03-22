@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import gameJSON from "./../game";
+import gameJSON from "./../data/game.json";
 import { mapState } from "vuex";
 
 export default {
