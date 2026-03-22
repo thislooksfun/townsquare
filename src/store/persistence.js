@@ -66,13 +66,24 @@ module.exports = (store) => {
   if (localStorage.getItem("players")) {
     store.commit(
       "players/set",
-      JSON.parse(localStorage.getItem("players")).map((player) => ({
-        ...player,
-        role:
-          store.state.roles.get(player.role) ||
-          store.getters.rolesJSONbyId.get(player.role) ||
-          {},
-      })),
+      JSON.parse(localStorage.getItem("players")).map((player) => {
+        let role = undefined;
+        if (player.role) {
+          const roleId = player.role.id || player.role;
+          role =
+            store.state.roles.get(roleId) ||
+            store.getters.rolesJSONbyId.get(roleId);
+
+          if (role && player.role.alignment) {
+            role = { ...role, alignment: player.role.alignment };
+          }
+        }
+
+        return {
+          ...player,
+          role: role || {},
+        };
+      }),
     );
   }
   if (localStorage.getItem("voteHistory")) {
@@ -229,7 +240,12 @@ module.exports = (store) => {
               state.players.players.map((player) => ({
                 ...player,
                 // simplify the stored data
-                role: player.role.id || {},
+                role: player.role.id
+                  ? {
+                      id: player.role.id,
+                      alignment: player.role.alignment,
+                    }
+                  : undefined,
               })),
             ),
           );
