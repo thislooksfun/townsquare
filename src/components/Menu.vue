@@ -18,14 +18,14 @@
     </span>
     <span
       class="nomlog-summary"
-      v-show="session.voteHistory.length && session.sessionId"
+      v-show="voteCount && session.sessionId"
       @click="toggleModal('voteHistory')"
-      :title="`${session.voteHistory.length} recent ${
-        session.voteHistory.length == 1 ? 'nomination' : 'nominations'
+      :title="`${voteCount} recent ${
+        voteCount == 1 ? 'nomination' : 'nominations'
       }`"
     >
       <font-awesome-icon icon="book-dead" />
-      {{ session.voteHistory.length }}
+      {{ voteCount }}
     </span>
     <span
       class="connection"
@@ -191,7 +191,7 @@
               <em><font-awesome-icon icon="theater-masks" /></em>
             </li>
             <li
-              v-if="session.voteHistory.length || !session.isSpectator"
+              v-if="voteCount || !session.isSpectator"
               @click="toggleModal('voteHistory')"
             >
               Vote history<em>[V]</em>
@@ -291,6 +291,9 @@ export default {
   computed: {
     ...mapState(["grimoire", "session", "edition"]),
     ...mapState("players", ["players"]),
+    voteCount() {
+      return this.session.voteHistory.filter((h) => h.type !== "night").length;
+    },
   },
   data() {
     return {

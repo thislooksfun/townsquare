@@ -115,11 +115,15 @@ export default {
           if (this.session.isSpectator) return;
           this.$store.commit("toggleModal", "roles");
           break;
-        case "v":
-          if (this.session.voteHistory.length || !this.session.isSpectator) {
+        case "v": {
+          const voteCount = this.session.voteHistory.filter(
+            (entry) => entry.type !== "night",
+          ).length;
+          if (voteCount || !this.session.isSpectator) {
             this.$store.commit("toggleModal", "voteHistory");
           }
           break;
+        }
         case "s":
           if (this.session.isSpectator) return;
           this.$refs.menu.toggleNight();
