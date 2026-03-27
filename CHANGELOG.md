@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.5.4](https://github.com/thislooksfun/townsquare/compare/v3.5.3...v3.5.4) (2026-03-27)
+
+
+### Bug Fixes
+
+* add missing first night wake order for snake charmer ([faea007](https://github.com/thislooksfun/townsquare/commit/faea007ddf9933d43213a297a4b80f3f311650cc)), closes [#182](https://github.com/thislooksfun/townsquare/issues/182)
+* persist alignment ([0bebb30](https://github.com/thislooksfun/townsquare/commit/0bebb30f7e8fc289355c7c6c5acbcc59df4cdca1)), closes [#183](https://github.com/thislooksfun/townsquare/issues/183)
+* persist voting speed ([3a88591](https://github.com/thislooksfun/townsquare/commit/3a88591c8e3d442f5e87624561bf9ace29657ac6)), closes [#184](https://github.com/thislooksfun/townsquare/issues/184)
+* show correct vote count ([b2d29b6](https://github.com/thislooksfun/townsquare/commit/b2d29b6bc005b1a3d9468a4ccfb63ad9ed827d0e)), closes [#185](https://github.com/thislooksfun/townsquare/issues/185)
+* update robots.txt ([35ce3ca](https://github.com/thislooksfun/townsquare/commit/35ce3ca922343a7282f53a9c5b46b7d97611e30a))
+
 ## [3.5.3](https://github.com/thislooksfun/townsquare/compare/v3.5.2...v3.5.3) (2026-03-21)
 
 
