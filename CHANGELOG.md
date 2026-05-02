@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.5.5](https://github.com/thislooksfun/townsquare/compare/v3.5.4...v3.5.5) (2026-05-02)
+
+
+### Bug Fixes
+
+* stop cutting off player names ([fd977e8](https://github.com/thislooksfun/townsquare/commit/fd977e8052f78a221c1fe7740ac8997fd1b9529a))
+* update robots.txt ([1196cd6](https://github.com/thislooksfun/townsquare/commit/1196cd66495dd85ec9a0fadcc458c4ce9d8bc249))
+
 ## [3.5.4](https://github.com/thislooksfun/townsquare/compare/v3.5.3...v3.5.4) (2026-03-27)
 
 
