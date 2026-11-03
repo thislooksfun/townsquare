@@ -51,7 +51,7 @@ jobs:
       IMAGE_NAME: ${{ github.repository }}-socket
       PROJECT_ID: townsquare
       SERVICE_ID: sockets
-      CREDENTIALS_ID: github
+      CREDENTIALS_ID: GHCR-townsquare
     environment: sockets
     steps:
       - uses: actions/checkout@v4
